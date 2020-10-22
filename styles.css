@@ -1,3 +1,99 @@
+*{
+  font-family: garamond;
+}
+
 body{
-  background-color:pink;
+  background-color:white;
+}
+.top{
+  padding:20px;
+  
+}
+#header{
+  font-family: garamond;
+  font-size:35px;
+  color: #006039;
+  transform:translate(250px,0px)
+}
+
+.container{
+  position:absolute;
+  max-width:700px;
+  height:350px;
+  background-color: #006039;
+  display:flex;
+}
+
+.lapdata{
+  background-color:beige;
+  flex: 1;
+  width:50px;
+  margin:10px;
+  padding:50px;
+}
+
+.rightDisplay{
+  background-color: white;
+  flex: 1;
+  margin:10px;
+  padding:0px;
+  width:400px;
+}
+
+.logo{
+  position:absolute;
+  width:auto;
+  height:50px;
+  transform:translate(250px,-23px);
+}
+
+
+li{
+  list-style-type: none;
+  transform: translate(0px,-40px);
+  font-size:18px;
+  width:180px;
+}
+
+.elapsed{
+  background-color:lightgrey;
+  padding:20px;
+  height:35px;
+  margin: 10px;
+  position:relative;
+  text-align:center;
+  border-radius:20px;
+  
+}
+
+.row1{
+  background-color: beige;
+    padding:30px;
+    margin: 5px;
+    position:relative;
+    border-radius:20px;
+    transform: translate(0px,3px);
+    text-align: center;
+}
+
+.row2{
+  background-color: beige;
+  padding:30px;
+  margin: 5px;
+  position:relative;
+  border-radius:20px;
+  transform: translate(0px,3px);
+  text-align: center;
+}
+
+button{
+
+  font-size:20px;
+  color:#A37E2C;
+  border-radius:20px;
+  border-style: outset;
+  border-color: grey;
+  margin: 5px;
+  vertical-align: center;
+  display:inline-block;
 }
