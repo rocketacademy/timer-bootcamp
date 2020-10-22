@@ -2,7 +2,7 @@
 // text to be displayed
 
 const displayTextEl = document.createElement('div')
-displayTextEl.innerHTML = `0:0:0`
+displayTextEl.innerHTML = `0:0: 0`
 const buttonEl = document.createElement('button')
 buttonEl.innerText = 'Start'
 const resetButtonEl = document.createElement('button')
