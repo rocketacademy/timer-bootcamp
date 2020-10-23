@@ -5,18 +5,28 @@ const elapsedTime = {
   minutes: 0,
   hours: 0,
 };
+
+// stores ID of CountTimeId function
 let timerId;
+
+// number of seconds per minute
 const SEC_PER_MIN = 3;
 const MIN_PER_HR = 3;
-const elapsedTimeOutput = () => `${elapsedTime.hours}:H ${elapsedTime.minutes}:M ${elapsedTime.seconds}:S`;
 
+// container to display elapsed time
 const elapsedTimeContainer = document.createElement('div');
+
+// start, stop, reset and lap button
 const startButton = document.createElement('button');
 const stopButton = document.createElement('button');
 const resetButton = document.createElement('button');
 const lapButton = document.createElement('button');
 
 // Helper functions =======================================================
+// to create a string about elapsed time in hours, minutes and seconds
+const getElapsedTimeOutput = () => `${elapsedTime.hours}:H ${elapsedTime.minutes}:M ${elapsedTime.seconds}:S`;
+
+// to start the time and keep track of it
 const countTime = () => {
   const countTimeId = setInterval(() => {
     elapsedTime.seconds += 1;
@@ -34,15 +44,17 @@ const countTime = () => {
       }
     }
 
-    // store current time
+    // store current time in the lap array
     // lapArray.push(elapsedTime);
-    elapsedTimeContainer.innerText = elapsedTimeOutput();
+
+    // store elapsed time output in container that displays elapsed time
+    elapsedTimeContainer.innerText = getElapsedTimeOutput();
   }, 1000);
   return countTimeId;
 };
 
 // Game initilization =====================================================
-elapsedTimeContainer.innerText = elapsedTimeOutput();
+elapsedTimeContainer.innerText = getElapsedTimeOutput();
 document.body.appendChild(elapsedTimeContainer);
 
 startButton.innerText = 'start';
@@ -65,7 +77,7 @@ resetButton.addEventListener('click', () => {
   elapsedTime.minutes = 0;
   elapsedTime.hours = 0;
 
-  elapsedTimeContainer.innerText = `${elapsedTimeOutput()}`;
+  elapsedTimeContainer.innerText = getElapsedTimeOutput();
 });
 // lapButton.addEventListener('click');
 document.body.appendChild(startButton);
