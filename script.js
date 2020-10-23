@@ -1,6 +1,14 @@
 // Global setup ===========================================================
-let elapsedTimeArray = [0, 0, 0];
+// object to store seconds, minutes and hour
+const elapsedTime = {
+  seconds: 0,
+  minutes: 0,
+  hours: 0,
+};
 let timerId;
+const SEC_PER_MIN = 3;
+const MIN_PER_HR = 3;
+const elapsedTimeOutput = () => `${elapsedTime.hours}:H ${elapsedTime.minutes}:M ${elapsedTime.seconds}:S`;
 
 const elapsedTimeContainer = document.createElement('div');
 const startButton = document.createElement('button');
@@ -10,36 +18,31 @@ const lapButton = document.createElement('button');
 
 // Helper functions =======================================================
 const countTime = () => {
-  let seconds = 0;
-  let minutes = 0;
-  let hours = 0;
-  elapsedTimeArray = [0, 0, 0];
-
   const countTimeId = setInterval(() => {
-    seconds += 1;
+    elapsedTime.seconds += 1;
 
     // increase minutes and hours
-    if (seconds % 3 === 0 && seconds > 1) {
+    if (elapsedTime.seconds % SEC_PER_MIN === 0 && elapsedTime.seconds > 1) {
       // increase minutes by 1 if 60s passed
-      minutes += 1;
-      seconds = 0;
+      elapsedTime.minutes += 1;
+      elapsedTime.seconds = 0;
 
       // increase hours by 1 if 60mins passed
-      if (minutes % 3 === 0) {
-        hours += 1;
-        minutes = 0;
+      if (elapsedTime.minutes % MIN_PER_HR === 0) {
+        elapsedTime.hours += 1;
+        elapsedTime.minutes = 0;
       }
     }
 
     // store current time
-    elapsedTimeArray.splice(0, 0, seconds, minutes, hours);
-    elapsedTimeContainer.innerText = `${elapsedTimeArray[2]}:H ${elapsedTimeArray[1]}:M ${elapsedTimeArray[0]}:S`;
+    // lapArray.push(elapsedTime);
+    elapsedTimeContainer.innerText = elapsedTimeOutput();
   }, 1000);
   return countTimeId;
 };
 
 // Game initilization =====================================================
-elapsedTimeContainer.innerText = '0:H 0:M 0:S';
+elapsedTimeContainer.innerText = elapsedTimeOutput();
 document.body.appendChild(elapsedTimeContainer);
 
 startButton.innerText = 'start';
@@ -57,7 +60,12 @@ stopButton.addEventListener('click', () => {
 resetButton.addEventListener('click', () => {
   console.log('reset button pressed');
   clearInterval(timerId);
-  elapsedTimeContainer.innerText = '0:H 0:M 0:S';
+  elapsedTime.seconds += 1;
+  elapsedTime.seconds = 0;
+  elapsedTime.minutes = 0;
+  elapsedTime.hours = 0;
+
+  elapsedTimeContainer.innerText = `${elapsedTimeOutput()}`;
 });
 // lapButton.addEventListener('click');
 document.body.appendChild(startButton);
