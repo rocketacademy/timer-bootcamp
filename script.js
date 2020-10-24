@@ -6,23 +6,35 @@ const elapsedTime = {
   hours: 0,
 };
 
-// stores ID of CountTimeId function
-let timerId;
-
 // number of seconds per minute
 const SEC_PER_MIN = 3;
 const MIN_PER_HR = 3;
 
-// container to display elapsed time
-const elapsedTimeContainer = document.createElement('div');
+// stores ID of CountTimeId function
+let timerId;
 
-// start, stop, reset and lap button
-const startButton = document.createElement('button');
-const stopButton = document.createElement('button');
-const resetButton = document.createElement('button');
-const lapButton = document.createElement('button');
+// container to display elapsed time
+let elapsedTimeContainer;
+
+// start, stop, reset and lap button elements
+let startButton;
+let stopButton;
+let resetButton;
+let lapButton;
 
 // Helper functions =======================================================
+// to create elements needed at game initialisation
+const createStartingElements = () => {
+  // container to display elapsed time
+  elapsedTimeContainer = document.createElement('div');
+
+  // start, stop, reset and lap button
+  startButton = document.createElement('button');
+  stopButton = document.createElement('button');
+  resetButton = document.createElement('button');
+  lapButton = document.createElement('button');
+};
+
 // to create a string about elapsed time in hours, minutes and seconds
 const getElapsedTimeOutput = () => `${elapsedTime.hours}:H ${elapsedTime.minutes}:M ${elapsedTime.seconds}:S`;
 
@@ -54,6 +66,7 @@ const countTime = () => {
 };
 
 // Game initilization =====================================================
+createStartingElements();
 elapsedTimeContainer.innerText = getElapsedTimeOutput();
 document.body.appendChild(elapsedTimeContainer);
 
