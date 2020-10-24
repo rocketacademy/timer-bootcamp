@@ -1,3 +1,17 @@
 body{
-  background-color:pink;
+  background-color:rgb(207, 207, 243);
+}
+
+.laps-splits{
+  width: 140px;
+  height: 1000px;
+  margin-top: 30px;
+}
+
+.buttons{
+  margin: 20px 20px 20px 20px;
+}
+
+.single-button{
+  margin-right: 20px;
 }
