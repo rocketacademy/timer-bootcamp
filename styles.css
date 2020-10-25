@@ -1,5 +1,12 @@
 body{
-  background-color:rgb(207, 207, 243);
+  background-color:black;
+  color: rgb(227,212,241);
+}
+
+.time{
+  font-size: 2.5em;
+  font-family:  Arial, sans-serif;
+  color: rgb(8, 255, 234) ;
 }
 
 .laps-splits{

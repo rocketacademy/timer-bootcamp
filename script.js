@@ -141,6 +141,7 @@ const onClickLap = () => {
 // Function to initialize the dom elements in the app
 const timerInit = () => {
   // Elapsed Time element
+  timeDisplayElement.classList.add('time');
   const divElapsedTimeDisplayContainer = document.createElement('div');
   divElapsedTimeDisplayContainer.innerHTML = 'Elapsed Time:';
   updateTimerDisplay();
