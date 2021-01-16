@@ -5,36 +5,52 @@ body {
 #header {
   font-size: 5em;
   text-align: center;
-  border: whitesmoke;
-  border-style: dotted;
+}
+.left-container {
+  position: absolute;
+  height: 500px;
 }
 
 .lap-data {
-  position: absolute;
   margin-left: 20px;
   font-size: 5em;
   color: white;
 }
 
-.elapsed-time {
+.right-container {
   margin-left: 500px;
-  padding-left: 100px;
+  max-width: 700px;
+  height: 500px;
+}
+
+.elapsed-time {
   color: white;
   font-size: 5em;
+  display: inline;
 }
 
-.timer-min {
-  position: absolute;
+.timer {
+  float: left;
   color: rgb(15, 15, 15);
   font-size: 1.5em;
 }
 
-.timer-sec {
-  margin-left: 140px;
+.laps {
   color: rgb(15, 15, 15);
-  font-size: 1.5em;
+  padding-top: 50px;
+  font-size: 200px;
+  text-align: center;
 }
 
-.start-button {
-  border: white solid;
+.start-button,
+.stop-button,
+.reset-button,
+.lap-button {
+  float: left;
+  width: 40%;
+  margin: 30px 20px;
+  border: 50px;
+  padding: 10px 40px;
+  font-size: 50px;
+  font-family: Impact;
 }

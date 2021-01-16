@@ -1,86 +1,83 @@
-// Timer
+// Timer V1
 
-// Set containers up
-// LAP DATA
-const lapDataDiv = document.createElement('div');
-lapDataDiv.classList.add('lap-data');
-lapDataDiv.innerText = 'Lap Data';
-document.body.appendChild(lapDataDiv);
+// Helper Functions
+const customCreate = (tagType, className, text) => {
+  const element = document.createElement(tagType);
+  element.innerText = text;
+  element.classList.add(className);
 
-// ELAPSED TIME
-const elapsedTime = document.createElement('div');
-elapsedTime.innerText = 'Elapsed Time';
-elapsedTime.classList.add('elapsed-time');
-document.body.appendChild(elapsedTime);
+  return element;
+};
 
-// Timer for Minutes  => ELAPSED TIME
-const timerCountMin = document.createElement('div');
-timerCountMin.innerText = 0;
-timerCountMin.classList.add('timer-min');
-elapsedTime.appendChild(timerCountMin);
+// Globals
+let setTimer;
+let numLaps = 0;
+let m = 0; let s = 0; let ms = 0;
 
-// Timer for Seconds => ELAPSED TIME
-const timerCountSec = document.createElement('div');
-timerCountSec.innerText = 0;
-timerCountSec.classList.add('timer-sec');
-elapsedTime.appendChild(timerCountSec);
+const leftContainer = customCreate('div', 'left-container', '');
+const rightContainer = customCreate('div', 'right-container', '');
 
-// START
-const startButton = document.createElement('button');
-startButton.innerText = 'START';
-startButton.classList.add('start-button');
-document.body.appendChild(startButton);
+const lapData = customCreate('div', 'lap-data', 'LAP DATA'); // Lap Data Header
+const elapsedTime = customCreate('div', 'elapsed-time', 'ELAPSED TIME'); // Elapsed Time Header
 
-// STOP
-const stop = document.createElement('div');
+// Timer & Laps
+const timer = customCreate('div', 'timer', '00:00:00');
+const laps = customCreate('div', 'laps', '0');
 
-// RESET
-const reset = document.createElement('div');
+// Buttons
+const startButton = customCreate('button', 'start-button', 'START'); // Start button
+const stopButton = customCreate('button', 'stop-button', 'STOP'); // Stop button
+const resetButton = customCreate('button', 'reset-button', 'RESET'); // Reset button
+const lapButton = customCreate('button', 'lap-button', 'LAP'); // Reset button
 
-// LAP
-const lap = document.createElement('div');
+// Render to the DOM
+document.body.appendChild(leftContainer);
+document.body.appendChild(rightContainer);
+leftContainer.appendChild(lapData);
+leftContainer.appendChild(laps);
+rightContainer.appendChild(elapsedTime);
+elapsedTime.appendChild(timer);
+rightContainer.appendChild(startButton);
+rightContainer.appendChild(stopButton);
+rightContainer.appendChild(resetButton);
+rightContainer.appendChild(lapButton);
 
-// // Set timing for hours
-// const delayForHour = delayForMin * 60;
-// let hours = 0;
+// Callbacks
+const startTime = () => {
+  setTimer = setInterval(() => {
+    // Only show a '0' as first digit if respective unit is less than 10.
+    timer.innerHTML = `${m < 10 ? `0${m}` : `${m}`}:${s < 10 ? `0${s}` : `${s}`}:${ms < 10 ? `0${ms}` : `${ms}`}`;
+    ms += 1;
+    // Once milliseconds cross 100, reset back to 0 & plus 1 second.
+    if (ms === 100) {
+      ms = 0;
+      s += 1;
+    }
+    // Once seconds cross 60, reset back to 0 & plus 1 min.
+    if (s === 60) {
+      s = 0;
+      m += 1;
+    }
+    console.log('TIME STARTS');
+  }, 10);
+};
 
-// // Output the Timer (min) container to DOM
-// const timerHour = setInterval(() => {
-//   timerCountMin.innerText = hours;
+const stopTime = () => {
+  console.log('TIME STOP');
+  clearInterval(setTimer);
+};
 
-//   if (hours > 4) {
-//     clearInterval(timerHour);
-//   }
+const resetTime = () => {
+  console.log('TIME RESET');
+  timer.innerText = '00:00:00';
+};
 
-//   hours += 1;
-// }, delayForHour);
+const lapTime = () => {
+  numLaps += 1;
+  laps.innerText = `${numLaps}`;
+};
 
-// Set timing for minutes
-const delayForMin = 1000;
-let minutes = 1;
-
-// Output the Timer (min) container to DOM
-const timerMin = setInterval(() => {
-  timerCountMin.innerText = minutes;
-
-  if (minutes > 540) {
-    clearInterval(timerMin);
-  }
-
-  minutes += 1;
-}, delayForMin);
-
-// Set timing for seconds
-const delayForSec = 1000;
-let seconds = 1;
-
-// Output the Timer (sec) container to DOM
-const timerSec = setInterval(() => {
-  timerCountSec.innerText = seconds;
-
-  if (seconds > 540) {
-    clearInterval(timerSec);
-  }
-
-  seconds += 1;
-}, delayForSec);
+startButton.addEventListener('click', startTime);
+stopButton.addEventListener('click', stopTime);
+resetButton.addEventListener('click', resetTime);
+lapButton.addEventListener('click', lapTime);
