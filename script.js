@@ -104,6 +104,45 @@ let firstCardRevealDiv;
 // before the game starts
 let gameStarted = false;
 
+const countdownDiv = document.querySelector(".countdown-div");
+const countdownTag = document.querySelector("#time");
+
+// capture the time here
+let minutes;
+let seconds;
+
+// Set the start of the countdown timer
+countdownTag.innerHTML = 000 + ":" + 05;
+
+const startTimer = () => {
+  const presentTime = countdownTag.innerHTML;
+
+  const timeArray = presentTime.split(/[:]+/);
+  minutes = timeArray[0];
+  seconds = checkSecond(timeArray[1] - 1);
+
+  if (seconds === 59) {
+    minutes = minutes - 1;
+
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(startTimer);
+    }
+  }
+  countdownTag.innerHTML = minutes + ":" + seconds;
+  // after every second, start timer
+  setTimeout(startTimer, 1000);
+};
+
+const checkSecond = (sec) => {
+  if (sec < 10 && sec >= 0) {
+    sec = "0" + sec;
+  } // add zero in front of numbers < 10
+  if (sec < 0) {
+    sec = "59";
+  }
+  return sec;
+};
+
 // Initialize game to begin
 const initGame = () => {
   // User hasn't keyed in the name yet
@@ -111,6 +150,7 @@ const initGame = () => {
   inputDiv.style.display = "flex";
   if (!gameStarted) {
     gameControlsDiv.style.display = "none";
+    countdownDiv.style.display = "none";
     boardTag.style.display = "none";
   }
 };
@@ -328,6 +368,7 @@ submitNameTag.addEventListener("click", () => {
     instructions.innerHTML = `Nice to meet you, ${playerName}! <br>Wanna match the card pairs?`;
     inputDiv.style.display = "none";
     gameControlsDiv.style.display = "flex";
+    startBtnTag.style.display = "block";
     replayBtnTag.style.display = "none";
   } else {
     playerNameTag.placeholder = "Don't forget to tell us your name :( ";
@@ -340,6 +381,8 @@ submitNameTag.addEventListener("click", () => {
 startBtnTag.addEventListener("click", () => {
   if (gameStarted) {
     startGame();
+    countdownDiv.style.display = "block";
+    startTimer();
   }
 });
 
@@ -354,7 +397,6 @@ endBtnTag.addEventListener("click", () => {
 });
 
 replayBtnTag.addEventListener("click", () => {
-  console.log("game will replay");
   instructions.innerHTML = `What's your name, new player?`;
   initGame();
 });

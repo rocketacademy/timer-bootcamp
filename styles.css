@@ -72,6 +72,14 @@ h1 {
   font-size: 48px;
 }
 
+h2 {
+  font-size: 24px;
+}
+
+span.countdown.warning {
+  color: #e73c3e;
+}
+
 button {
   background-color: transparent;
   outline: none;
