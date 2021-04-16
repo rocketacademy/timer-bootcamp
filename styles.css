@@ -1,3 +1,90 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: pink;
+  background-color: rgb(36, 36, 36);
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: white;
+}
+
+/* stop watch container*/
+.stopwatch-container {
+  width: 80%;
+  height: 100%;
+  background-color: rgb(255, 171, 61);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2px;
+}
+
+/* lap-data container*/
+.lap-data-container {
+  width: 50%;
+  background-color: rgb(47, 47, 47);
+  height: 500px;
+  border-radius: 20px 0 0 20px;
+}
+
+/* timer & buttons container*/
+.timer-buttons-container {
+  width: 50%;
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 15px;
+  border-radius: 0 20px 20px 0;
+}
+
+/* elapsed time container*/
+.elapsed-time-container {
+  width: 100%;
+  height: 40%;
+  background-color: #000;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/* buttons container*/
+.btn-container {
+  width: 100%;
+  height: 60%;
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+}
+
+.elapsed-time {
+  color: white;
+  font-size: 40px;
+  padding: 15px 40px;
+}
+
+button {
+  font-size: 15px;
+  cursor: pointer;
+  margin: 5px;
+  background-color: rgb(255, 171, 61);
+  color: white;
+  padding: 20px 20px;
+  border-radius: 10px;
+}
+
+button:disabled {
+  background-color: rgba(51, 255, 0, 0.63);
+  cursor: not-allowed;
 }
