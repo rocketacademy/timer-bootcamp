@@ -1,3 +1,27 @@
 body {
   background-color: pink;
 }
+.control-container {
+  background-color: white;
+  width: 500px;
+  height: 400px;
+  margin-left: 20px;
+  border-radius: 4px;
+  text-align: center;
+}
+.lap-data {
+  background-color: white;
+  width: 200px;
+  height: 400px;
+  border-radius: 4px;
+}
+.stopwatch-container {
+  display: flex;
+}
+.elapsed-time {
+  height: 100px;
+  width: 450px;
+  padding-top: 40px;
+  background-color: wheat;
+  margin-left: 25px;
+}
