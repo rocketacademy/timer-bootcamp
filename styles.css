@@ -1,3 +1,79 @@
 body {
   background-color: pink;
+  width: 100%;
 }
+
+.square {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 70px;
+  width: 70px;
+  border-radius: 8px;
+  vertical-align: top;
+}
+
+.card {
+  margin: 10px;
+  padding: 10px;
+  font-size: 30px;
+  background-color: grey;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.suit {
+  margin: 5px;
+  font-size: 20px;
+}
+
+.name {
+  margin: 5px;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.red {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
+.messages {
+  width: 450px;
+  text-align: center;
+}
+
+.timer-display {
+  margin: 10px auto;
+  width: 300px;
+  height: 40px;
+  background-color: aliceblue;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-left: 90px;
+}
+
+.timer-container {
+  width: 430px;
+  height: 150px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: grey;
+}
+
+.btn {
+  margin-left: 60px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
