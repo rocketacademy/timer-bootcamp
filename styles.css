@@ -1,3 +1,37 @@
 body {
   background-color: pink;
+  text-align: center;
+}
+
+.button {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 30px;
+  width: 50px;
+  vertical-align: top;
+  text-align: center;
+}
+
+.timer {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 80px;
+  width: 150px;
+  vertical-align: top;
+  text-align: center;
+}
+
+.lapdata {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+  vertical-align: top;
+  text-align: center;
 }
