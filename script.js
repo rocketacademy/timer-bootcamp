@@ -3,7 +3,7 @@
 ** TIMER CONSTANTS AND VARIABLES
 **
 */
-const totalSeconds = 0;
+const totalSeconds = 213124;
 let timer = totalSeconds;
 const minutesInHour = 60;
 const secondsInMinute = 60;
@@ -35,6 +35,12 @@ const setHoursMinutesAndSeconds = () => {
   }
 };
 
+const setAndDisplayTime = () => {
+  const display = document.querySelector('.timerDisplayText');
+  setHoursMinutesAndSeconds();
+  display.innerText = `${hours}:${minutes}:${seconds}`;
+};
+
 /*
 ** CALLBACK FUNCTIONS
 **
@@ -42,9 +48,7 @@ const setHoursMinutesAndSeconds = () => {
 
 const startTimerIntervalFn = () => {
   timer += 1;
-  setHoursMinutesAndSeconds();
-  const timerDisplay = document.querySelector('.timerDisplayText');
-  timerDisplay.innerText = `${hours}:${minutes}:${seconds}`;
+  setAndDisplayTime();
 };
 
 const startButtonCallback = (e) => {
@@ -57,15 +61,21 @@ const pauseButtonCallback = (e) => {
   clearInterval(startTimerInterval);
 };
 
+const stopButtonCallback = (e) => {
+  e.preventDefault();
+  clearInterval(startTimerInterval);
+  timer = 0;
+  setAndDisplayTime();
+};
+
 /*
 ** TIMER UI DISPLAY
 **
 */
 const timerDisplayText = document.createElement('p');
 timerDisplayText.classList.add('timerDisplayText');
-setHoursMinutesAndSeconds();
-timerDisplayText.innerText = `${hours}:${minutes}:${seconds}`;
 document.body.appendChild(timerDisplayText);
+setAndDisplayTime();
 
 /*
 ** TIMER BUTTONS
@@ -82,3 +92,9 @@ pauseButton.classList.add('pauseButton');
 pauseButton.innerText = 'Pause';
 pauseButton.addEventListener('click', pauseButtonCallback);
 document.body.appendChild(pauseButton);
+
+const stopButton = document.createElement('button');
+stopButton.classList.add('stopButton');
+stopButton.innerText = 'Stop';
+stopButton.addEventListener('click', stopButtonCallback);
+document.body.appendChild(stopButton);
