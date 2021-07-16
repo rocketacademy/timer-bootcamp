@@ -28,6 +28,7 @@ const setTimer = () => {
 };
 
 const initTimer = () => {
+  stopTimer();
   // add if stop is clicked to clear setinterval
   timerInterval = setInterval(() => { timer += 1;
     console.log(seconds);
@@ -51,6 +52,7 @@ const lapStop = () => {
   splitCalc();
   lapDataDiv.innerHTML += `<br/>${hours}:${minutes}:${seconds}`;
   resetTimer();
+  initTimer();
 };
 
 const splitCalc = () => {
