@@ -37,6 +37,7 @@ const initTimer = () => {
 };
 
 const resetTimer = () => {
+  stopTimer();
   timer = 0;
   seconds = 0;
   minutes = 0;
@@ -134,7 +135,10 @@ const resetButton = document.createElement('button');
 resetButton.innerText = 'Reset';
 resetButton.style.marginLeft = '35%';
 resetButton.style.marginTop = '15%';
-resetButton.addEventListener('click', resetTimer);
+resetButton.addEventListener('click', (() => {
+  resetTimer();
+  lapDataDiv.innerHTML = 'LAP TIMING';
+}));
 
 const lapButton = document.createElement('button');
 lapButton.innerText = 'Lap';
