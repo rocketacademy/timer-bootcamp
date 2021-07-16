@@ -52,6 +52,11 @@ const startButtonCallback = (e) => {
   startTimerInterval = setInterval(startTimerIntervalFn, 1000);
 };
 
+const pauseButtonCallback = (e) => {
+  e.preventDefault();
+  clearInterval(startTimerInterval);
+};
+
 /*
 ** TIMER UI DISPLAY
 **
@@ -71,3 +76,9 @@ startButton.classList.add('startButton');
 startButton.innerText = 'Start';
 startButton.addEventListener('click', startButtonCallback);
 document.body.appendChild(startButton);
+
+const pauseButton = document.createElement('button');
+pauseButton.classList.add('startButton');
+pauseButton.innerText = 'Pause';
+pauseButton.addEventListener('click', pauseButtonCallback);
+document.body.appendChild(pauseButton);
