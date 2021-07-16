@@ -85,6 +85,8 @@ const resetTimer = () => {
   currentLapTime.innerHTML = `Current Lap Time <br> ${Math.floor(lapTime / (60 * 60))}:${Math.floor((lapTime / 60) % 60)}:${Math.floor(lapTime / 10 % 6)}${Math.floor(lapTime % 10)}`;
 
   lapData.innerHTML = 'Lap Data <br>';
+
+  lapCount = 0;
 };
 
 const lapTimer = () => {
@@ -104,7 +106,7 @@ const stopTimer = () => {
 const lapClicked = () => {
   lapCount += 1;
   const lapRecord = document.createElement('span');
-  lapRecord.innerHTML = `${lapCount}. ${Math.floor(lapTime / (60 * 60))}:${Math.floor((lapTime / 60) % 60)}:${Math.floor(lapTime / 10 % 6)}${Math.floor(lapTime % 10)}<br>`;
+  lapRecord.innerHTML = `Lap ${lapCount}. ${Math.floor(lapTime / (60 * 60))}:${Math.floor((lapTime / 60) % 60)}:${Math.floor(lapTime / 10 % 6)}${Math.floor(lapTime % 10)}<br>`;
   lapRecord.className = 'laptiming';
   lapData.appendChild(lapRecord);
   lapTime = 0;
