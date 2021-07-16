@@ -17,11 +17,11 @@ const setTimer = () => {
   if (seconds.toString().length < 2) {
     seconds = `0${seconds}`;
   }
-  minutes = Math.floor(seconds / 60);
+  minutes = Math.floor(timer / 60);
   if (minutes.toString().length < 2) {
     minutes = `0${minutes}`;
   }
-  hours = Math.floor(minutes / 60);
+  hours = Math.floor((timer / 60) / 60);
   if (hours.toString().length < 2) {
     hours = `0${hours}`;
   }
