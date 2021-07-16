@@ -3,7 +3,7 @@
 ** TIMER CONSTANTS AND VARIABLES
 **
 */
-const totalSeconds = 213124;
+const totalSeconds = 0;
 let timer = totalSeconds;
 const minutesInHour = 60;
 const secondsInMinute = 60;
@@ -54,11 +54,19 @@ const startTimerIntervalFn = () => {
 const startButtonCallback = (e) => {
   e.preventDefault();
   startTimerInterval = setInterval(startTimerIntervalFn, 1000);
+  const button = document.querySelector('.startButton');
+  if (!button.disabled) {
+    button.disabled = true;
+  }
 };
 
 const pauseButtonCallback = (e) => {
   e.preventDefault();
   clearInterval(startTimerInterval);
+  const button = document.querySelector('.startButton');
+  if (button.disabled) {
+    button.disabled = false;
+  }
 };
 
 const stopButtonCallback = (e) => {
@@ -66,6 +74,10 @@ const stopButtonCallback = (e) => {
   clearInterval(startTimerInterval);
   timer = 0;
   setAndDisplayTime();
+  const button = document.querySelector('.startButton');
+  if (button.disabled) {
+    button.disabled = false;
+  }
 };
 
 /*
