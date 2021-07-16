@@ -78,7 +78,7 @@ startButton.addEventListener('click', startButtonCallback);
 document.body.appendChild(startButton);
 
 const pauseButton = document.createElement('button');
-pauseButton.classList.add('startButton');
+pauseButton.classList.add('pauseButton');
 pauseButton.innerText = 'Pause';
 pauseButton.addEventListener('click', pauseButtonCallback);
 document.body.appendChild(pauseButton);
