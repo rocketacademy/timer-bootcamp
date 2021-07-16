@@ -20,7 +20,7 @@ body {
   margin: 335px;
   height: 12px;
 }
-.lap {
+.lapcontainer {
   position: absolute;
 
   width: 93px;

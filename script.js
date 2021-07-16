@@ -9,7 +9,7 @@ elapsedTimeContainer.classList.add('elapsedtime');
 elapsedTimeContainer.innerText = `${hours}: ${minutes} : ${seconds}`;
 document.body.appendChild(elapsedTimeContainer);
 
-const whenBtnClick = () => {
+const stoppingOrStartingRunTime = () => {
   startButton.disabled = true;
   const ref = setInterval(() => {
     if (seconds === 60) {
@@ -31,29 +31,29 @@ const whenBtnClick = () => {
   }, delayInseconds);
 };
 
-const startButtonClick = () => {
+const clickingStartButton = () => {
   buttonValue = 'start';
 
-  whenBtnClick();
+  stoppingOrStartingRunTime();
 };
 
-const stopbuttonClick = () => {
+const clickingStopButton = () => {
   buttonValue = 'stop';
   console.log(buttonValue);
-  whenBtnClick();
+  stoppingOrStartingRunTime();
 };
 
-const resetbuttonClick = () => {
+const clickingResetButton = () => {
   console.log('reset');
   seconds = 0;
   minutes = 0;
   hours = 0;
   elapsedTimeContainer.innerText = `${hours}: ${minutes} : ${seconds}`;
   buttonValue = 'stop';
-  stopbuttonClick();
+  clickingStopButton();
   let i = 0;
   while (i < totalNumOfLapClick) {
-    const elem = document.getElementById('timeLap');
+    const elem = document.getElementById('toBeRemove');
     elem.parentNode.removeChild(elem);
     i += 1;
   }
@@ -76,7 +76,7 @@ const lapbutton = document.createElement('button');
 startContainer.classList.add('start');
 resetBtnContainer.classList.add('reset');
 stopContainer.classList.add('stop');
-lapContainer.classList.add('lap');
+lapContainer.classList.add('lapcontainer');
 timeDataContainer.classList.add('lapdata');
 
 timeDataContainer.innerText = 'Lap Data';
@@ -109,14 +109,14 @@ lapContainer.appendChild(lapbutton);
 // lap button click
 const lapbuttonClick = () => {
   const newLapData = document.createElement('div');
-  newLapData.setAttribute('id', 'timeLap');
+  newLapData.setAttribute('id', 'toBeRemove');
   newLapData.innerText = `${hours}: ${minutes} : ${seconds}`;
   timeDataContainer.appendChild(newLapData);
   totalNumOfLapClick += 1;
 };
 
 // if button click
-startButton.addEventListener('click', startButtonClick);
-stopbutton.addEventListener('click', stopbuttonClick);
-resetbuttom.addEventListener('click', resetbuttonClick);
+startButton.addEventListener('click', clickingStartButton);
+stopbutton.addEventListener('click', clickingStopButton);
+resetbuttom.addEventListener('click', clickingResetButton);
 lapbutton.addEventListener('click', lapbuttonClick);
