@@ -40,34 +40,35 @@ currentLapTime.innerHTML = `Current Lap Time <br> ${Math.floor(lapTime / (60 * 6
 currentLapTime.classList.add('timer');
 
 // create div to hold the different buttons of timer
-const div1 = document.createElement('div');
-div1.className = 'div';
+const lapContainer = document.createElement('div');
+lapContainer.className = 'lapContainer';
 
-const div2 = document.createElement('div');
-div2.className = 'div';
+const timerContainer = document.createElement('div');
+timerContainer.className = 'timerContainer';
 
-const div3 = document.createElement('div');
-div3.className = 'div';
+const runningTime = document.createElement('div');
+runningTime.className = 'runtime';
 
-const div4 = document.createElement('div');
-div4.className = 'div';
+const startStopParent = document.createElement('div');
+startStopParent.className = 'startStopParent';
 
-const div5 = document.createElement('div');
-div5.className = 'div';
+const resetLap = document.createElement('div');
+resetLap.className = 'resetLap';
 
-div1.appendChild(lapData);
-div2.appendChild(timer);
-div3.appendChild(currentLapTime);
-div4.appendChild(startButton);
-div4.appendChild(stopButton);
-div5.appendChild(resetButton);
-div5.appendChild(lapButton);
+runningTime.appendChild(timer);
+runningTime.appendChild(currentLapTime);
+startStopParent.appendChild(startButton);
+startStopParent.appendChild(stopButton);
+resetLap.appendChild(resetButton);
+resetLap.appendChild(lapButton);
 
-document.body.appendChild(div1);
-document.body.appendChild(div2);
-document.body.appendChild(div3);
-document.body.appendChild(div4);
-document.body.appendChild(div5);
+lapContainer.appendChild(lapData);
+timerContainer.appendChild(runningTime);
+timerContainer.appendChild(startStopParent);
+timerContainer.appendChild(resetLap);
+
+document.body.appendChild(lapContainer);
+document.body.appendChild(timerContainer);
 
 const startTimer = () => {
   ref = setInterval(() => {
@@ -78,6 +79,8 @@ const startTimer = () => {
 };
 
 const resetTimer = () => {
+  clearInterval(ref);
+  clearInterval(ref2);
   time = 0;
   timer.innerHTML = `Elapsed Time <br> ${Math.floor(time / (60 * 60))}:${Math.floor((time / 60) % 60)}:${Math.floor(time / 10 % 6)}${Math.floor(time % 10)}`;
 
