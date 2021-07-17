@@ -1,14 +1,23 @@
 // Please implement exercise logic here
 let seconds=0;
+let lapSeconds=0;
 let min=0;
 let hours=0;
 let timer;
+let lapTimer;
 let lapsSeconds=[];
 let lapDiffs=[];
+const maxlapsDisplay=5;
 
 const lapDatas= document.createElement('div');
+const interface= document.createElement('div');
+const timeBox= document.createElement('div');
+
 const elapsedTime=document.createElement('div');   
+const lapTime= document.createElement('div');
+
 const buttons= document.createElement('div');
+
 
 const startButton= document.createElement('button');
 const stopButton= document.createElement('button');
@@ -25,12 +34,19 @@ buttons.appendChild(stopButton);
 buttons.appendChild(resetButton);
 buttons.appendChild(lapButton);
 
+lapDatas.classList.add('laps');
+interface.classList.add('interface');
+elapsedTime.classList.add('elapsedTime');
+buttons.classList.add('buttons');
+lapTime.classList.add('lapTime');
+timeBox.classList.add('timebox');
 
-document.body.appendChild(elapsedTime);
-document.body.appendChild(buttons);
 document.body.appendChild(lapDatas);
-
-
+timeBox.appendChild(elapsedTime);
+timeBox.appendChild(lapTime);
+interface.appendChild(timeBox);
+interface.appendChild(buttons);
+document.body.appendChild(interface);
 
 const twoDigitFormat=(number)=>{
   if(number<10){
@@ -59,10 +75,14 @@ const startTimer=()=>{
     seconds++;
   }, 100);
 }
-
+//some times it doesn't stop the timer
 const stopTimer=()=>{
   clearInterval(timer);
+  clearInterval(lapTimer);
   elapsedTime.innerText= timeFormat(hours, min, sec);
+
+  [hourDiff, hourMin, hourSec]= calHourMinSec(lapSeconds);
+  lapTime.innerText= timeFormat(hourDiff, hourMin, hourSec);
 }
 const resetTimer=()=>{
   seconds=0;
@@ -76,7 +96,7 @@ const resetTimer=()=>{
 
 const logLapData=()=>{
 
-  lapsSeconds.unshift(seconds);
+  lapsSeconds.unshift(lapSeconds);
   let lapDiff = 0;
   if(lapsSeconds.length>1){
     lapDiff=lapsSeconds[0]-lapsSeconds[1];
@@ -88,9 +108,9 @@ const logLapData=()=>{
 const updateLaps=()=>{
   lapDatas.innerHTML='';
   const oneLap=document.createElement('div'); 
-  
+  const lapDisplayNum=lapsSeconds.length>maxlapsDisplay? maxlapsDisplay:lapsSeconds.length;
 
-  for(let i=0; i<lapsSeconds.length; i++){
+  for(let i=0; i<lapDisplayNum; i++){
     const lapHeader= document.createElement('h1');
     const lap=document.createElement('p');
 
@@ -99,8 +119,6 @@ const updateLaps=()=>{
 
     [hourDiff, hourMin, hourSec]= calHourMinSec(Math.abs(secDiff));
     let lapDiffString = secDiff >= 0 ? timeFormat(hourDiff, hourMin, hourSec): `-${timeFormat(hourDiff, hourMin, hourSec)}`;
-    console.log(`${hourMin} ${hourSec}sec `);
-     console.log(`${lapDiffString} diff `);
 
     lapHeader.innerText=`Lap: ${lapsSeconds.length-i}  Diff: ${lapDiffString}`;
 
@@ -112,14 +130,27 @@ const updateLaps=()=>{
   }
   lapDatas.appendChild(oneLap);
 }
+const startLapTimer=()=>{
+   lapTimer = setInterval(
+    ()=>{
+    [hours,min,sec]=calHourMinSec(lapSeconds);
+    lapTime.innerText= timeFormat(hours, min, sec);
+    lapSeconds++;
+  }, 100);
+}
 
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
 lapButton.addEventListener('click', ()=>{
+
+  startTimer();
+  startLapTimer();
   logLapData();
   updateLaps();
+  lapSeconds=0;
 });
-
+//start states
 elapsedTime.innerText= timeFormat(0, 0, 0);
+lapTime.innerText= timeFormat(0, 0, 0);
 

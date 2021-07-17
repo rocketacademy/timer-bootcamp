@@ -1,3 +1,65 @@
 body {
   background-color: pink;
+  font-family: "Teko", sans-serif;
+}
+h1 {
+  font-size: 1.2rem;
+}
+
+#header {
+  text-align: left;
+}
+.laps {
+  float: left;
+  /* display: inline-flex; */
+  background-color: azure;
+  width: 250px;
+  height: 370px;
+  border-radius: 20px;
+  padding: 30px;
+  margin-left: 40px;
+  text-align: right;
+}
+
+.interface {
+  display: inline-flex;
+  margin-left: 20px;
+  width: 200px;
+  /* width: 100px; */
+  /* background-color: azure; */
+  justify-content: center;
+}
+button {
+  display: inline-block;
+}
+.buttons {
+  text-align: center;
+  background-color: red;
+  margin-top: 75px;
+  margin-left: -180px;
+  justify-content: center;
+}
+
+.timebox {
+  display: block;
+  padding: 10px;
+  width: 160px;
+  height: 50px;
+  background-color: azure;
+  border-radius: 10px;
+}
+
+.elapsedTime {
+  padding: 10px;
+  display: block;
+  text-align: center;
+}
+
+.lapTime {
+  font-size: 0.6rem;
+  padding: 10px;
+  display: block;
+  margin-top: -20px;
+  margin-left: 20px;
+  text-align: center;
 }
