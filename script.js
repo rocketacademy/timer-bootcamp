@@ -73,13 +73,29 @@ let canClickLapButton = false;
 let lapEventCounter = 1;
 let timerCounter = 0;
 let lastTimerCounter = 0;
+let cHours;
+let cMinutes;
+let cSeconds;
 
-// =============== HELPER FUNCTION ======================
+// =============== HELPER FUNCTIONS ======================
 // to append first digit with zero if counter is less than 10 to achieve double digit timer look
 const firstDigit = (a) => {
   if (a < 10) {
     return 0;
   } return '';
+};
+
+const convertSecondsToTimer = (b) => {
+  if (b < 3600) {
+    cHours = 0;
+    cMinutes = Math.floor(b / 60);
+    cSeconds = Math.ceil(((b / 60) - cMinutes) * 60);
+  } else {
+    cHours = Math.floor(b / 3600);
+    cMinutes = Math.floor(((b / 3600) - cHours) * 60);
+    cSeconds = Math.ceil(((((b / 3600) - cHours) * 60) - cMinutes) * 60);
+  }
+  return `${firstDigit(cHours)}${cHours}:${firstDigit(cMinutes)}${cMinutes}:${firstDigit(cSeconds)}${cSeconds}`;
 };
 
 // =============== CLICK EVENTS ======================
@@ -140,7 +156,7 @@ const lapEvent = () => {
     let spanName = `span${lapEventCounter}`;
     spanName = document.createElement('span');
     spanName.classList.add('split');
-    spanName.innerHTML = ` (+ ${timeDiff}s)`;
+    spanName.innerHTML = `<br>(+ ${convertSecondsToTimer(timeDiff)})`;
     const lapOutput = `Lap ${lapEventCounter}<br>${firstDigit(hours)}${hours}:${firstDigit(minutes)}${minutes}:${firstDigit(seconds)}${seconds}`;
     elementName.innerHTML = lapOutput;
     elementName.classList.add('lap');
