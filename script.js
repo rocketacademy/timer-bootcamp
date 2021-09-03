@@ -27,7 +27,8 @@ const makeDeck = (cardAmount) => {
       currentSymbol = '♦️';
     }
 
-    // set the color of the card (used later to determine the css class which in turn determines the color)
+    // set the color of the card (used later to
+    // determine the css class which in turn determines the color)
     // does not directly set the color of the card
     let cardColor;
     if (currentSymbol === '♥️' || currentSymbol === '♦️') {
@@ -99,11 +100,13 @@ const shuffleCards = (cards) => {
 ####################### */
 // boardSize has to be an even number
 const boardSize = 4;
+const timeoutDuration = 180000; // in milliseconds
 let board = [];
 let firstCard = null;
 let firstCardElement;
 let deck;
 let boardEl;
+let matches = 0;
 /* ###########################
 ## PLAYER ACTION CALLBACKS ##
 ########################### */
@@ -138,13 +141,20 @@ const squareClick = (messageBoard, cardElement, column, row) => {
     // && clickedCard.suit === firstCard.suit
     ) {
       console.log('match');
+      matches += 1;
+      console.log(matches);
       // display match message
-      // messageBoard.innerText = 'it\'s a match!';
-      messageBoard.innerHTML = '<img src="/Users/grahamlim/Documents/bootcamp/week-02/day-003/pre-class/match-game-bootcamp/doge_card.gif" />';
-      // apply css class and card's name and suit to cardElement so that it looks like the card has been turned over
+      messageBoard.innerText = 'it\'s a match!';
+
+      // apply css class and card's name and suit
+      // to cardElement so that it looks
+      // like the card has been turned over
       cardElement.classList.add('card');
       cardElement.innerHTML = `${clickedCard.name}<br>${clickedCard.suitSymbol}`;
-      card;
+
+      if (matches === 8) {
+        messageBoard.innerHTML = '<img src="/Users/grahamlim/Documents/bootcamp/week-02/day-003/pre-class/match-game-bootcamp/doge_card.gif" />';
+      }
     } else {
       console.log('NOT a match');
       messageBoard.innerText = 'no match, try again';
@@ -152,13 +162,14 @@ const squareClick = (messageBoard, cardElement, column, row) => {
       cardElement.classList.add('card');
 
       // turn both cards back over after 3 seconds
-      // removing innerText and changing the css class back to square, returns it to it's original state
+      // removing innerText and changing the css
+      // class back to square, returns it to it's original state
       setTimeout(() => {
         firstCardElement.innerText = '';
         firstCardElement.className = 'square';
         cardElement.innerText = '';
         cardElement.className = 'square';
-      }, 3000);
+      }, 2000);
     }
 
     // reset the first card
@@ -182,7 +193,7 @@ const buildBoardElements = (board) => {
   // create the div where messages will be shown to the user
   const messageBoard = document.createElement('div');
   messageBoard.classList.add('messages');
-  messageBoard.innerText = `${timeoutDuration} Milliseconds to Play! Click on a Card`;
+  messageBoard.innerText = 'Tick Tock, Time to Play! Click on a Card';
   boardElement.appendChild(messageBoard);
 
   // use the board data structure we passed in to create the correct size board
@@ -221,6 +232,24 @@ const buildBoardElements = (board) => {
   return boardElement;
 };
 
+function timer() {
+  let milliseconds = timeoutDuration - 1000;
+  const delayInMilliseconds = 1000;
+  const output = document.createElement('div');
+  output.setAttribute('id', 'timer');
+  document.body.appendChild(output);
+
+  const ref = setInterval(() => {
+    output.innerHTML = `${milliseconds} Milliseconds left to finish the game, no pressure at all!`;
+
+    if (milliseconds <= 0) {
+      clearInterval(ref);
+    }
+
+    milliseconds -= 1000;
+  }, delayInMilliseconds);
+}
+
 const initGame = () => {
   // create this special deck by getting the doubled cards and
   // making a smaller array that is ( boardSize squared ) number of cards
@@ -252,17 +281,24 @@ const initGame = () => {
 function boardCleaner() {
   // removeElements(document.querySelectorAll('.board'));
   // removeElements(document.querySelectorAll('.row'));
-  console.log('pause');
+  console.log('cleaning board');
   boardElement.innerHTML = '';
   board = [];
-  console.log('debug attempt');
+
+  const timerFind = document.getElementById('timer');
+  timerFind.parentElement.removeChild(timerFind);
+  console.log('board cleaned');
 }
 
-const timeoutDuration = 10000; // in milliseconds
+// function discourager() {
+//   downerMessage = document.createElement;
+// }
 
 function playerStart() {
 // #########################################
 // initialise game by calling initGame function
+  timer();
+
   initGame();
 
   const startButton = document.querySelector('button');
