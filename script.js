@@ -246,10 +246,6 @@ const buildBoardElements = (board) => {
 
 let stoppedState = false;
 
-function stopButton() {
-  stoppedState = true;
-}
-
 function startButton() {
   stoppedState = false;
 }
@@ -257,6 +253,26 @@ function startButton() {
 let milliseconds;
 let elapsedMilliseconds;
 const delayInMilliseconds = 1000;
+
+function stopButton() {
+  stoppedState = true;
+  const capturedMS = milliseconds;
+  const capturedElapsed = elapsedMilliseconds;
+
+  timerCleaner();
+
+  const countdownTimer = document.createElement('span');
+  countdownTimer.setAttribute('id', 'countdown-timer');
+  const timeLeftSearch = document.getElementById('time-left');
+  countdownTimer.innerHTML = `${capturedMS / 1000} Seconds left, no pressure!`;
+  timeLeftSearch.appendChild(countdownTimer);
+
+  const countupTimer = document.createElement('span');
+  countupTimer.setAttribute('id', 'elapsed-timer');
+  const elapsedSearch = document.getElementById('elapsed');
+  countupTimer.innerHTML = `${capturedElapsed / 1000} Seconds elapsed`;
+  elapsedSearch.appendChild(countupTimer);
+}
 
 // this creates a timer above the game area
 function countdown() {
@@ -281,8 +297,9 @@ function countdown() {
       }
     }, delayInMilliseconds);
   }
-  else {
-    console.log('countdown stopped');
+  if (stoppedState) {
+    clearInterval(ref);
+    console.log('elapsed stopped');
   }
 }
 
@@ -300,16 +317,19 @@ function elapsedTimer() {
   if (!stoppedState) { // as long as stop button is not pressed, carry on
     initialCountup();
 
-    const ref = setInterval(() => {
+    ref = setInterval(() => {
       if (elapsedMilliseconds < timeoutDuration) {
         initialCountup();
       }
       else {
         clearInterval(ref);
+        boardCleaner();
+        buttonSpawner();
       }
     }, delayInMilliseconds);
   }
   if (stoppedState) {
+    clearInterval(ref);
     console.log('elapsed stopped');
   }
 }
@@ -372,6 +392,7 @@ function playerStart() {
 // #########################################
 // initialise game by calling initGame function
   matches = 0;
+  stoppedState = false;
 
   countdown();
   elapsedTimer();
@@ -384,11 +405,11 @@ function playerStart() {
   // const messageSearch = document.querySelector('messages');
   // messageSearch.innerText = '10 Seconds to Play!';
 
-  setTimeout(boardCleaner,
-    timeoutDuration);// actual 3 minute delay to wipe everything out, including timer
+  // setTimeout(boardCleaner,
+  //   timeoutDuration);// actual 3 minute delay to wipe everything out, including timer
 
-  setTimeout(buttonSpawner,
-    timeoutDuration);// actual 3 minute delay to respawn button
+  // setTimeout(buttonSpawner,
+  //   timeoutDuration);// actual 3 minute delay to respawn button
 }
 
 function buttonSpawner() {
