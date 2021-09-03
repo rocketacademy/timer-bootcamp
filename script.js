@@ -1,4 +1,5 @@
 const countDown = 10;
+let canStart = true;
 let timeData = [];
 let time = 0;
 let hour = 0;
@@ -85,21 +86,25 @@ container.appendChild(lapButton);
 let ref;
 
 const startTimer = () => {
-  ref = setInterval(() => {
-    time += 1;
-    milisec = time % 100;
-    seconds = Math.floor(time / 100);
-    minutes = Math.floor(time / (100 * 60));
-    hour = Math.floor(time / (100 * 60 * 60));
-    HH.innerHTML = `${hour}h`;
-    MM.innerHTML = `${minutes}m`;
-    SS.innerHTML = `${seconds}s`;
-    MS.innerHTML = `${milisec}`;
-  }, countDown);
+  if (canStart) {
+    ref = setInterval(() => {
+      time += 1;
+      milisec = time % 100;
+      seconds = Math.floor(time / 100);
+      minutes = Math.floor(time / (100 * 60));
+      hour = Math.floor(time / (100 * 60 * 60));
+      HH.innerHTML = `${hour}h`;
+      MM.innerHTML = `${minutes}m`;
+      SS.innerHTML = `${seconds}s`;
+      MS.innerHTML = `${milisec}`;
+    }, countDown);
+  }
+  canStart = false;
 };
 
 const stopTimer = () => {
   clearInterval(ref);
+  canStart = true;
 };
 
 const resetTimer = () => {
