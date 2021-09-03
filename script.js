@@ -327,7 +327,7 @@ const gamePlay = () => {
   // Create a reset game button, will reset current grid on click.
   const resetDiv = document.createElement('div');
   const resetButton = document.createElement('button');
-  resetButton.innerText = 'Reset this game';
+  resetButton.innerText = 'Reset Timer and Game';
   resetButton.addEventListener('click', () => {
     document.querySelector('#main-board').remove();
     document.querySelector('.timer-display').remove();
