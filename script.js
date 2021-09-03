@@ -258,28 +258,49 @@ const gamePlay = () => {
   // Set up a timer for 3mins. Once 3mins is up, the board will disappear.
   // Countdown Timer displays remaining time in game.
   let gameTime = 180000;
+  let isPaused = false;
   const delayInMillisceonds = 1000;
   const timerDisplay = document.createElement('div');
   timerDisplay.classList.add('timer-display');
 
   const ref = setInterval(() => {
-    timerDisplay.innerText = `Time Remaining: ${gameTime / 1000} seconds`;
+    const secondDisplay = (gameTime / 1000) % 60;
+    const minuteDisplay = ((gameTime / 1000) - secondDisplay) / 60;
+    timerDisplay.innerText = `Time Remaining: ${minuteDisplay}:${secondDisplay}`;
 
-    if (gameTime <= 0) {
-      clearInterval(ref);
-    }
-    gameTime -= 1000;
+    if (isPaused !== true) {
+      if (gameTime <= 0) {
+        clearInterval(ref);
+      }
+      gameTime -= 1000;
 
-    if (gameTime === 0 && totalWin === 0) {
-      boardEl.innerHTML = '';
-      messageDisplay(`Sorry ${userName}... Time's up! Better luck next time!`);
-    } else if (gameTime === 0) {
-      boardEl.innerHTML = '';
-      messageDisplay(`Thanks for playing ${userName}! Time's up! You won ${totalWin} times! Nice!`);
+      if (gameTime === 0 && totalWin === 0) {
+        boardEl.innerHTML = '';
+        messageDisplay(`Sorry ${userName}... Time's up! Better luck next time!`);
+      } else if (gameTime === 0) {
+        boardEl.innerHTML = '';
+        messageDisplay(`Thanks for playing ${userName}! Time's up! You won ${totalWin} times! Nice!`);
+      }
     }
   }, delayInMillisceonds);
 
+  const pauseButton = document.createElement('button');
+  pauseButton.classList.add('timer-button');
+  pauseButton.innerText = 'Pause';
+  pauseButton.addEventListener('click', () => {
+    isPaused = true;
+  });
+
+  const resumeButton = document.createElement('button');
+  resumeButton.classList.add('timer-button');
+  resumeButton.innerText = 'Start';
+  resumeButton.addEventListener('click', () => {
+    isPaused = false;
+  });
+
   document.body.appendChild(timerDisplay);
+  document.body.appendChild(pauseButton);
+  document.body.appendChild(resumeButton);
 
   // create this special deck by getting the doubled cards and
   // making a smaller array that is ( boardSize squared ) number of cards
@@ -310,6 +331,7 @@ const gamePlay = () => {
   resetButton.addEventListener('click', () => {
     document.querySelector('#main-board').remove();
     document.querySelector('.timer-display').remove();
+    document.querySelectorAll('.timer-button').forEach((e) => e.remove());
     board = [];
     numMatches = 0;
     gameTime = 180000;
