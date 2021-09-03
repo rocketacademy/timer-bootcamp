@@ -100,7 +100,7 @@ const shuffleCards = (cards) => {
 ####################### */
 // boardSize has to be an even number
 const boardSize = 4;
-const timeoutDuration = 180000; // in milliseconds
+const timeoutDuration = 20000; // in milliseconds
 let board = [];
 let firstCard = null;
 let firstCardElement;
@@ -159,7 +159,13 @@ const squareClick = (messageBoard, cardElement, column, row) => {
       if (matches === 8) {
         messageBoard.innerHTML = '<img src="/Users/grahamlim/Documents/bootcamp/week-02/day-003/pre-class/match-game-bootcamp/doge_card.gif" />';
         // clearInterval(ref);
-        timerCleaner(); }
+        timerCleaner();
+
+        setTimeout(boardCleaner,
+          5000);// resets game after 10 seconds from winning
+
+        setTimeout(buttonSpawner,
+          5000); }// resets game after 10 seconds from winning
     } else {
       console.log('NOT a match');
       messageBoard.innerText = 'no match, try again';
@@ -175,7 +181,7 @@ const squareClick = (messageBoard, cardElement, column, row) => {
         firstCardElement.className = 'square';
         cardElement.innerText = '';
         cardElement.className = 'square';
-      }, 2000);
+      }, 1000);
     }
 
     // reset the first card
@@ -238,29 +244,84 @@ const buildBoardElements = (board) => {
   return boardElement;
 };
 
-function timer() {
-  let milliseconds = timeoutDuration - 1000;
-  // -1000 to account for setInterval delay
-  const delayInMilliseconds = 1000;
-  const countdownTimer = document.createElement('div');
-  countdownTimer.setAttribute('id', 'timer');
-  document.body.appendChild(countdownTimer);
+let stoppedState = false;
 
-  ref = setInterval(() => {
+function stopButton() {
+  stoppedState = true;
+}
+
+function startButton() {
+  stoppedState = false;
+}
+
+let milliseconds;
+let elapsedMilliseconds;
+const delayInMilliseconds = 1000;
+
+// this creates a timer above the game area
+function countdown() {
+  milliseconds = timeoutDuration;
+  const countdownTimer = document.createElement('span');
+  countdownTimer.setAttribute('id', 'countdown-timer');
+  const timeLeftSearch = document.getElementById('time-left');
+  timeLeftSearch.appendChild(countdownTimer);
+
+  function initialCountdown() {
     countdownTimer.innerHTML = `${milliseconds / 1000} Seconds left, no pressure!`;
-
-    if (milliseconds <= 0) {
-      clearInterval(ref);
-    }
-
     milliseconds -= 1000;
-  }, delayInMilliseconds);
+  }
+  if (!stoppedState) {
+    initialCountdown();
+    const ref = setInterval(() => {
+      if (milliseconds > 0) {
+        initialCountdown();
+      }
+      else {
+        clearInterval(ref);
+      }
+    }, delayInMilliseconds);
+  }
+  else {
+    console.log('countdown stopped');
+  }
+}
+
+function elapsedTimer() {
+  elapsedMilliseconds = 0;
+  const countupTimer = document.createElement('span');
+  countupTimer.setAttribute('id', 'elapsed-timer');
+  const elapsedSearch = document.getElementById('elapsed');
+  elapsedSearch.appendChild(countupTimer);
+
+  function initialCountup() {
+    countupTimer.innerHTML = `${elapsedMilliseconds / 1000} Seconds elapsed`;
+    elapsedMilliseconds += 1000;
+  }
+  if (!stoppedState) { // as long as stop button is not pressed, carry on
+    initialCountup();
+
+    const ref = setInterval(() => {
+      if (elapsedMilliseconds < timeoutDuration) {
+        initialCountup();
+      }
+      else {
+        clearInterval(ref);
+      }
+    }, delayInMilliseconds);
+  }
+  if (stoppedState) {
+    console.log('elapsed stopped');
+  }
 }
 
 // removes countdown timer
 function timerCleaner() {
-  const timerFind = document.getElementById('timer');
-  timerFind.parentElement.removeChild(timerFind);
+  const elapsedFind = document.getElementById('elapsed-timer');
+  elapsedFind.parentElement.removeChild(elapsedFind);
+  const countdownFind = document.getElementById('countdown-timer');
+  countdownFind.parentElement.removeChild(countdownFind);
+  milliseconds = timeoutDuration;
+  elapsedMilliseconds = 0;
   console.log('timer cleaned');
 }
 
@@ -310,7 +371,10 @@ function boardCleaner() {
 function playerStart() {
 // #########################################
 // initialise game by calling initGame function
-  timer();
+  matches = 0;
+
+  countdown();
+  elapsedTimer();
 
   initGame();
 
@@ -321,10 +385,10 @@ function playerStart() {
   // messageSearch.innerText = '10 Seconds to Play!';
 
   setTimeout(boardCleaner,
-    timeoutDuration);// actual 3 minute delay to wipe everything out
+    timeoutDuration);// actual 3 minute delay to wipe everything out, including timer
 
   setTimeout(buttonSpawner,
-    timeoutDuration);// actual 3 minute delay to wipe everything out
+    timeoutDuration);// actual 3 minute delay to respawn button
 }
 
 function buttonSpawner() {

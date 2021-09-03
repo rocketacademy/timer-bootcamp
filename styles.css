@@ -18,14 +18,13 @@
 }
 
 .square {
-  margin: 25px;
-  padding: 25px;
+  margin: 15px;
+  padding: 15px;
   /* background-image: url("/Users/grahamlim/Documents/bootcamp/week-02/day-003/pre-class/match-game-bootcamp/doge_card.gif"); */
   background-color: pink;
   /* width: 100px; */
-  length: 25px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 5px;
   display: inline-block;
 }
 
@@ -34,15 +33,23 @@
   font-size: 5em;
 }
 
-#timer {
+#elapsed {
   font-family: Lobster, monospace;
-  font-size: 40px;
+  font-size: 20px;
+  color: blue;
+}
+
+#time-left {
+  font-family: Lobster, monospace;
+  font-size: 20px;
+  color: blue;
 }
 
 .word {
   background-color: pink;
-  margin: 0 4px;
+  margin: 4px;
   padding: 10px;
+  font-size: 20px;
 }
 
 .row {
@@ -56,6 +63,8 @@
   length: 20px;
   /* margin: 15px;
   padding: 20px; */
+  font-family: Lobster, monospace;
+  font-size: 20px;
 }
 
 /* body {
