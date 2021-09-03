@@ -107,6 +107,8 @@ let firstCardElement;
 let deck;
 let boardEl;
 let matches = 0;
+
+let canclick = true; // for countdown timer
 /* ###########################
 ## PLAYER ACTION CALLBACKS ##
 ########################### */
@@ -122,7 +124,7 @@ const squareClick = (messageBoard, cardElement, column, row) => {
   }
 
   // first turn
-  if (firstCard === null) {
+  if (firstCard === null && canclick) {
     console.log('first turn');
     firstCard = clickedCard;
     // turn this card over
@@ -152,19 +154,23 @@ const squareClick = (messageBoard, cardElement, column, row) => {
       cardElement.classList.add('card');
       cardElement.innerHTML = `${clickedCard.name}<br>${clickedCard.suitSymbol}`;
 
+      // if you win and get all matches before time limit
+      // this will stop the timer
       if (matches === 8) {
         messageBoard.innerHTML = '<img src="/Users/grahamlim/Documents/bootcamp/week-02/day-003/pre-class/match-game-bootcamp/doge_card.gif" />';
-      }
+        // clearInterval(ref);
+        timerCleaner(); }
     } else {
       console.log('NOT a match');
       messageBoard.innerText = 'no match, try again';
       cardElement.innerHTML = `${clickedCard.name}<br>${clickedCard.suitSymbol}`;
       cardElement.classList.add('card');
-
-      // turn both cards back over after 3 seconds
+      canclick = false;
+      // turn both cards back over after 2 seconds
       // removing innerText and changing the css
       // class back to square, returns it to it's original state
       setTimeout(() => {
+        canclick = true;
         firstCardElement.innerText = '';
         firstCardElement.className = 'square';
         cardElement.innerText = '';
@@ -234,13 +240,14 @@ const buildBoardElements = (board) => {
 
 function timer() {
   let milliseconds = timeoutDuration - 1000;
+  // -1000 to account for setInterval delay
   const delayInMilliseconds = 1000;
-  const output = document.createElement('div');
-  output.setAttribute('id', 'timer');
-  document.body.appendChild(output);
+  const countdownTimer = document.createElement('div');
+  countdownTimer.setAttribute('id', 'timer');
+  document.body.appendChild(countdownTimer);
 
-  const ref = setInterval(() => {
-    output.innerHTML = `${milliseconds} Milliseconds left to finish the game, no pressure at all!`;
+  ref = setInterval(() => {
+    countdownTimer.innerHTML = `${milliseconds / 1000} Seconds left, no pressure!`;
 
     if (milliseconds <= 0) {
       clearInterval(ref);
@@ -250,6 +257,14 @@ function timer() {
   }, delayInMilliseconds);
 }
 
+// removes countdown timer
+function timerCleaner() {
+  const timerFind = document.getElementById('timer');
+  timerFind.parentElement.removeChild(timerFind);
+  console.log('timer cleaned');
+}
+
+// starts game
 const initGame = () => {
   // create this special deck by getting the doubled cards and
   // making a smaller array that is ( boardSize squared ) number of cards
@@ -285,9 +300,7 @@ function boardCleaner() {
   boardElement.innerHTML = '';
   board = [];
 
-  const timerFind = document.getElementById('timer');
-  timerFind.parentElement.removeChild(timerFind);
-  console.log('board cleaned');
+  timerCleaner();
 }
 
 // function discourager() {
@@ -316,7 +329,7 @@ function playerStart() {
 
 function buttonSpawner() {
   const startButton = document.createElement('button');
-  startButton.innerHTML = `Start Game! Ends ${timeoutDuration} Milliseconds After You Click`;
+  startButton.innerHTML = `Start Game! Ends ${timeoutDuration / 1000} Seconds After You Click`;
   startButton.setAttribute('class', 'button');
   document.body.appendChild(startButton);
   startButton.addEventListener('click', playerStart);

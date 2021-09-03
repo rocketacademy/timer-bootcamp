@@ -12,7 +12,9 @@
 
 .board {
   font-family: Lobster, monospace;
-  font-size: 40px;
+  font-size: 20px;
+  margin: 5px;
+  color: purple;
 }
 
 .square {
@@ -30,6 +32,30 @@
 #header {
   font-family: Lobster, monospace;
   font-size: 5em;
+}
+
+#timer {
+  font-family: Lobster, monospace;
+  font-size: 40px;
+}
+
+.word {
+  background-color: pink;
+  margin: 0 4px;
+  padding: 10px;
+}
+
+.row {
+  background-color: white;
+  margin: 15px;
+  padding: 20px;
+}
+
+.container {
+  background-color: grey;
+  length: 20px;
+  /* margin: 15px;
+  padding: 20px; */
 }
 
 /* body {
