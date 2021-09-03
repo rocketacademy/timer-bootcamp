@@ -9,6 +9,7 @@ let canClick = true;
 // Create a div element for game instructions
 const gameInfo = document.createElement('div');
 
+
 // game play logic
 // player 1 turn, if both cards match, player points =+ 1
 // else, player 2 turn,player points =+ 1
@@ -230,6 +231,103 @@ const createCard = (cardInfo) => {
 // Create a helper function for output to abstract complexity
 // of DOM manipulation away from game logic
 
+//Timer
+const buildTimerElements = (messageBoard) => {
+  let ref;
+  let minutes = 0;
+  let seconds = 10;
+  let canStart = true;
+
+  const startTimer = () => {
+    const delayInMilliseconds = 1000;
+    if (canStart === false) {
+      //nothing happens
+      return;
+    }
+  if (canClick === true) {
+    canClick = false;
+    setTimeout(() => {
+      canClick = true;
+    }, 1000);}
+
+    messageBoard.innerText = 'click on a square';
+    // enabling the squares to be clicked here
+
+    ref = setInterval(() => {
+      display.innerHTML = `${minutes} minutes ${seconds} seconds`;
+      if (seconds === 0) {
+        minutes -= 1;
+        seconds = 60;
+      }
+
+      if (minutes < 0) {
+        clearInterval(ref);
+        canStart = true;
+        canClick = false;
+        messageBoard.innerHTML = 'Times up! click the reset button to restart';
+      }
+
+      seconds -= 1;
+    }, delayInMilliseconds);
+
+    // this is to prevent user from clicking on the start button multiple times
+    canStart = false;
+  };
+
+  const stopTimer = () => {
+    clearInterval(ref);
+    canStart = true;
+    // prevents user from clicking on the squares when timer is paused
+    canClick = false;
+    messageBoard.innerText = 'click start to resume game';
+  };
+
+  const resetTimer = () => {
+    minutes = 0;
+    seconds = 10;
+    canStart = true;
+    canClick = true;
+    display.innerHTML = `${minutes} minutes ${seconds} seconds`;
+    messageBoard.innerHTML = 'click start to begin';
+  };
+
+  // build the container where all the timer elements will go in
+  const timerContainer = document.createElement('div');
+  timerContainer.classList.add('timer-container');
+
+  // the timer's display and the container which it will go in
+  const timerTop = document.createElement('div');
+  timerContainer.appendChild(timerTop);
+  const display = document.createElement('div');
+  display.classList.add('timer-display');
+  display.innerHTML = `${minutes} minutes ${seconds} seconds`;
+  timerTop.appendChild(display);
+
+  // the timer's buttons and the container which it will go in
+  const timerBottom = document.createElement('div');
+  timerContainer.appendChild(timerBottom);
+  const startButton = document.createElement('button');
+  startButton.classList.add('btn');
+  startButton.innerText = 'START';
+  // start button functionality to be initialised here
+  startButton.addEventListener('click', startTimer);
+  timerBottom.appendChild(startButton);
+  const stopButton = document.createElement('button');
+  stopButton.classList.add('btn');
+  stopButton.innerText = 'STOP';
+  // stop button functionality to be initialised here
+  stopButton.addEventListener('click', stopTimer);
+  timerBottom.appendChild(stopButton);
+  const resetButton = document.createElement('button');
+  resetButton.classList.add('btn');
+  resetButton.innerText = 'RESET';
+  // reset button functionality to be initialised here
+  resetButton.addEventListener('click', resetTimer);
+  timerBottom.appendChild(resetButton);
+
+  return timerContainer;
+};
+
 const initGame = () => {
 // Gameinfo div
   gameInfo.innerText = 'Welcome to MATCH GAME! In this game the user turns cards over one at a time to find matching pairs of cards. Click the respective buttons to draw cards, ';
@@ -248,9 +346,21 @@ const initGame = () => {
       board[i].push(deck.pop());
     }
   }
+    // create the div where messages will be shown to the user
+  const messageBoard = document.createElement('div');
+  messageBoard.classList.add('messages');
+  messageBoard.innerText = 'click start to begin';
+  document.body.appendChild(messageBoard);
+
+  // messageBoard is passed into builBoardElements and buildTimerElements
+  // so that it can be accessed within those functions
   const boardEl = buildBoardElements(board);
   document.body.appendChild(boardEl);
+
+  const timerEl = buildTimerElements(messageBoard);
+  document.body.appendChild(timerEl);
 };
+  
 
 initGame();
 
