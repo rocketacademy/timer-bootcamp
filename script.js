@@ -20,6 +20,7 @@ let gameReset = false;
 let gamesWon = 0;
 let elapsedMs = 0;
 let stopwatchStop = false;
+let swOn = false;
 
 const getRandomIndex = (max) => Math.floor(Math.random() * max);
 
@@ -180,7 +181,7 @@ const msToMin = (timeMs) => {
   return `${minutes}:${padSeconds}`;
 };
 
-const secToSMH = (timeMs) => {
+const secToHMS = (timeMs) => {
   const timeSec = timeMs / 1000;
   let minutes = Math.floor(timeSec / 60);
   const seconds = timeSec % 60;
@@ -246,16 +247,22 @@ const inputName = () => {
 };
 
 const startStopwatch = () => {
-  const countStopwatch = setInterval(() => { elapsedDiv.innerText = `${secToSMH(elapsedMs)}`;
+  if (swOn === false) {
+    const countStopwatch = setInterval(() => { elapsedDiv.innerText = `${secToHMS(elapsedMs)}`;
 
-    if (stopwatchStop === true) {
-      clearInterval(countStopwatch);
-      stopwatchStop = false;
-    }
+      if (stopwatchStop === true) {
+        clearInterval(countStopwatch);
+        stopwatchStop = false;
+        swOn = false;
+      }
 
-    elapsedMs += 1000;
-  }, 1000);
+      elapsedMs += 1000;
+    }, 1000);
+    swOn = true;
+  }
 };
+
+// BUG! after reset, stopwatch doesn't start when press start button again (need to press twice)
 
 const createStopwatch = () => {
   // elapsedTime
@@ -264,31 +271,36 @@ const createStopwatch = () => {
   stopwatchDiv.appendChild(elapsedDiv);
 
   // create start, stop, reset, lap buttons
+  const swButton1 = document.createElement('div');
+  const swButton2 = document.createElement('div');
+  stopwatchDiv.appendChild(swButton1);
+  stopwatchDiv.appendChild(swButton2);
+
   const startButton = document.createElement('button');
   startButton.classList.add('stopwatch-button');
   startButton.innerText = 'Start';
   startButton.addEventListener('click', startStopwatch);
-  stopwatchDiv.appendChild(startButton);
+  swButton1.appendChild(startButton);
 
   const stopButton = document.createElement('button');
   stopButton.classList.add('stopwatch-button');
   stopButton.innerText = 'Stop';
   stopButton.addEventListener('click', () => { stopwatchStop = true; });
-  stopwatchDiv.appendChild(stopButton);
+  swButton1.appendChild(stopButton);
 
   const resetButton = document.createElement('button');
   resetButton.classList.add('stopwatch-button');
   resetButton.innerText = 'Reset';
   resetButton.addEventListener('click', () => { stopwatchStop = true;
     elapsedMs = 0;
-    elapsedDiv.innerText = `${secToSMH(elapsedMs)}`; });
-  stopwatchDiv.appendChild(resetButton);
+    elapsedDiv.innerText = `${secToHMS(elapsedMs)}`; });
+  swButton2.appendChild(resetButton);
 
   const lapButton = document.createElement('button');
   lapButton.classList.add('stopwatch-button');
   lapButton.innerText = 'Lap';
   lapButton.addEventListener('click', null);
-  stopwatchDiv.appendChild(lapButton);
+  swButton2.appendChild(lapButton);
 };
 
 const initGame = () => {
@@ -320,6 +332,7 @@ const initGame = () => {
 
   // stopwatchDiv
   createStopwatch();
+  stopwatchDiv.classList.add('container');
   document.body.appendChild(stopwatchDiv);
 };
 
