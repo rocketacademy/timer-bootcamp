@@ -85,6 +85,12 @@ container.appendChild(lapButton);
 
 let ref;
 
+const firstDigit = (a) => {
+  if (a < 10) {
+    return '0' + `${a}`;
+  } return a;
+};
+
 const startTimer = () => {
   if (canStart) {
     ref = setInterval(() => {
@@ -93,10 +99,10 @@ const startTimer = () => {
       seconds = Math.floor(time / 100);
       minutes = Math.floor(time / (100 * 60));
       hour = Math.floor(time / (100 * 60 * 60));
-      HH.innerHTML = `${hour}h`;
-      MM.innerHTML = `${minutes}m`;
-      SS.innerHTML = `${seconds}s`;
-      MS.innerHTML = `${milisec}`;
+      HH.innerHTML = `${firstDigit(hour)}h`;
+      MM.innerHTML = `${firstDigit(minutes)}m`;
+      SS.innerHTML = `${firstDigit(seconds)}s`;
+      MS.innerHTML = `${firstDigit(milisec)}`;
     }, countDown);
   }
   canStart = false;
@@ -125,7 +131,7 @@ const getTimeDisplay = (x) => {
   seconds = Math.floor(x / 100);
   minutes = Math.floor(x / (100 * 60));
   hour = Math.floor(x / (100 * 60 * 60));
-  myoutput = `${hour}h ${minutes}m ${seconds}s ${milisec}`;
+  myoutput = `${firstDigit(hour)}h ${firstDigit(minutes)}m ${firstDigit(seconds)}s ${firstDigit(milisec)}`;
   return myoutput;
 };
 
