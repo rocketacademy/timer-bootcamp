@@ -254,7 +254,7 @@ let milliseconds;
 let elapsedMilliseconds;
 const delayInMilliseconds = 1000;
 
-function stopButton() {
+function stopPressed() {
   stoppedState = true;
   const capturedMS = milliseconds;
   const capturedElapsed = elapsedMilliseconds;
@@ -324,7 +324,6 @@ function elapsedTimer() {
       else {
         clearInterval(ref);
         boardCleaner();
-        buttonSpawner();
       }
     }, delayInMilliseconds);
   }
@@ -399,9 +398,6 @@ function playerStart() {
 
   initGame();
 
-  const startButton = document.querySelector('button');
-  startButton.parentElement.removeChild(startButton);
-
   // const messageSearch = document.querySelector('messages');
   // messageSearch.innerText = '10 Seconds to Play!';
 
@@ -414,10 +410,18 @@ function playerStart() {
 
 function buttonSpawner() {
   const startButton = document.createElement('button');
-  startButton.innerHTML = `Start Game! Ends ${timeoutDuration / 1000} Seconds After You Click`;
-  startButton.setAttribute('class', 'button');
-  document.body.appendChild(startButton);
+  startButton.innerHTML = `New Game! Ends ${timeoutDuration / 1000} Seconds After You Click`;
+  startButton.setAttribute('id', 'reset-button');
+  const resetSearch = document.getElementById('reset');
+  resetSearch.appendChild(startButton);
   startButton.addEventListener('click', playerStart);
+
+  const stopButton = document.createElement('button');
+  stopButton.innerHTML = 'Stop';
+  stopButton.setAttribute('id', 'stop-button');
+  const stopSearch = document.getElementById('stop');
+  stopSearch.appendChild(stopButton);
+  stopButton.addEventListener('click', stopPressed);
 }
 
 buttonSpawner();
