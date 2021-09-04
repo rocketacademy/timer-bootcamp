@@ -167,11 +167,3 @@ const lapEvent = () => {
   else { userMsg.innerText = 'Lap function is available when timer is running.';
     setInterval(() => { userMsg.innerHTML = ''; }, 5000); }
 };
-
-// =============== INITIALISE WINDOW ================
-
-firstCol.style = 'display:none';
-startButton.addEventListener('click', startEvent);
-stopButton.addEventListener('click', stopEvent);
-resetButton.addEventListener('click', resetEvent);
-lapButton.addEventListener('click', lapEvent);
