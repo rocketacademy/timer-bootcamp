@@ -1,7 +1,7 @@
 // ========================== VARIABLES DECLARATION ==========================
 
 // boardSize has to be an even number
-const boardSize = 2;
+const boardSize = 4;
 let board = [];
 let firstCard = null;
 let firstCardElement;
@@ -113,6 +113,7 @@ const messageDisplay = (message) => {
   gameInfo.innerText = message;
 };
 
+let canClick = true;
 // Function to check card match and turn cards over.
 const squareClick = (cardElement, column, row) => {
   console.log(cardElement);
@@ -129,7 +130,7 @@ const squareClick = (cardElement, column, row) => {
   }
 
   // first turn
-  if (firstCard === null) {
+  if (firstCard === null && canClick === true) {
     console.log('first turn');
     firstCard = clickedCard;
     // turn this card over
@@ -144,7 +145,6 @@ const squareClick = (cardElement, column, row) => {
     // second turn
   } else {
     console.log('second turn');
-
     if (
       clickedCard.displayName === firstCard.displayName
         && clickedCard.suitSymbol === firstCard.suitSymbol
@@ -171,15 +171,19 @@ const squareClick = (cardElement, column, row) => {
     } else {
       console.log('NOT a match');
       messageDisplay('Oops, no match! Try again!');
+      canClick = false;
+      console.log('canClick = false');
 
       // turn the second card over for 3s
       cardElement.appendChild(createCard(clickedCard));
       setTimeout(() => {
+        canClick = true;
         cardElement.innerText = '';
       }, 3000);
 
       // turn the first card back over after 3 s
       setTimeout(() => {
+        canClick = true;
         firstCardElement.innerText = '';
       }, 3000);
     }
@@ -246,6 +250,7 @@ const getName = () => {
     // Remove the name input and submit buttons.
     userNameInput.remove();
     submitButton.remove();
+    // eslint-disable-next-line no-use-before-define
     initGame();
   });
 
@@ -275,9 +280,11 @@ const gamePlay = () => {
       gameTime -= 1000;
 
       if (gameTime === 0 && totalWin === 0) {
+        // eslint-disable-next-line no-use-before-define
         boardEl.innerHTML = '';
         messageDisplay(`Sorry ${userName}... Time's up! Better luck next time!`);
       } else if (gameTime === 0) {
+        // eslint-disable-next-line no-use-before-define
         boardEl.innerHTML = '';
         messageDisplay(`Thanks for playing ${userName}! Time's up! You won ${totalWin} times! Nice!`);
       }
