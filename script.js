@@ -1,11 +1,21 @@
+const lapDiv = document.createElement('div');
 const stopwatchDiv = document.createElement('div');
 const elapsedDiv = document.createElement('div');
 let elapsedMs = 0;
-let stopwatchStop = false;
-let swOn = false;
+let modeStop = false;
+let timeOn = false; // to prevent multiple presses on start
+let previousLap = 0;
+
+const onClick = (buttonEl) => {
+  buttonEl.style.background = 'grey';
+  // eslint-disable-next-line
+  const setColourWhite = setTimeout(() => {
+    buttonEl.style.background = '#efefef';
+  }, 200);
+};
 
 const secToHMS = (timeMs) => {
-  const timeSec = timeMs / 1000;
+  const timeSec = Math.round(timeMs / 1000);
   let minutes = Math.floor(timeSec / 60);
   const seconds = timeSec % 60;
   const hours = Math.floor(minutes / 60);
@@ -17,24 +27,35 @@ const secToHMS = (timeMs) => {
 };
 
 const startStopwatch = () => {
-  if (swOn === false) {
-    const countStopwatch = setInterval(() => { elapsedDiv.innerText = `${secToHMS(elapsedMs)}`;
+  elapsedDiv.style.backgroundColor = 'palegreen';
+  modeStop = false;
 
-      if (stopwatchStop === true) {
+  if (timeOn === false) {
+    const countStopwatch = setInterval(() => {
+      elapsedMs += 100;
+      elapsedDiv.innerText = `${secToHMS(elapsedMs)}`;
+
+      if (modeStop === true) {
         clearInterval(countStopwatch);
-        stopwatchStop = false;
-        swOn = false;
+        elapsedDiv.style.backgroundColor = 'mistyrose';
+        timeOn = false;
       }
-
-      elapsedMs += 1000;
-    }, 1000);
-    swOn = true;
+    }, 100);
   }
 };
 
-// BUG! after reset, stopwatch doesn't start when press start button again (need to press twice)
+const lapTiming = () => {
+  const splitMs = elapsedMs - previousLap;
+  lapDiv.innerHTML += `${secToHMS(elapsedMs)} (+${secToHMS(splitMs)}) <br>`;
+  previousLap = elapsedMs;
+};
 
 const createStopwatch = () => {
+  // lap times
+  lapDiv.innerHTML = 'Lap Times: <br>';
+  lapDiv.classList.add('lap-times');
+  document.body.appendChild(lapDiv);
+
   // elapsedTime
   elapsedDiv.classList.add('elapsed-time');
   elapsedDiv.innerText = '00:00:00';
@@ -49,30 +70,39 @@ const createStopwatch = () => {
   const startButton = document.createElement('button');
   startButton.classList.add('stopwatch-button');
   startButton.innerText = 'Start';
-  startButton.addEventListener('click', startStopwatch);
+  startButton.addEventListener('click', (event) => {
+    onClick(event.currentTarget);
+    startStopwatch(); });
   swButton1.appendChild(startButton);
 
   const stopButton = document.createElement('button');
   stopButton.classList.add('stopwatch-button');
   stopButton.innerText = 'Stop';
-  stopButton.addEventListener('click', () => { stopwatchStop = true; });
+  stopButton.addEventListener('click', (event) => { modeStop = true;
+    onClick(event.currentTarget); });
   swButton1.appendChild(stopButton);
 
   const resetButton = document.createElement('button');
   resetButton.classList.add('stopwatch-button');
   resetButton.innerText = 'Reset';
-  resetButton.addEventListener('click', () => { stopwatchStop = true;
+  resetButton.addEventListener('click', (event) => { modeStop = true;
     elapsedMs = 0;
-    elapsedDiv.innerText = `${secToHMS(elapsedMs)}`; });
+    previousLap = 0;
+    lapDiv.innerHTML = 'Lap Times: <br>';
+    elapsedDiv.innerText = `${secToHMS(elapsedMs)}`;
+    onClick(event.currentTarget); });
   swButton2.appendChild(resetButton);
 
   const lapButton = document.createElement('button');
   lapButton.classList.add('stopwatch-button');
   lapButton.innerText = 'Lap';
-  lapButton.addEventListener('click', null);
+  lapButton.addEventListener('click', (event) => {
+    onClick(event.currentTarget);
+    lapTiming(); });
   swButton2.appendChild(lapButton);
+
+  stopwatchDiv.classList.add('container');
+  document.body.appendChild(stopwatchDiv);
 };
 
 createStopwatch();
-stopwatchDiv.classList.add('container');
-document.body.appendChild(stopwatchDiv);
