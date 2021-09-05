@@ -1,3 +1,50 @@
+header {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
   background-color: pink;
+}
+
+.container {
+  padding: 20px;
+  width: 50%;
+  display: inline-block;
+}
+
+.lap-times {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: mistyrose;
+  width: 30%;
+  display: inline-block;
+  height: 300px;
+  padding: 20px;
+  vertical-align: top;
+  border-radius: 20px;
+}
+
+.elapsed-time {
+  margin: 25px;
+  font-size: 70px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: mistyrose;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.stopwatch-button {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 10px;
+  margin-left: 50px;
+  border: 0px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 30px;
+  background-color: #efefef;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }
