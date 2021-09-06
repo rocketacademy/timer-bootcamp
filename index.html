@@ -1,12 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>Timer</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
     <h1 id="header">Timer!</h1>
+      <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class = 'row align-text-center'>
+                    <h5>Lap data</h5>
+                </div>
+                <div class = 'row align-text-center'>
+                    <div id = 'lap_data' class = 'text-center'>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row text-center">
+                    <h5>Elapsed time</h3>
+                </div>
+                <div class="row align-text-center" >
+                    <div id ='Elapsed_time' class="text-center">
+                        <label id="minutes">00</label>
+                        <label id="colon">:</label>
+                        <label id="seconds">00</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col text-center'>
+                        <button class="btn btn-primary" onClick='start()'>start</button>
+                    </div>
+                    <div class='col text-center'>
+                        <button class="btn btn-danger" onclick='stop()'>stop</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col text-center'>
+                        <button class="btn btn-primary" onclick = 'reset()'>reset</button>
+                    </div>
+                    <div class='col text-center'>
+                        <button class="btn btn-primary" onclick='lap()'>lap </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
   </body>
