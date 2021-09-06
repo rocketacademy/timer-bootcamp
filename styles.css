@@ -1,3 +1,117 @@
 body {
-  background-color: pink;
+  background-color: rgb(192, 215, 255);
+}
+.bigContainer {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  /* height: 200px; */
+  width: 250px;
+  vertical-align: top;
+}
+.display {
+  display: inline-block;
+  margin: 8px;
+  height: 25px;
+  width: 100px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.container {
+  margin: 1px;
+  display: inline-block;
+  height: 200px;
+  width: 300px;
+  text-align: center;
+}
+
+.time {
+  padding: 10px;
+  margin: 12px;
+  background-color: rgb(102, 179, 133);
+  display: inline-block;
+  height: 50px;
+  width: 200px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.timebox {
+  display: inline-block;
+  margin: 8px;
+  height: 25px;
+  width: 30px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 21px;
+}
+
+.small {
+  padding: 10px;
+  margin: 10px;
+  background-color: rgb(102, 179, 133);
+  display: inline-block;
+  height: 30px;
+  width: 80px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 23px;
+}
+
+.suit {
+  margin: 5px;
+  font-size: 20px;
+}
+
+.name {
+  margin: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.red {
+  color: rgb(208, 9, 9);
+}
+
+div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#gameInfo {
+  font-family: Arial, Helvetica, sans-serif;
+}
+#gameInfo2 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+#timer {
+  font-family: Arial, Helvetica, sans-serif;
+}
+#reset {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 2px 4px 2px 4px;
+  font-size: 15px;
+}
+#submit {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 2px 4px 2px 4px;
+  font-size: 15px;
+}
+#userInput {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 2px 4px 2px 4px;
+  font-size: 15px;
 }
