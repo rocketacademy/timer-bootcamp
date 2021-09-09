@@ -40,3 +40,17 @@ body {
 .black {
   color: black;
 }
+
+.elapsedTime {
+  font-size: 60px;
+}
+
+.stopwatchButton {
+  font-size: 20px;
+  display: inline-block;
+  margin: 10px;
+}
+
+.lapTimes {
+  font-size: 20px;
+}

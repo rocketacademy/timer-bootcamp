@@ -8,6 +8,8 @@ let deck;
 let isNewRound = true;
 let userName = "";
 let boardEl;
+let milliSecs = 0;
+let isStopPressed = false;
 
 const resetGame = () => {
   firstCard = null;
@@ -299,3 +301,80 @@ resetButton.class = "reset";
 const elementReset = document.createElement("div");
 elementReset.appendChild(resetButton);
 document.body.appendChild(elementReset);
+
+//function to display stopwatch time in hour, mins, sec
+const displayHMS = (millSecs) => {
+  const timeSecs = millSecs / 1000;
+  let minutes = Math.floor(timeSecs / 60);
+  const seconds = timeSecs % 60;
+  const hours = Math.floor(minutes / 60);
+  minutes %= 60;
+  const padSeconds = String(seconds).padStart(2, 0);
+  const padMinutes = String(minutes).padStart(2, 0);
+  const padHours = String(hours).padStart(2, 0);
+  return `${padHours}:${padMinutes}:${padSeconds}`;
+};
+
+//funtion to control the elapsed time
+const runStopWatch = () => {
+  const stopwatchCount = setInterval(() => {
+    stopwatchTime.innerHTML = `${displayHMS(milliSecs)}`;
+    if (isStopPressed) {
+      clearInterval(stopwatchCount);
+      milliSecs -= 1000;
+    }
+    milliSecs += 1000;
+  }, 1000);
+};
+
+//create Stopwatch elements
+const stopwatchTime = document.createElement("div");
+stopwatchTime.innerHTML = "00:00:00";
+stopwatchTime.classList.add("elapsedTime");
+document.body.appendChild(stopwatchTime);
+
+const stopwatchButtons1 = document.createElement("div");
+const stopwatchButtons2 = document.createElement("div");
+
+const stopwatchStart = document.createElement("button");
+stopwatchStart.innerHTML = "START";
+stopwatchButtons1.appendChild(stopwatchStart);
+stopwatchStart.classList.add("stopwatchButton");
+stopwatchStart.addEventListener("click", runStopWatch);
+
+const stopwatchStop = document.createElement("button");
+stopwatchStop.innerHTML = "STOP";
+stopwatchButtons1.appendChild(stopwatchStop);
+stopwatchStop.classList.add("stopwatchButton");
+stopwatchStop.addEventListener("click", () => {
+  isStopPressed = true;
+  runStopWatch();
+});
+
+const stopwatchReset = document.createElement("button");
+stopwatchReset.innerHTML = "RESET";
+stopwatchButtons2.appendChild(stopwatchReset);
+stopwatchReset.classList.add("stopwatchButton");
+stopwatchReset.addEventListener("click", () => {
+  milliSecs = 0;
+  isStopPressed = true;
+  runStopWatch();
+});
+
+const displayLapDiv = document.createElement("div");
+document.body.appendChild(displayLapDiv);
+
+const stopwatchLap = document.createElement("button");
+stopwatchLap.innerHTML = "LAP";
+stopwatchButtons2.appendChild(stopwatchLap);
+stopwatchLap.classList.add("stopwatchButton");
+stopwatchLap.addEventListener("click", () => {
+  const displayLap = document.createElement("p");
+  displayLap.innerHTML = `${displayHMS(milliSecs)}`;
+  displayLap.classList.add("lapTimes");
+  displayLapDiv.appendChild(displayLap);
+});
+
+document.body.appendChild(displayLapDiv);
+document.body.appendChild(stopwatchButtons1);
+document.body.appendChild(stopwatchButtons2);
