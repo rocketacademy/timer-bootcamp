@@ -1,9 +1,11 @@
+// Global variables
 let time;
 let mainClock = [0, 0, 0];
 let lapClock = [0, 0, 0];
 let isTimerOn = false;
 let lapCount = 0;
 
+// Initialise UI, create DOM elements
 const container = document.createElement('div');
 container.id = 'container';
 
@@ -15,21 +17,25 @@ container.appendChild(mainTimer);
 const lapTimer = document.createElement('div');
 lapTimer.classList.add('timer', 'lap-timer');
 lapTimer.innerText = '00:00:00';
+lapTimer.style.display = 'none';
 container.appendChild(lapTimer);
 
+const buttonContainer = document.createElement('div');
+buttonContainer.id = 'button-container';
+container.appendChild(buttonContainer);
+
 const startButton = document.createElement('button');
-startButton.id = 'start-button';
 startButton.innerText = 'Start';
-container.appendChild(startButton);
+buttonContainer.appendChild(startButton);
 
 const lapButton = document.createElement('button');
-lapButton.id = 'lap-button';
 lapButton.innerText = 'Lap';
 lapButton.disabled = true;
-container.appendChild(lapButton);
+buttonContainer.appendChild(lapButton);
 
 const laps = document.createElement('table');
 laps.id = 'laps';
+laps.style.display = 'none';
 container.appendChild(laps);
 const row = laps.insertRow();
 const headings = ['Lap', 'Lap times', 'Overall time'];
@@ -40,6 +46,7 @@ for (let j = 0; j < headings.length; j += 1) {
 
 document.body.appendChild(container);
 
+// Given an array of [hours, mins, secs], convert it to a string that can be displayed
 const getFormattedTime = (clock) => {
   let [hoursLeft, minutesLeft, secondsLeft] = clock.map(String);
 
@@ -50,8 +57,10 @@ const getFormattedTime = (clock) => {
   return `${hoursLeft}:${minutesLeft}:${secondsLeft}`;
 };
 
+// Called whenever user clicks on the start/stop/resume button
 const startTimer = () => {
   if (!isTimerOn) {
+    // if timer was off, then set to on and create a timer using setinterval
     isTimerOn = true;
     startButton.innerText = 'Stop';
     lapButton.innerText = 'Lap';
@@ -85,6 +94,7 @@ const startTimer = () => {
       }
     }, 1000);
   } else {
+    // if timer was on, then set to off and use clearinterval on the previously created interval
     isTimerOn = false;
     startButton.innerText = 'Resume';
     lapButton.innerText = 'Reset';
@@ -92,13 +102,21 @@ const startTimer = () => {
   }
 };
 
+// Called when the user clicks on the Lap button
 const onNewLap = () => {
   lapCount += 1;
+
+  // Insert row into laps table, and create an array for the row data
   const newRow = laps.insertRow();
   const rowData = [lapCount];
+
   if (lapCount === 1) {
+    // First time lapping, lap time is same as main time
+    // Show lap timer and the laps table
     rowData.push(mainTimer.innerText);
     rowData.push(mainTimer.innerText);
+    lapTimer.style.display = 'block';
+    laps.style.display = 'table';
   } else {
     rowData.push(lapTimer.innerText);
     rowData.push(mainTimer.innerText);
@@ -106,24 +124,32 @@ const onNewLap = () => {
     lapTimer.innerText = '00:00:00';
   }
 
+  // Add row data to laps table
   for (let i = 0; i < headings.length; i += 1) {
     const newCell = newRow.insertCell();
     newCell.appendChild(document.createTextNode(rowData[i]));
   }
 };
 
+// Called when user clicks on Reset button
 const resetTimer = () => {
+  // Reset global variables
   clearInterval(time);
   mainClock = [0, 0, 0];
   lapClock = [0, 0, 0];
-  mainTimer.innerText = '00:00:00';
-  lapTimer.innerText = '00:00:00';
   isTimerOn = false;
   lapCount = 0;
 
+  // Reset UI
+  mainTimer.innerText = '00:00:00';
+  lapTimer.innerText = '00:00:00';
   startButton.innerText = 'Start';
   lapButton.innerText = 'Lap';
   lapButton.disabled = true;
+  lapTimer.style.display = 'none';
+  laps.style.display = 'none';
+
+  while (laps.rows.length > 1) laps.rows[1].remove();
 };
 
 startButton.addEventListener('click', startTimer);
