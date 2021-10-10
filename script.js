@@ -1,36 +1,46 @@
 let time;
-let clock = [0, 0, 0];
+let mainClock = [0, 0, 0];
+let lapClock = [0, 0, 0];
 let isTimerOn = false;
+let lapCount = 0;
 
 const container = document.createElement('div');
 container.id = 'container';
 
-const timer = document.createElement('div');
-timer.id = 'timer';
-timer.innerText = '00:00:00';
-container.appendChild(timer);
+const mainTimer = document.createElement('div');
+mainTimer.classList.add('timer', 'main-timer');
+mainTimer.innerText = '00:00:00';
+container.appendChild(mainTimer);
+
+const lapTimer = document.createElement('div');
+lapTimer.classList.add('timer', 'lap-timer');
+lapTimer.innerText = '00:00:00';
+container.appendChild(lapTimer);
 
 const startButton = document.createElement('button');
 startButton.id = 'start-button';
-startButton.innerText = 'Start / Stop';
+startButton.innerText = 'Start';
 container.appendChild(startButton);
 
 const lapButton = document.createElement('button');
 lapButton.id = 'lap-button';
 lapButton.innerText = 'Lap';
+lapButton.disabled = true;
 container.appendChild(lapButton);
 
-const resetButton = document.createElement('button');
-resetButton.id = 'reset-button';
-resetButton.innerText = 'Reset';
-container.appendChild(resetButton);
+const laps = document.createElement('table');
+laps.id = 'laps';
+container.appendChild(laps);
+const row = laps.insertRow();
+const headings = ['Lap', 'Lap times', 'Overall time'];
+for (let j = 0; j < headings.length; j += 1) {
+  const cell = row.insertCell();
+  cell.appendChild(document.createTextNode(headings[j]));
+}
 
-// const laps = document.createElement('div');
-// laps.id = 'laps';
-// container.appendChild(laps);
-// const lapsHeader = document.body.appendChild(container);
+document.body.appendChild(container);
 
-const getFormattedTime = () => {
+const getFormattedTime = (clock) => {
   let [hoursLeft, minutesLeft, secondsLeft] = clock.map(String);
 
   hoursLeft = hoursLeft.length > 1 ? hoursLeft : `0${hoursLeft}`;
@@ -43,36 +53,81 @@ const getFormattedTime = () => {
 const startTimer = () => {
   if (!isTimerOn) {
     isTimerOn = true;
+    startButton.innerText = 'Stop';
+    lapButton.innerText = 'Lap';
+    lapButton.disabled = false;
+
     time = setInterval(() => {
-      clock[2] += 1;
-      if (clock[2] > 59) {
-        clock[1] += 1;
-        clock[2] = 0;
+      mainClock[2] += 1;
+      if (mainClock[2] > 59) {
+        mainClock[1] += 1;
+        mainClock[2] = 0;
       }
-      if (clock[1] > 59) {
-        clock[0] += 1;
-        clock[1] = 0;
+      if (mainClock[1] > 59) {
+        mainClock[0] += 1;
+        mainClock[1] = 0;
       }
 
-      timer.innerText = getFormattedTime();
+      mainTimer.innerText = getFormattedTime(mainClock);
+
+      if (lapCount > 0) {
+        lapClock[2] += 1;
+        if (lapClock[2] > 59) {
+          lapClock[1] += 1;
+          lapClock[2] = 0;
+        }
+        if (lapClock[1] > 59) {
+          lapClock[0] += 1;
+          lapClock[1] = 0;
+        }
+
+        lapTimer.innerText = getFormattedTime(lapClock);
+      }
     }, 1000);
   } else {
     isTimerOn = false;
+    startButton.innerText = 'Resume';
+    lapButton.innerText = 'Reset';
     clearInterval(time);
   }
 };
 
-const lapTimer = () => {
+const onNewLap = () => {
+  lapCount += 1;
+  const newRow = laps.insertRow();
+  const rowData = [lapCount];
+  if (lapCount === 1) {
+    rowData.push(mainTimer.innerText);
+    rowData.push(mainTimer.innerText);
+  } else {
+    rowData.push(lapTimer.innerText);
+    rowData.push(mainTimer.innerText);
+    lapClock = [0, 0, 0];
+    lapTimer.innerText = '00:00:00';
+  }
 
+  for (let i = 0; i < headings.length; i += 1) {
+    const newCell = newRow.insertCell();
+    newCell.appendChild(document.createTextNode(rowData[i]));
+  }
 };
 
 const resetTimer = () => {
   clearInterval(time);
-  clock = [0, 0, 0];
-  timer.innerText = '00:00:00';
+  mainClock = [0, 0, 0];
+  lapClock = [0, 0, 0];
+  mainTimer.innerText = '00:00:00';
+  lapTimer.innerText = '00:00:00';
   isTimerOn = false;
+  lapCount = 0;
+
+  startButton.innerText = 'Start';
+  lapButton.innerText = 'Lap';
+  lapButton.disabled = true;
 };
 
 startButton.addEventListener('click', startTimer);
-lapButton.addEventListener('click', lapTimer);
-resetButton.addEventListener('click', resetTimer);
+lapButton.addEventListener('click', () => {
+  if (isTimerOn) onNewLap();
+  else resetTimer();
+});
