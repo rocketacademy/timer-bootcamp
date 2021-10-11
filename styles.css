@@ -1,3 +1,9 @@
-body {
-  background-color: pink;
+.square {
+  padding: 10px;
+  margin: 10px;
+  background-color: aqua;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  vertical-align: top;
 }
