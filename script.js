@@ -36,7 +36,7 @@ timer.innerText = timeConverter(time)
 timerColumn.appendChild(timer)
 
 
-
+let x = 0
 const start = ()=> {
   stopped = false
   timerInterval = setInterval(() => {
