@@ -4,7 +4,7 @@ let handle2 = null;
 let start = true;
 let prevTime = 0; // for Date.now() difference with elapsedTime
 let elapsedTime = 0;
-
+let firstSplit = true;
 let split = false;
 let prevSplitTime = 0;
 let elapsedSplitTime = 0;
@@ -69,22 +69,36 @@ const resetStopwatch = () => {
   prevTime = 0;
   start = true;
   split = false;
+  prevSplitTime = 0;
+  elapsedSplitTime = 0;
+  firstSplit = true;
   renderTime(stopWatch, elapsedTime);
 };
 
 //split the stopwatch
 const splitStopwatch = () => {
   if (split && !start && handle !== null) {
-    splitWatch = document.createElement("div");
-    splitContainer.appendChild(splitWatch);
-    handle2 = setInterval(function () {
-      if (!prevSplitTime) {
-        prevSplitTime = Date.now(); //to set the initial value of the time
-      }
-      elapsedSplitTime += Date.now() - prevSplitTime; //to get the difference between elapsed and 0;
-      prevSplitTime = Date.now();
-    }, 100);
-    renderTime(splitWatch, elapsedSplitTime);
-    elapsedSplitTime = 0;
+    if (!firstSplit) {
+      console.log("not first split");
+      splitWatch = document.createElement("div");
+      splitContainer.appendChild(splitWatch);
+      renderTime(splitWatch, elapsedSplitTime);
+      elapsedSplitTime = 0;
+    }
+    if (firstSplit) {
+      firstSplit = false;
+      console.log("first split");
+      splitWatch = document.createElement("div");
+      splitContainer.appendChild(splitWatch);
+      handle2 = setInterval(function () {
+        if (!prevSplitTime) {
+          prevSplitTime = Date.now(); //to set the initial value of the time
+        }
+        elapsedSplitTime += Date.now() - prevSplitTime; //to get the difference between elapsed and 0;
+        prevSplitTime = Date.now();
+      }, 100);
+      renderTime(splitWatch, elapsedTime);
+      elapsedSplitTime = 0;
+    }
   }
 };
