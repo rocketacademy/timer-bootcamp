@@ -1,3 +1,40 @@
+html {
+  min-height: 100vh;
+  cursor: url(https://cur.cursors-4u.net/holidays/hol-1/hol80.ani),
+    url(https://cur.cursors-4u.net/holidays/hol-1/hol80.png), auto !important;
+}
+
 body {
-  background-color: pink;
+  font-family: "Quantico", sans-serif;
+  margin: 0;
+  text-align: center;
+  background: radial-gradient(#ffb6c1, #ffffff);
+}
+
+.elapsed {
+  font-size: 250%;
+}
+
+.image-container {
+  display: inline-block;
+}
+
+.img {
+  max-width: 50px;
+  margin: 30px;
+}
+
+.disabled {
+  opacity: 35%;
+}
+
+.split {
+  max-width: 65px;
+  margin: 25px;
+}
+
+.split-container {
+  font-size: 150%;
+  font-style: italic;
+  font-weight: thin;
 }
