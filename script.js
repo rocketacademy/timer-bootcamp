@@ -9,10 +9,39 @@ let split = false;
 let prevSplitTime = 0;
 let elapsedSplitTime = 0;
 
-//build elements
+//build stopwatch elapsed time
 const stopWatch = document.createElement("div");
+stopWatch.classList.add("elapsed");
+stopWatch.innerHTML = `00 : 00 : 00 : 0000`;
 document.body.appendChild(stopWatch);
+
+// build interactive buttons
+const imgContainer = document.createElement("div");
+imgContainer.classList.add("image-container");
+document.body.appendChild(imgContainer);
+const goStart = document.createElement("img");
+goStart.classList.add("img", "start");
+goStart.src = "/assets/play.png";
+imgContainer.appendChild(goStart);
+const goStop = document.createElement("img");
+goStop.classList.add("img", "stop");
+goStop.src = "/assets/stop.png";
+goStop.classList.add("disabled");
+imgContainer.appendChild(goStop);
+const goReset = document.createElement("img");
+goReset.classList.add("img", "reset");
+goReset.src = "/assets/reset.png";
+goReset.classList.add("disabled");
+imgContainer.appendChild(goReset);
+const goSplit = document.createElement("img");
+goSplit.classList.add("img", "split");
+goSplit.src = "/assets/split.png";
+goSplit.classList.add("disabled");
+imgContainer.appendChild(goSplit);
+
+// build split container to record lap
 const splitContainer = document.createElement("div");
+splitContainer.classList.add("split-container");
 document.body.appendChild(splitContainer);
 let splitWatch;
 
@@ -73,6 +102,7 @@ const resetStopwatch = () => {
   elapsedSplitTime = 0;
   firstSplit = true;
   renderTime(stopWatch, elapsedTime);
+  splitContainer.innerHTML = "";
 };
 
 //split the stopwatch
@@ -102,3 +132,27 @@ const splitStopwatch = () => {
     }
   }
 };
+
+//add event listener to each button
+goStart.addEventListener("click", function () {
+  startStopwatch();
+  goStart.classList.add("disabled");
+  goSplit.classList.remove("disabled");
+  goStop.classList.remove("disabled");
+  goReset.classList.remove("disabled");
+});
+goStop.addEventListener("click", function () {
+  pauseStopwatch();
+  goSplit.classList.add("disabled");
+  goStop.classList.add("disabled");
+});
+goReset.addEventListener("click", function () {
+  resetStopwatch();
+  goStart.classList.remove("disabled");
+  goSplit.classList.add("disabled");
+  goStop.classList.add("disabled");
+  goReset.classList.add("disabled");
+});
+goSplit.addEventListener("click", function () {
+  splitStopwatch();
+});
