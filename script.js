@@ -12,7 +12,7 @@ let elapsedSplitTime = 0;
 //build stopwatch elapsed time
 const stopWatch = document.createElement("div");
 stopWatch.classList.add("elapsed");
-stopWatch.innerHTML = `00 : 00 : 00 : 0000`;
+stopWatch.innerHTML = `00 : 00 : 00 : 000`;
 document.body.appendChild(stopWatch);
 
 // build interactive buttons
@@ -61,7 +61,7 @@ const renderTime = (element, elapsed) => {
   text += hours.toString().padStart(2, "0") + " : ";
   text += minutes.toString().padStart(2, "0") + " : ";
   text += seconds.toString().padStart(2, "0") + " : ";
-  text += milliseconds.toString().padStart(4, "0");
+  text += milliseconds.toString().padStart(3, "0");
   element.innerHTML = text;
   return element.innerHTML;
 };
