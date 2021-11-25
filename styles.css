@@ -16,7 +16,6 @@ body {
 }
 
 .image-container {
-  margin: 40px;
   display: inline-block;
 }
 
@@ -35,7 +34,6 @@ body {
 }
 
 .split-container {
-  margin: 40px;
   font-size: 150%;
   font-style: italic;
   font-weight: thin;
