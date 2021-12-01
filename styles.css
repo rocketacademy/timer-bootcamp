@@ -1,3 +1,38 @@
 body {
   background-color: pink;
 }
+
+.lapdataBox {
+  width: 50%;
+  height: 550px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  border: 0.5px solid rgb(146, 145, 145);
+  background-color: rgb(218, 212, 212);
+  float: left;
+}
+
+.elaspedTimeBox {
+  width: 30%;
+  height: 280px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 40px;
+  border: 0.5px solid rgb(146, 145, 145);
+  background-color: rgb(218, 212, 212);
+  float: left;
+}
+
+.buttonBox {
+  float: left;
+  font-size: 30px;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+
+.button {
+  padding: 15px;
+  margin-left: 30px;
+  width: 70px;
+}
