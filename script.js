@@ -1,4 +1,17 @@
 // Please implement exercise logic here
+// global variable
+let millis = 0;
+const delayInMilliseconds = 10;
+
+// helper function to convert mill to mins and sec
+const millisToMinutesAndSeconds = (ms) => {
+    let milliseconds = Math.floor((ms % 1000) / 100);
+    let seconds = Math.floor((ms / 1000) % 60);
+    let minutes = Math.floor((ms / (1000 * 60)) % 60);
+    let hours = Math.floor((ms / (1000 * 60 * 60)) % 24)
+ return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+};
+
 // overall container
 const timerContainer = document.createElement("div")
 timerContainer.classList.add("timerBox")
@@ -46,5 +59,33 @@ lapBtn.classList.add("button")
 resetBtnContainer.appendChild(lapBtn);
 
 timerContainer.appendChild(resetBtnContainer);
+
+const startTimer = () => {
+  ref = setInterval(() => {
+    // insert timer into timeDiv
+    const convertTime = millisToMinutesAndSeconds(millis);
+    elaspedTime.innerText = `${convertTime}`;
+
+    millis += 10;
+    // if (milliseconds <= 0) {
+    //   clearInterval(ref);
+    // }
+  }, delayInMilliseconds);
+
+  return ref;
+};
+
+const stopTimer =() => {
+  clearInterval(ref)
+}
+
+const resetTimer = () => {
+  millis = 0;
+  elaspedTime.innerHTML = millisToMinutesAndSeconds(millis);
+}
+// say which function to call *when* the user clicks the button
+startBtn.addEventListener('click', startTimer);
+stopBtn.addEventListener('click', stopTimer);
+resetBtn.addEventListener('click', resetTimer);
 
 
