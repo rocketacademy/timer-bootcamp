@@ -101,6 +101,9 @@ const resetTimer = () => {
   numOfTimesLapClicked = 0;
   lapCount = 1;
   canClick = true;
+  lapTime = null;
+  previousLapTime = null;
+  timeArray = [];
 }
 
 const lapCounter = () => {
