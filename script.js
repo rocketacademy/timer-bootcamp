@@ -1,11 +1,17 @@
 // Please implement exercise logic here
 // global variable
 let millis = 0;
+let canClick = true;
 const delayInMilliseconds = 10;
+let lapTime = null;
+let previousLapTime = null;
+let timeArray = [];
+let numOfTimesLapClicked = 0;
+let lapCount = 1;
 
 // helper function to convert mill to mins and sec
 const millisToMinutesAndSeconds = (ms) => {
-    let milliseconds = Math.floor((ms % 1000) / 100);
+    let milliseconds = Math.floor((ms % 1000) / 10);
     let seconds = Math.floor((ms / 1000) % 60);
     let minutes = Math.floor((ms / (1000 * 60)) % 60);
     let hours = Math.floor((ms / (1000 * 60 * 60)) % 24)
@@ -22,10 +28,14 @@ const lapData = document.createElement ("div");
 lapData.classList.add("lapdataBox");
 timerContainer.appendChild(lapData);
 
+const rightContainer = document.createElement("div");
+rightContainer.classList.add("rightContainer")
+timerContainer.appendChild(rightContainer)
+
 // container for elasped time
 const elaspedTime = document.createElement("div");
 elaspedTime.classList.add("elaspedTimeBox")
-timerContainer.appendChild(elaspedTime);
+rightContainer.appendChild(elaspedTime);
 
 
 // container for start/stop buttons
@@ -42,7 +52,7 @@ stopBtn.innerHTML = "Stop";
 stopBtn.classList.add("button")
 startBtnContainer.appendChild(stopBtn)
 
-timerContainer.appendChild(startBtnContainer)
+rightContainer.appendChild(startBtnContainer)
 
 // container for reset/lap
 const resetBtnContainer = document.createElement("div");
@@ -58,9 +68,12 @@ lapBtn.innerHTML = "Lap";
 lapBtn.classList.add("button")
 resetBtnContainer.appendChild(lapBtn);
 
-timerContainer.appendChild(resetBtnContainer);
+rightContainer.appendChild(resetBtnContainer);
 
 const startTimer = () => {
+  // set canClick to false prevents users from starting the timer again
+  if (canClick === true) {
+  canClick = false;
   ref = setInterval(() => {
     // insert timer into timeDiv
     const convertTime = millisToMinutesAndSeconds(millis);
@@ -74,18 +87,67 @@ const startTimer = () => {
 
   return ref;
 };
+};
 
 const stopTimer =() => {
   clearInterval(ref)
+  canClick = true;
 }
 
 const resetTimer = () => {
   millis = 0;
-  elaspedTime.innerHTML = millisToMinutesAndSeconds(millis);
+  elaspedTime.innerText = '';
+  lapData.innerText = '';
+  numOfTimesLapClicked = 0;
+  lapCount = 1;
+  canClick = true;
 }
+
+const lapCounter = () => {
+
+  // push the time into array created
+  timeArray.push(millis);
+
+  // get the lap time, if its the first round
+  if (previousLapTime === null) {
+    lapTime = timeArray[numOfTimesLapClicked];
+    previousLapTime = timeArray[numOfTimesLapClicked];
+  }
+
+  if (previousLapTime !== null) {
+  // from the second round lap time is current lapTime - previousLapTime
+    lapTime = timeArray[numOfTimesLapClicked] - previousLapTime;
+    previousLapTime = timeArray[numOfTimesLapClicked]
+  }
+
+  const displayLapTime = millisToMinutesAndSeconds(millis);
+
+  // display time difference between laps
+  let displayTimeDiff = millisToMinutesAndSeconds(previousLapTime - lapTime);
+
+  const dataBox1 = document.createElement('div');
+  const dataBox2 = document.createElement('div');
+  const dataBox3 = document.createElement('div');
+  
+  dataBox1.innerText = `Lap No: ${lapCount}`
+  dataBox2.innerText = `Lap Time: ${displayLapTime}`
+  dataBox3.innerText = `Lap Diff: ${displayTimeDiff}`
+  const lineBreak = document.createElement('BR');
+
+  lapData.appendChild(dataBox1);
+  lapData.appendChild(dataBox2);
+  lapData.appendChild(dataBox3);
+  lapData.appendChild(lineBreak);
+
+  // add 1 to the counter
+  numOfTimesLapClicked += 1;
+  lapCount +=1;
+}
+
 // say which function to call *when* the user clicks the button
 startBtn.addEventListener('click', startTimer);
 stopBtn.addEventListener('click', stopTimer);
 resetBtn.addEventListener('click', resetTimer);
+lapBtn.addEventListener('click', lapCounter);
 
 
