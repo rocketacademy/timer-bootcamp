@@ -3,10 +3,35 @@ const delayInMilliseconds = 1000;
 let timeInterval;
 const splitTimes = [];
 
+/**
+ * Convert seconds to full hh:mm:ss time.
+ * @param {*} secs Seconds
+ * @returns Full hh:mm:ss time string
+ */
 const convertSecondsToFullTime = (secs) => new Date(secs * 1000).toISOString().substr(11, 8);
+
+/**
+ * Convert full hh:mm:ss time string into seconds.
+ * @param {*} fullTime Full hh:mm:ss time string
+ * @returns Seconds
+ */
 const convertFullTimeToSeconds = (fullTime) => {
   const time = fullTime.split(':');
   return parseInt(((time[0] * 60 * 60) + (time[1] * 60) + time[2]), 10);
+};
+
+/**
+ * Adjust whether buttons should be enabled.
+ * @param {*} startButton Start button
+ * @param {*} stopButton Stop button
+ * @param {*} resetButton Reset button
+ * @param {*} lapButton Lap button
+ */
+const adjustButtons = (startButton, stopButton, resetButton, lapButton) => {
+  document.querySelector('.start').disabled = (startButton) ? '' : 'disabled';
+  document.querySelector('.stop').disabled = (stopButton) ? '' : 'disabled';
+  document.querySelector('.reset').disabled = (resetButton) ? '' : 'disabled';
+  document.querySelector('.lap').disabled = (lapButton) ? '' : 'disabled';
 };
 
 /**
@@ -21,10 +46,7 @@ const startStopwatch = (elapsedTimeElement) => {
     seconds += 1;
   }, delayInMilliseconds);
 
-  document.querySelector('.start').disabled = 'disabled';
-  document.querySelector('.stop').disabled = '';
-  document.querySelector('.reset').disabled = 'disabled';
-  document.querySelector('.lap').disabled = '';
+  adjustButtons(false, true, false, true);
 };
 
 /**
@@ -33,10 +55,7 @@ const startStopwatch = (elapsedTimeElement) => {
 const stopStopwatch = () => {
   clearInterval(timeInterval);
 
-  document.querySelector('.start').disabled = '';
-  document.querySelector('.stop').disabled = 'disabled';
-  document.querySelector('.reset').disabled = '';
-  document.querySelector('.lap').disabled = 'disabled';
+  adjustButtons(true, false, true, false);
 };
 
 /**
@@ -48,15 +67,13 @@ const resetStopwatch = (elapsedTimeElement, lapsListElement) => {
   const elapsedTime = elapsedTimeElement;
   const lapsListData = lapsListElement;
 
+  // reset vars
   elapsedTime.innerText = convertSecondsToFullTime(0);
   seconds = 0;
   splitTimes.length = 0;
   lapsListData.innerHTML = '';
 
-  document.querySelector('.start').disabled = '';
-  document.querySelector('.stop').disabled = 'disabled';
-  document.querySelector('.reset').disabled = 'disabled';
-  document.querySelector('.lap').disabled = 'disabled';
+  adjustButtons(true, false, false, false);
 };
 
 /**
@@ -68,13 +85,14 @@ const recordLapAndSplit = (elapsedTimeElement, lapsListElement) => {
   const elapsedTime = elapsedTimeElement;
   const lapsListData = lapsListElement;
 
+  // record split time
   splitTimes.push(convertFullTimeToSeconds(elapsedTime.innerText));
 
+  // calculate lap time
   const lapTime = (splitTimes.length === 1)
     ? splitTimes[0] : (splitTimes[splitTimes.length - 1] - splitTimes[splitTimes.length - 2]);
 
-  lapsListData.innerHTML
-    += `<ul>Lap ${splitTimes.length} ${convertSecondsToFullTime(lapTime)} (${elapsedTime.innerText})</ul>`;
+  lapsListData.innerHTML = `<ul>Lap ${splitTimes.length}\u00A0\u00A0${convertSecondsToFullTime(lapTime)} (${elapsedTime.innerText})</ul>${lapsListData.innerHTML}`;
 };
 
 /**
@@ -83,55 +101,59 @@ const recordLapAndSplit = (elapsedTimeElement, lapsListElement) => {
  */
 const buildUI = () => {
   const uiElement = document.createElement('div');
+  uiElement.classList.add('grid-container');
 
+  // lap data box element
   const lapsElement = document.createElement('div');
   lapsElement.classList.add('laps');
 
+  // list of lap times
   const lapsListElement = document.createElement('ol');
   lapsListElement.classList.add('laps-list');
   lapsElement.appendChild(lapsListElement);
 
   uiElement.appendChild(lapsElement);
 
+  // elapsed time element
   const elapsedTimeElement = document.createElement('div');
-  elapsedTimeElement.classList.add('laps');
+  elapsedTimeElement.classList.add('elapsed-time');
   elapsedTimeElement.innerText = convertSecondsToFullTime(0);
   uiElement.appendChild(elapsedTimeElement);
 
-  const buttonsElement = document.createElement('div');
-
+  // start button
   const startButtonElement = document.createElement('button');
   startButtonElement.classList.add('button');
   startButtonElement.classList.add('start');
   startButtonElement.innerText = 'Start';
   startButtonElement.addEventListener('click', () => startStopwatch(elapsedTimeElement));
-  buttonsElement.appendChild(startButtonElement);
+  uiElement.appendChild(startButtonElement);
 
+  // stop button
   const stopButtonElement = document.createElement('button');
   stopButtonElement.classList.add('button');
   stopButtonElement.classList.add('stop');
   stopButtonElement.innerText = 'Stop';
   stopButtonElement.addEventListener('click', () => stopStopwatch());
   stopButtonElement.disabled = 'disabled';
-  buttonsElement.appendChild(stopButtonElement);
+  uiElement.appendChild(stopButtonElement);
 
+  // reset button
   const resetButtonElement = document.createElement('button');
   resetButtonElement.classList.add('button');
   resetButtonElement.classList.add('reset');
   resetButtonElement.innerText = 'Reset';
   resetButtonElement.addEventListener('click', () => resetStopwatch(elapsedTimeElement, lapsListElement));
   resetButtonElement.disabled = 'disabled';
-  buttonsElement.appendChild(resetButtonElement);
+  uiElement.appendChild(resetButtonElement);
 
+  // lap button
   const lapButtonElement = document.createElement('button');
   lapButtonElement.classList.add('button');
   lapButtonElement.classList.add('lap');
   lapButtonElement.innerText = 'Lap';
   lapButtonElement.addEventListener('click', () => recordLapAndSplit(elapsedTimeElement, lapsListElement));
   lapButtonElement.disabled = 'disabled';
-  buttonsElement.appendChild(lapButtonElement);
-
-  uiElement.appendChild(buttonsElement);
+  uiElement.appendChild(lapButtonElement);
 
   return uiElement;
 };
@@ -140,8 +162,6 @@ const buildUI = () => {
  * Initialize stop watch.
  */
 const initStopwatch = () => {
-  const ui = buildUI();
-
-  document.body.appendChild(ui);
+  document.body.appendChild(buildUI());
 };
 initStopwatch();
