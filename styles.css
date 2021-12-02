@@ -1,3 +1,70 @@
 body {
-  background-color: pink;
+  background-color: yellowgreen;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.board {
+  background-color: thistle;
+  border-radius: 10px;
+  width: fit-content;
+  margin: auto;
+}
+
+.square {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  vertical-align: top;
+  border-radius: 5px;
+  text-align: middle;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.game-info {
+  padding: 10px;
+  margin: 10px auto auto auto;
+  width: fit-content;
+  background-color: grey;
+  border-radius: 10px;
+  border: pink;
+  text-align: center;
+  font-size: 24px;
+}
+
+.winMessage {
+  width: auto;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 48px;
+}
+
+.timeSection {
+  /* background-color: aquamarine; */
+  text-align: center;
+}
+
+.timeDisplay {
+  width: auto;
+  margin: auto;
+  /* border: 10px solid;
+  border-color: antiquewhite; */
+  text-align: center;
+  font-size: 48px;
+}
+
+.button {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+}
+
+.gluten {
+  font-family: "Gluten", cursive;
 }
