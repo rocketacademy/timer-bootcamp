@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="stopwatch_styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <h1 id="header" class="gluten">Stopwatch</h1>
+
+    <div id="timeSection" class="timeSection">
+      <div id="leftSide" class="leftSide">
+        <h2 id="lapData">Insert Lap Data</h2>
+      </div>
+
+      <div id="rightSide" class="rightSide">
+        <h1 id="elapsedTime" class="elapsedTime">00 : 00 : 00</h1>
+
+        <div id="functionButtons" class="functionButtons">
+          <div>
+            <button id="startButton" class="button">Start</button>
+            <button id="stopButton" class="button">Stop</button>
+          </div>
+          <div>
+            <button id="resetButton" class="button">Reset</button>
+            <button id="lapButton" class="button">Lap</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="center">
+      <a href="index.html">
+        <button id="matchGame" class="button" style="margin: 10px">
+          Match Game
+        </button>
+      </a>
+    </div>
+    <!-- Import program logic -->
+    <script src="stopwatch_script.js"></script>
+    <!-- slapped the script here to it loads after the HTML and DOM -->
+  </body>
+</html>
