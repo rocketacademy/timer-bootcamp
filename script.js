@@ -32,6 +32,7 @@ document.getElementById("stop-button").addEventListener("click", () => {
 document.getElementById("reset-button").addEventListener("click", () => {
   totalSeconds = 0;
   lapSeconds = 0;
+  lapData = [];
   document.getElementById("lap-data-times").innerHTML = "";
   updateElapsedTime();
 });
