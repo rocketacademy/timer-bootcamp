@@ -14,7 +14,7 @@ let interval;
 let min = 0,
   sec = 0;
 let timerRunning = false;
-let lapTimeClicked = []; // store time differences as seconds
+let lapTimeClicked = []; // store time as seconds
 
 //////////////////////
 // helper function //
@@ -85,8 +85,8 @@ const resetTimer = () => {
 
 const onLapClick = () => {
   let timeElapsedSecs = 0;
-  minClicked = min;
-  secClicked = sec;
+  const minClicked = min;
+  const secClicked = sec;
   console.log("lap");
 
   if (timerRunning) {
@@ -98,7 +98,7 @@ const onLapClick = () => {
       timeElapsedSecs = timeClicked - lapTimeClicked[lapTimeClicked.length - 1]; // curT - prevT
     }
 
-    lapTimeClicked.push(timeElapsedSecs);
+    lapTimeClicked.push(timeClicked);
     // console.log(lapTimeClicked);
     const t = convertSecToMinSec(timeElapsedSecs);
     // console.log(t);
