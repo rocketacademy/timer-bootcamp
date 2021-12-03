@@ -1,0 +1,77 @@
+body {
+  background-color: #36395a;
+  color: #fff;
+  font-family: "Concert One", cursive;
+  text-align: center;
+}
+
+.timeSection {
+  display: block;
+  width: auto;
+  background-color: #5a5e9a;
+  text-align: center;
+}
+
+.timeDisplay {
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  text-align: center;
+  font-size: 72px;
+  display: inline-block;
+}
+
+.functionButtons {
+  display: inline-block;
+  width: auto;
+  background-color: #2cc8f7;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.button {
+  margin: auto;
+  padding: 10px;
+  font-size: 24px;
+  text-align: center;
+  width: 150px;
+
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 2px solid #618685;
+  color: #618685;
+  background: 0 0;
+  padding: 8px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.05) 0px 1px 1.5px 0px;
+  font-family: "Concert One", cursive;
+  font-weight: 800;
+  font-size: 16px;
+  height: 42px;
+}
+
+.button:hover {
+  background-color: #618685;
+  color: #fff;
+}
+
+.concert {
+  font-family: "Concert One", cursive;
+}
+
+.center {
+  width: auto;
+  margin: auto;
+}
+
+.leftSide {
+  background-color: pink;
+  display: inline-block;
+}
+
+.rightSide {
+  background-color: powderblue;
+  display: inline-block;
+}

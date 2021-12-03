@@ -1,3 +1,91 @@
 body {
-  background-color: pink;
+  background-color: #fefbd8;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.board {
+  background-color: #d5f4e6;
+  border-radius: 10px;
+  width: fit-content;
+  margin: auto;
+}
+
+.square {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  border-radius: 5px;
+  text-align: match-parent;
+}
+
+.square:hover {
+  background-color: #618685;
+}
+
+.game-info {
+  padding: 10px;
+  margin: 10px auto auto auto;
+  width: fit-content;
+  background-color: #80ced6;
+  border-radius: 10px;
+  border: 2px solid black;
+  text-align: center;
+  font-size: 24px;
+}
+
+.winMessage {
+  width: auto;
+  margin: 20px;
+  padding: 40px;
+  background-color: #618685;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 48px;
+}
+
+.timeSection {
+  /* background-color: aquamarine; */
+  text-align: center;
+}
+
+.timeDisplay {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+  font-size: 48px;
+}
+
+.button {
+  margin: 0 5px 10px 5px;
+  font-size: 24px;
+
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 2px solid #618685;
+  color: #618685;
+  background: 0 0;
+  padding: 8px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.05) 0px 1px 1.5px 0px;
+  font-weight: 800;
+  font-size: 16px;
+  height: 42px;
+}
+
+.button:hover {
+  background-color: #618685;
+  color: #fff;
+}
+
+.gluten {
+  font-family: "Gluten", cursive;
 }
