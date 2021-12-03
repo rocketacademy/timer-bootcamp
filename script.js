@@ -1,4 +1,4 @@
-// Please implement exercise logic here
+// This thing mainly uses JS to generate and add HTML elements, as opposed to directly creating HTML elements in the index file
 
 // Global Variables
 // boardSize has to be an even number
@@ -53,8 +53,8 @@ const cardNameMap = {
 // Win Message
 const winMessage = document.createElement("div");
 winMessage.id = "winMessage";
-winMessage.classList.add("gluten");
-winMessage.innerText = "You've Won!\n✨✨✨✨✨";
+winMessage.classList.add("gluten", "winMessage");
+winMessage.innerText = "You've Won!\nCongratulations!";
 // i can't actually figure out how to make this look more like an annoying popup message
 // but whatever
 
@@ -73,7 +73,7 @@ timeSection.appendChild(timeDisplay);
 // Start Button
 const startButton = document.createElement("button");
 startButton.id = "startButton";
-startButton.classList.add("button");
+startButton.classList.add("gluten", "button");
 startButton.innerText = "Start";
 startButton.addEventListener("click", () => {
   startRound();
@@ -83,7 +83,7 @@ timeSection.appendChild(startButton);
 // Reset Button
 const resetButton = document.createElement("button");
 resetButton.id = "resetButton";
-resetButton.classList.add("button");
+resetButton.classList.add("gluten", "button");
 resetButton.innerText = "Reset";
 resetButton.addEventListener("click", () => {
   resetRound();
@@ -106,6 +106,9 @@ const refreshTimer = function () {
       "gameInfo"
     ).innerText = `Time's UP!\nYou did not manage to match all the cards. Your score was ${currentScore}.\n\nReset the game to play again.`;
     canCLick = false;
+    setInterval(() => {
+      resetRound();
+    });
   }
 };
 
@@ -123,7 +126,6 @@ const squareClick = (cardElement, column, row) => {
 
   // first turn
   if (firstCard === null) {
-    console.log("first turn");
     firstCard = clickedCard;
     // turn this card over
     cardElement.innerText = firstCard.name;
@@ -133,7 +135,6 @@ const squareClick = (cardElement, column, row) => {
 
     // second turn
   } else {
-    console.log("second turn");
     if (
       clickedCard.name === firstCard.name &&
       clickedCard.suit === firstCard.suit
@@ -146,13 +147,12 @@ const squareClick = (cardElement, column, row) => {
       cardElement.innerText = clickedCard.name;
       canCLick = true;
     } else {
-      // show card to user for 3 seconds before turning over
+      // show card to user for 1 second before turning over
       gameInfo.innerText =
-        "Not a Match - Cards will be turned over again in 3 seconds!";
+        "Not a Match - Cards will be turned over again in 1 second!";
       cardElement.innerText = clickedCard.name;
       canCLick = false;
       setTimeout(() => {
-        // console.log("waiting 3 seconds...");
         // turn both cards back over
         firstCardElement.innerText = "";
         cardElement.innerText = "";
@@ -160,21 +160,18 @@ const squareClick = (cardElement, column, row) => {
         canCLick = true;
       }, 1000);
     }
-
     // reset the first card
     firstCard = null;
   }
+
   if (currentScore == maxScore) {
     gameInfo.innerText = "Well done! You've completed the game.";
     document.body.appendChild(winMessage);
     setTimeout(() => {
       const elementsToRemove = document.getElementById("winMessage");
       elementsToRemove.remove();
+      resetRound();
     }, 5000);
-    // add code to reset board here
-    // create (or unhide) a reset button
-    // on reset clicked, re-initialize most global variables
-    // can probably just create another function and listener
   }
 };
 
@@ -183,7 +180,6 @@ const startRound = function () {
   timeInterval = setInterval(() => {
     refreshTimer();
   }, 1000);
-  // trigger this with a button?
 };
 
 const resetRound = function () {
@@ -227,7 +223,7 @@ const buildBoardElements = (board) => {
       const square = document.createElement("div");
 
       // set a class for CSS purposes
-      square.classList.add("square");
+      square.classList.add("square", "gluten");
 
       // set the click event
       // eslint-disable-next-line
