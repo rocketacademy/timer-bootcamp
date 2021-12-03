@@ -6,8 +6,33 @@
   </head>
 
   <body>
-    <h1 id="header">Timer!</h1>
+    <h1 id="header">Timer!⏳</h1>
     <!-- Import program logic -->
+    <section id="container">
+      <div id="lap-data"></div>
+      <div id="right-side">
+        <div id="top">
+          <div id="main-timer">
+            <span class="timer hours">00:</span>
+            <span class="timer minutes">00:</span>
+            <span class="timer seconds">00</span>
+            <span class="timer miliseconds">:00</span>
+          </div>
+          <div id="lap-timer">Placeholder</div>
+        </div>
+        <div id="bottom">
+          <div id="top-buttons">
+            <button id="start-button">Start</button>
+            <button id="stop-button">Stop</button>
+          </div>
+
+          <div id="bottom-buttons">
+            <button id="lap-button">Lap</button>
+            <button id="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
     <script src="script.js"></script>
   </body>
 </html>

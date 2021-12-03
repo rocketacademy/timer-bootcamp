@@ -1,3 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;700&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
 body {
   background-color: pink;
+}
+
+h1 {
+  font-family: "Arial";
+  font-size: 4em;
+  margin: 50px;
+}
+
+#container {
+  display: flex;
+  height: 90%;
+}
+
+#lap-data {
+  width: 40%;
+}
+
+#right-side {
+  display: flex;
+  flex-direction: column;
+}
+
+#main-timer {
+  width: 100%;
+  font-family: "Roboto Mono", monospace;
+}
+
+.timer {
+  font-size: 6.5em;
+}
+.miliseconds {
+  font-size: 5em;
+}
+#lap-timer {
+  width: 80%;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 5em;
+}
+
+#bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+button {
+  width: 10vw;
+  padding: 2em;
+  margin: 0.5em;
 }
