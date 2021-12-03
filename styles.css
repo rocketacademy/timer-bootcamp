@@ -12,7 +12,8 @@ body {
 h1 {
   font-family: "Arial";
   font-size: 4em;
-  margin: 50px;
+  margin-top: 50px;
+  margin-left: 50px;
 }
 
 #container {
@@ -22,6 +23,8 @@ h1 {
 
 #lap-data {
   width: 40%;
+  padding: 0 50px;
+  margin-top: 40px;
 }
 
 #right-side {
@@ -32,19 +35,24 @@ h1 {
 #main-timer {
   width: 100%;
   font-family: "Roboto Mono", monospace;
+  font-size: 32px;
 }
 
 .timer {
-  font-size: 6.5em;
+  font-size: 6.5rem;
 }
-.miliseconds {
-  font-size: 5em;
+.timer.miliseconds {
+  font-size: 5rem;
 }
-#lap-timer {
-  width: 80%;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  font-size: 5em;
+
+.timer-lap {
+  width: 100%;
+  font-family: "Roboto Mono", monospace;
+  font-size: 4em;
+}
+
+.timer-lap.miliseconds {
+  font-size: 2.5em;
 }
 
 #bottom {
