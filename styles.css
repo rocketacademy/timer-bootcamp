@@ -13,6 +13,7 @@ body {
 
 .lapdatabox {
   display: flex;
+  float: left;
   padding-left: 14px;
   margin: 10px;
   width: 200px;
@@ -30,15 +31,15 @@ body {
   display: flex;
   width: 230px;
   height: 500px;
-  margin: 10px;
+  margin: 20px;
   text-align: center;
-  float: right;
   flex-direction: column;
 }
 
 .elapsedtimebox {
   text-align: center;
   display: inline-block;
+  margin: 10px;
   padding: 20px;
   height: 80px;
   width: 230px;
