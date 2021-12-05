@@ -46,7 +46,7 @@ document.body.appendChild(announcement);
 // clockSpace.appendChild(clockTimer);
 // const clockWords = document.createTextNode(' CountDown : ');
 const clockWords = document.createElement('div');
-clockWords.innerText = 'CountDown';
+clockWords.innerText = 'Stop Watch';
 document.body.appendChild(clockWords);
 const clock = document.createElement('h3');
 document.body.appendChild(clock);
@@ -56,22 +56,47 @@ clock.innerText = '';
 const congrats = document.createElement('h2');
 document.body.appendChild(congrats);
 
+// ################ BUTTONS ################//
+// create Time Buttons
+const timerButtons = document.createElement(`div`);
+document.body.appendChild(timerButtons);
+
+// Start Game Button
+const startButton = document.createElement('button');
+startButton.innerText = 'Start';
+timerButtons.appendChild(startButton);
+startButton.onclick = function () {
+  gamerName.value = '';
+  congrats.innerText = '';
+  announcement.innerText = ""
+  initGame();
+  
+};
+
+
 // Reset Game Button
 const resetbutton = document.createElement('button');
-resetbutton.innerText = 'reset game';
-// resetbutton.type = "reset"
+resetbutton.innerText = 'Reset';
+timerButtons.appendChild(resetbutton);
 resetbutton.onclick = function () {
-  // existingBoard.innerHTML = '';
-  // existingBoard = null;
-  // board = [];
-
   gamerName.value = '';
   congrats.innerText = '';
 
   initGame();
   // return counter
+  return
 };
-document.body.appendChild(resetbutton);
+
+
+// stopWatch Button
+const stopWatchButton = document.createElement(`button`);
+stopWatchButton.innerText = `Stop`;
+timerButtons.appendChild(stopWatchButton);
+stopWatchButton.onclick = function(){
+  clearInterval(ref)
+}
+
+
 
 // Gameplay Logic
 const squareClick = async (cardElement, column, row) => {
@@ -164,8 +189,8 @@ const squareClick = async (cardElement, column, row) => {
 
 console.log('starting...');
 
-let delayInMilliseconds = 1000; // 3 mins to complete
-let delayInSeconds = 10; // 3 mins to complete
+let delayInMilliseconds = 1000;
+let delayInSeconds = 10;
 let counter;
 let ref;
 
@@ -348,7 +373,7 @@ const initGame = () => {
 
   // INIT
   wins = 0;
-  counter = delayInSeconds; // delayInMilliseconds;
+  counter = 0// delayInSeconds; // delayInMilliseconds;
   if (ref) {
     clearInterval(ref);
     ref = null;
@@ -357,11 +382,11 @@ const initGame = () => {
   // initialie a timeout case
   ref = setInterval(() => {
     clock.innerText = counter;
-    counter -= 1;
-    if (counter < 0) {
+    counter += 1;
+    if (counter >=11) {
       clearInterval(ref);
       ref = null;
-      announcement.innerText = 'stop playing. game over';
+      announcement.innerText = 'stop playing. game over. Hit reset to start over';
       boardElement.innerText = '';
     }
   }, 1000);
@@ -388,4 +413,4 @@ const shuffleCards = function (cardDeck) {
   return cardDeck;
 };
 
-initGame();
+// initGame(); // remove bcos activation by start button
