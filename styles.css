@@ -1,3 +1,80 @@
 body {
-  background-color: pink;
+  background-color: #b7b7a4;
+  box-sizing: border-box;
+}
+
+.square {
+  padding: 50px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  border-radius: 8px;
+  height: 13px;
+  width: 2px;
+  vertical-align: top;
+}
+
+.input {
+  padding: auto;
+  margin: auto;
+}
+
+.card {
+  padding: 50px;
+  margin: 10px;
+  background-color: #9a8c98;
+  width: 10px;
+  height: 50px;
+  text-align: center;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+​ .suit {
+  margin: 5px;
+  font-size: 20px;
+}
+
+​ .messageBoard {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  width: 480px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.timer {
+  padding: 50px;
+  margin: 10px;
+  background-color: #ffe8d6;
+  width: 360px;
+  height: 150px;
+  text-align: center;
+  border-radius: 8px;
+  display: block;
+}
+
+.lapData {
+  margin: 10px auto;
+  border: 2px solid black;
+  height: 20px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.timer-board {
+  margin: 10 px auto;
+  height: 20px;
+  background-color: aliceblue;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.btn {
+  margin: 20px 15px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
 }
