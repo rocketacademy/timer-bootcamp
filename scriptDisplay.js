@@ -49,7 +49,7 @@ const clockWords = document.createElement('div');
 clockWords.innerText = 'Stop Watch';
 document.body.appendChild(clockWords);
 const clock = document.createElement('h3');
-document.body.appendChild(clock);
+clockWords.appendChild(clock);
 // clockTimer.clockSpace.insertBefore(clock, clockTimer.nextSibling);
 clock.innerText = '';
 
@@ -68,11 +68,9 @@ timerButtons.appendChild(startButton);
 startButton.onclick = function () {
   gamerName.value = '';
   congrats.innerText = '';
-  announcement.innerText = ""
+  announcement.innerText = '';
   initGame();
-  
 };
-
 
 // Reset Game Button
 const resetbutton = document.createElement('button');
@@ -84,19 +82,16 @@ resetbutton.onclick = function () {
 
   initGame();
   // return counter
-  return
+  return;
 };
-
 
 // stopWatch Button
 const stopWatchButton = document.createElement(`button`);
 stopWatchButton.innerText = `Stop`;
 timerButtons.appendChild(stopWatchButton);
-stopWatchButton.onclick = function(){
-  clearInterval(ref)
-}
-
-
+stopWatchButton.onclick = function () {
+  clearInterval(ref);
+};
 
 // Gameplay Logic
 const squareClick = async (cardElement, column, row) => {
@@ -190,7 +185,7 @@ const squareClick = async (cardElement, column, row) => {
 console.log('starting...');
 
 let delayInMilliseconds = 1000;
-let delayInSeconds = 10;
+let delayInSeconds = 125; // time limit
 let counter;
 let ref;
 
@@ -373,20 +368,22 @@ const initGame = () => {
 
   // INIT
   wins = 0;
-  counter = 0// delayInSeconds; // delayInMilliseconds;
+  counter = 0; // delayInSeconds; // delayInMilliseconds;
   if (ref) {
     clearInterval(ref);
     ref = null;
   }
 
-  // initialie a timeout case
+  //%%%% Amendment to countdown in Match Game  %%%%
+  // initialie a timeout case. 
   ref = setInterval(() => {
-    clock.innerText = counter;
+    clock.innerText = `${Math.floor(counter/60)} Minutes and ${counter%60} Seconds`;
     counter += 1;
-    if (counter >=11) {
+    if (counter >= delayInSeconds + 1) {
       clearInterval(ref);
       ref = null;
-      announcement.innerText = 'stop playing. game over. Hit reset to start over';
+      announcement.innerText =
+        'stop playing. game over. Hit reset to start over';
       boardElement.innerText = '';
     }
   }, 1000);
