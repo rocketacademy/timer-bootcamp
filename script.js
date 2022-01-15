@@ -8,12 +8,11 @@ let firstCardElement;
 
 // For gameplay
 let canClick = false;
-// let gameCompleted = false;
 
 // For stopwatch
 let milliseconds = 0;
 const delayInMilliseconds = 100; // 0.1 second
-const maxMilliseconds = 60000; // 3 minutes (1 min = 60 000ms)
+const maxMilliseconds = 180000; // 3 minutes (1 min = 60 000ms)
 let stopwatchStarted = false;
 let stopwatchRef;
 
@@ -26,6 +25,8 @@ const resetBtn = document.createElement('button');
 const gameInfoContainer = document.createElement('div');
 const gameInfo = document.createElement('div');
 const stopwatchContainer = document.createElement('div');
+let timeoutMsgMatch;
+let timeoutMsgNoMatch;
 
 // ----- HELPER FUNCTIONS -----------------------
 // Get a random index ranging from 0 (inclusive) to max (exclusive).
@@ -111,6 +112,32 @@ const formatOpenCard = (cardDiv, card) => {
 	cardDiv.classList.add('open-card');
 };
 
+// Close all cards that are open
+const closeAllOpenCards = () => {
+	let openCardsList = document.querySelectorAll('div.open-card');
+	for (let i = 0; i < openCardsList.length; i += 1) {
+		openCardsList[i].classList.remove('open-card', 'red', 'black');
+		openCardsList[i].innerText = ``;
+		console.log(openCardsList[i]);
+	}
+};
+
+// Checks if all cards are open (game complete)
+// Returns true || false
+const areAllCardsOpen = () => {
+	const numOfOpenCards = document.querySelectorAll('.open-card');
+	if (numOfOpenCards.length === 16) {
+		return true;
+	}
+	return false;
+};
+
+// Update game info
+const updateGameInfo = (msgText) => {
+	gameInfo.innerHTML = msgText;
+	gameInfoContainer.appendChild(gameInfo);
+};
+
 // Format stopwatch
 const formatStopwatch = (ms) => {
 	// Show min:sec
@@ -137,8 +164,18 @@ const startStopwatch = () => {
 	stopwatchRef = setInterval(() => {
 		if (milliseconds >= maxMilliseconds) {
 			clearInterval(stopwatchRef);
-			updateGameInfo(`Time's up! You lose.`);
+			clearTimeout(timeoutMsgMatch);
+			clearTimeout(timeoutMsgNoMatch);
+
+			updateGameInfo(`Time's up! You lose.<br>Hit reset to try again.`);
+
+			// Find all open cards and remove the open-card class
+			closeAllOpenCards();
+
 			canClick = false;
+			startBtn.disabled = true;
+			stopBtn.disabled = true;
+			resetBtn.disabled = false;
 		}
 
 		stopwatch.innerHTML = formatStopwatch(milliseconds);
@@ -148,12 +185,17 @@ const startStopwatch = () => {
 
 const stopStopwatch = () => {
 	clearInterval(stopwatchRef);
-	updateGameInfo(
-		`Congrats, you matched all the cards!<br>Refresh the page to play again.`
-	);
+
 	canClick = false;
 	startBtn.disabled = false;
 	stopBtn.disabled = true;
+
+	if (areAllCardsOpen() === true) {
+		updateGameInfo(
+			`Congrats, you matched all the cards!<br>Click reset to play again.`
+		);
+		startBtn.disabled = true;
+	}
 };
 
 const resetStopwatch = () => {
@@ -162,22 +204,20 @@ const resetStopwatch = () => {
 	stopwatch.innerHTML = formatStopwatch(milliseconds);
 	startBtn.disabled = false;
 	stopBtn.disabled = true;
+	canClick = false;
 
 	// Reset game
+	resetGame();
+};
+
+const resetGame = () => {
 	board.length = 0;
+	firstCard = null;
 	const bodyDivs = document.querySelectorAll('body > div');
 	for (let i = 0; i < bodyDivs.length; i += 1) {
 		document.body.removeChild(bodyDivs[i]);
 	}
 	initGame();
-};
-
-const areAllCardsOpen = () => {
-	const numOfOpenCards = document.querySelectorAll('.open-card');
-	if (numOfOpenCards.length === 16) {
-		return true;
-	}
-	return false;
 };
 
 // ----- GAMEPLAY LOGIC -------------------------
@@ -231,7 +271,7 @@ const openCard = (cardElement, row, column) => {
 			else {
 				updateGameInfo(`Noice, it's a match!`);
 				if (milliseconds <= 2100) {
-					setTimeout(() => {
+					timeoutMsgMatch = setTimeout(() => {
 						updateGameInfo(`Click a card to continue.`);
 					}, 2000);
 				}
@@ -246,8 +286,13 @@ const openCard = (cardElement, row, column) => {
 
 			formatOpenCard(cardElement, clickedCard);
 
+			stopBtn.disabled = true;
+			resetBtn.disabled = true;
 			// "Turn cards over" after a set time
-			setTimeout(() => {
+			timeoutMsgNoMatch = setTimeout(() => {
+				stopBtn.disabled = false;
+				resetBtn.disabled = false;
+
 				// "Turn cards over" by removing card name in square
 				cardElement.innerText = ``;
 				firstCardElement.innerText = ``;
@@ -255,11 +300,8 @@ const openCard = (cardElement, row, column) => {
 				cardElement.classList.remove('open-card', 'red', 'black');
 				firstCardElement.classList.remove('open-card', 'red', 'black');
 
-				if (milliseconds >= 2000) {
-					updateGameInfo(`Click to open a card.`);
-				}
 				canClick = true;
-			}, 1500);
+			}, 2000);
 
 			// Update game info
 			updateGameInfo(`Sorry, those didn't match. Try again!`);
@@ -309,11 +351,6 @@ const createGameInfoContainer = () => {
 
 	gameInfoContainer.appendChild(gameInfo);
 	document.body.appendChild(gameInfoContainer);
-};
-
-const updateGameInfo = (msgText) => {
-	gameInfo.innerHTML = msgText;
-	gameInfoContainer.appendChild(gameInfo);
 };
 
 // Create container for board elements
