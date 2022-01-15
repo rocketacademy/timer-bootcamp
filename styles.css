@@ -1,3 +1,107 @@
 body {
-  background-color: pink;
+	background-color: lavenderblush;
+	font-family: monospace;
+	text-align: center;
+}
+
+h1 {
+	color: darkmagenta;
+}
+
+h2 {
+	color: darkmagenta;
+}
+
+h3 {
+	text-align: left;
+	margin: 0.5em;
+}
+
+li {
+	text-align: left;
+	margin-bottom: 0.5em;
+}
+
+.stopwatch-container {
+	color: darkmagenta;
+	font-size: 1.2em;
+	background-color: plum;
+	border: 2px solid mediumorchid;
+	width: 50vw;
+	padding: 1em;
+	margin: 2em auto;
+}
+
+.stopwatch-container button {
+	font-family: monospace;
+	font-size: 1rem;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 0.5rem;
+	margin: 0.5rem;
+	color: white;
+	background-color: mediumorchid;
+	border-radius: 5em;
+	border-width: 2px;
+	border-style: solid;
+	border-color: darkorchid;
+}
+
+.stopwatch-container button:disabled {
+	color: thistle;
+	background-color: lavender;
+	border-color: thistle;
+}
+
+.stopwatch {
+	font-size: 1.5em;
+	background-color: lavenderblush;
+	width: 10em;
+	margin: auto;
+	padding: 0.5em;
+	border-radius: 5em;
+	border: 2px solid mediumorchid;
+	box-sizing: border-box;
+}
+
+.game-info-container {
+	color: darkmagenta;
+	font-size: 1.2em;
+	background-color: plum;
+	border: 2px solid mediumorchid;
+	height: 2.5em;
+	width: 50vw;
+	padding: 1em;
+	margin: 2em auto;
+}
+
+.board-container {
+	background-color: plum;
+	border: 2px solid mediumorchid;
+	width: 50vw;
+	padding: 1em;
+	margin: 2em auto;
+}
+
+.square {
+	padding: 10px;
+	margin: 10px;
+	background-color: darkmagenta;
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	vertical-align: top;
+	text-align: center;
+}
+
+.open-card {
+	background-color: lavenderblush;
+}
+
+.red {
+	color: crimson;
+}
+.black {
+	color: darkslategrey;
 }
