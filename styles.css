@@ -12,7 +12,7 @@ h2 {
 	color: darkmagenta;
 }
 
-.timer-container {
+.stopwatch-container {
 	color: darkmagenta;
 	font-size: 1.2em;
 	background-color: plum;
@@ -22,11 +22,30 @@ h2 {
 	margin: 2em auto;
 }
 
-.timer-container p {
+.stopwatch-container p {
 	margin-top: 0.5em;
 }
+.stopwatch-container button {
+	font-family: monospace;
+	font-size: 1rem;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 0.5rem;
+	margin: 0.5rem;
+	color: white;
+	background-color: orchid;
+	border-radius: 10%;
+	border-width: 2px;
+	border-style: solid;
+	border-color: lavender purple purple lavender;
+}
 
-.timer {
+.stopwatch-container button:disabled {
+	background-color: lightgrey;
+}
+
+.stopwatch {
 	font-size: 1.5em;
 }
 

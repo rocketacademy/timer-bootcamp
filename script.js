@@ -8,19 +8,24 @@ let firstCardElement;
 
 // For gameplay
 let canClick = true;
-let gameCompleted = false;
+// let gameCompleted = false;
 
-// For timer
-let milliseconds = 180000; // 3 minutes (1 min = 60 000ms)
+// For stopwatch
+let milliseconds = 0;
 const delayInMilliseconds = 100; // 0.1 second
-let timerStarted = false;
-let timerRef;
+const maxMilliseconds = 180000; // 3 minutes (1 min = 60 000ms)
+let stopwatchStarted = false;
+let stopwatchRef;
+
+const stopwatch = document.createElement('div');
+const startBtn = document.createElement('button');
+const stopBtn = document.createElement('button');
+const resetBtn = document.createElement('button');
 
 // For game information
 const gameInfoContainer = document.createElement('div');
 const gameInfo = document.createElement('div');
-const timerContainer = document.createElement('div');
-const timer = document.createElement('div');
+const stopwatchContainer = document.createElement('div');
 
 // ----- HELPER FUNCTIONS -----------------------
 // Get a random index ranging from 0 (inclusive) to max (exclusive).
@@ -106,8 +111,8 @@ const formatOpenCard = (cardDiv, card) => {
 	cardDiv.classList.add('open-card');
 };
 
-// Format timer
-const formatTimer = (ms) => {
+// Format stopwatch
+const formatStopwatch = (ms) => {
 	// Show min:sec
 	// calculate minutes
 	let min = Math.floor((ms / 1000 / 60) % 60);
@@ -124,25 +129,37 @@ const formatTimer = (ms) => {
 	return `${min}:${sec}`;
 };
 
-const startTimer = () => {
-	timerRef = setInterval(() => {
-		if (milliseconds <= 0) {
-			clearInterval(timerRef);
+const startStopwatch = () => {
+	stopwatchRef = setInterval(() => {
+		if (milliseconds >= maxMilliseconds) {
+			clearInterval(stopwatchRef);
 			updateGameInfo(`Time's up! You lose.`);
 			canClick = false;
 		}
 
-		timer.innerHTML = formatTimer(milliseconds);
-		milliseconds -= delayInMilliseconds;
+		stopwatch.innerHTML = formatStopwatch(milliseconds);
+		milliseconds += delayInMilliseconds;
 	}, delayInMilliseconds);
+	startBtn.disabled = true;
+	stopBtn.disabled = false;
 };
 
-const stopTimer = () => {
-	clearInterval(timerRef);
+const stopStopwatch = () => {
+	clearInterval(stopwatchRef);
 	updateGameInfo(
 		`Congrats, you matched all the cards!<br>Refresh the page to play again.`
 	);
 	canClick = false;
+	startBtn.disabled = false;
+	stopBtn.disabled = true;
+};
+
+const resetStopwatch = () => {
+	clearInterval(stopwatchRef);
+	milliseconds = 0;
+	stopwatch.innerHTML = formatStopwatch(milliseconds);
+	startBtn.disabled = false;
+	stopBtn.disabled = true;
 };
 
 const areAllCardsOpen = () => {
@@ -157,11 +174,11 @@ const areAllCardsOpen = () => {
 
 // What happens when user clicks on a square
 const openCard = (cardElement, row, column) => {
-	// Start timer on first ever card clicked
-	if (timerStarted === false) {
-		startTimer();
-		timerStarted = true;
-	}
+	// // Start timer on first ever card clicked
+	// if (timerStarted === false) {
+	// 	startTimer();
+	// 	timerStarted = true;
+	// }
 
 	// Store the clicked card
 	const clickedCard = board[row][column];
@@ -202,7 +219,7 @@ const openCard = (cardElement, row, column) => {
 
 			// Check if all cards are open
 			if (areAllCardsOpen() === true) {
-				stopTimer();
+				stopStopwatch();
 				return;
 			}
 
@@ -251,15 +268,32 @@ const openCard = (cardElement, row, column) => {
 
 // ----- GAME INITIALISATION --------------------
 
-// Create container for timer
-const createTimerContainer = () => {
-	timerContainer.classList.add('timer-container');
-	timerContainer.innerHTML = `<p>You have 3 minutes to match all card pairs, starting from when you open your first card.</p>`;
-	document.body.appendChild(timerContainer);
+// Create container for stopwatch
+const createStopwatchContainer = () => {
+	// Format the container
+	stopwatchContainer.classList.add('stopwatch-container');
+	stopwatchContainer.innerHTML = `<p>Time how long it takes for you to match all the cards. You can only flip cards over when the stopwatch is running.</p>`;
+	document.body.appendChild(stopwatchContainer);
 
-	timer.classList.add('timer');
-	timer.innerHTML = formatTimer(milliseconds);
-	timerContainer.appendChild(timer);
+	// Format the stopwatch
+	stopwatch.classList.add('stopwatch');
+	stopwatch.innerHTML = formatStopwatch(milliseconds);
+	stopwatchContainer.appendChild(stopwatch);
+
+	// Format the buttons
+	startBtn.innerText = 'Start';
+	stopBtn.innerText = 'Stop';
+	resetBtn.innerText = 'Reset';
+	stopwatchContainer.appendChild(startBtn);
+	stopwatchContainer.appendChild(stopBtn);
+	stopwatchContainer.appendChild(resetBtn);
+
+	stopBtn.disabled = true;
+
+	// Add event listeners to buttons
+	startBtn.addEventListener('click', startStopwatch);
+	stopBtn.addEventListener('click', stopStopwatch);
+	resetBtn.addEventListener('click', resetStopwatch);
 };
 
 // Create container for game info
@@ -339,7 +373,7 @@ const initGame = () => {
 		}
 	}
 
-	createTimerContainer();
+	createStopwatchContainer();
 	createGameInfoContainer();
 	createBoardContainer(board);
 };
