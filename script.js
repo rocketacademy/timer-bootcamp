@@ -25,6 +25,7 @@ const resetBtn = document.createElement('button');
 const gameInfoContainer = document.createElement('div');
 const gameInfo = document.createElement('div');
 const stopwatchContainer = document.createElement('div');
+const gameRulesDiv = document.createElement('div');
 let timeoutMsgMatch;
 let timeoutMsgNoMatch;
 
@@ -118,7 +119,6 @@ const closeAllOpenCards = () => {
 	for (let i = 0; i < openCardsList.length; i += 1) {
 		openCardsList[i].classList.remove('open-card', 'red', 'black');
 		openCardsList[i].innerText = ``;
-		console.log(openCardsList[i]);
 	}
 };
 
@@ -163,19 +163,21 @@ const startStopwatch = () => {
 
 	stopwatchRef = setInterval(() => {
 		if (milliseconds >= maxMilliseconds) {
+			// Clear all intervals and timeouts
 			clearInterval(stopwatchRef);
 			clearTimeout(timeoutMsgMatch);
 			clearTimeout(timeoutMsgNoMatch);
 
-			updateGameInfo(`Time's up! You lose.<br>Hit reset to try again.`);
-
 			// Find all open cards and remove the open-card class
 			closeAllOpenCards();
 
+			// Discontinue gameplay, only allow to Reset
 			canClick = false;
 			startBtn.disabled = true;
 			stopBtn.disabled = true;
 			resetBtn.disabled = false;
+
+			updateGameInfo(`Time's up! You lose.<br>Hit reset to try again.`);
 		}
 
 		stopwatch.innerHTML = formatStopwatch(milliseconds);
@@ -269,11 +271,11 @@ const openCard = (cardElement, row, column) => {
 
 			// If not all cards have been open, update game info
 			else {
-				updateGameInfo(`Noice, it's a match!`);
+				updateGameInfo(`Noice, it's a match!<br> Pick your next card.`);
 				if (milliseconds <= 2100) {
 					timeoutMsgMatch = setTimeout(() => {
 						updateGameInfo(`Click a card to continue.`);
-					}, 2000);
+					}, 1500);
 				}
 
 				canClick = true;
@@ -301,10 +303,10 @@ const openCard = (cardElement, row, column) => {
 				firstCardElement.classList.remove('open-card', 'red', 'black');
 
 				canClick = true;
-			}, 2000);
+			}, 1500);
 
 			// Update game info
-			updateGameInfo(`Sorry, those didn't match. Try again!`);
+			updateGameInfo(`Sorry, those didn't match.<br> Try again!`);
 		}
 
 		// Reset the cards
@@ -316,9 +318,30 @@ const openCard = (cardElement, row, column) => {
 
 // Create container for stopwatch
 const createStopwatchContainer = () => {
+	// Format game instructions
+	stopwatchContainer.innerHTML = ``;
+
+	let gameRules = [
+		`Time how long it takes for you to match all the cards.`,
+		`You can only flip cards over when the stopwatch is running.`,
+		` You have a maximum of 3 minutes to play.`,
+	];
+
+	let header = document.createElement('h3');
+	header.innerText = `How to play`;
+
+	let ul = document.createElement('ul');
+	for (let i = 0; i < gameRules.length; i += 1) {
+		let li = document.createElement('li');
+		li.innerText = gameRules[i];
+		ul.appendChild(li);
+	}
+
+	stopwatchContainer.appendChild(header);
+	stopwatchContainer.appendChild(ul);
+
 	// Format the container
 	stopwatchContainer.classList.add('stopwatch-container');
-	stopwatchContainer.innerHTML = `<p>Time how long it takes for you to match all the cards. You can only flip cards over when the stopwatch is running.</p>`;
 	document.body.appendChild(stopwatchContainer);
 
 	// Format the stopwatch

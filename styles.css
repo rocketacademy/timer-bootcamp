@@ -12,6 +12,16 @@ h2 {
 	color: darkmagenta;
 }
 
+h3 {
+	text-align: left;
+	margin: 0.5em;
+}
+
+li {
+	text-align: left;
+	margin-bottom: 0.5em;
+}
+
 .stopwatch-container {
 	color: darkmagenta;
 	font-size: 1.2em;
@@ -22,9 +32,6 @@ h2 {
 	margin: 2em auto;
 }
 
-.stopwatch-container p {
-	margin-top: 0.5em;
-}
 .stopwatch-container button {
 	font-family: monospace;
 	font-size: 1rem;
@@ -34,19 +41,28 @@ h2 {
 	padding: 0.5rem;
 	margin: 0.5rem;
 	color: white;
-	background-color: orchid;
-	border-radius: 10%;
+	background-color: mediumorchid;
+	border-radius: 5em;
 	border-width: 2px;
 	border-style: solid;
-	border-color: lavender purple purple lavender;
+	border-color: darkorchid;
 }
 
 .stopwatch-container button:disabled {
-	background-color: lightgrey;
+	color: thistle;
+	background-color: lavender;
+	border-color: thistle;
 }
 
 .stopwatch {
 	font-size: 1.5em;
+	background-color: lavenderblush;
+	width: 10em;
+	margin: auto;
+	padding: 0.5em;
+	border-radius: 5em;
+	border: 2px solid mediumorchid;
+	box-sizing: border-box;
 }
 
 .game-info-container {
