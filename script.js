@@ -7,13 +7,13 @@ let firstCard = null;
 let firstCardElement;
 
 // For gameplay
-let canClick = true;
+let canClick = false;
 // let gameCompleted = false;
 
 // For stopwatch
 let milliseconds = 0;
 const delayInMilliseconds = 100; // 0.1 second
-const maxMilliseconds = 180000; // 3 minutes (1 min = 60 000ms)
+const maxMilliseconds = 60000; // 3 minutes (1 min = 60 000ms)
 let stopwatchStarted = false;
 let stopwatchRef;
 
@@ -130,6 +130,10 @@ const formatStopwatch = (ms) => {
 };
 
 const startStopwatch = () => {
+	canClick = true;
+	startBtn.disabled = true;
+	stopBtn.disabled = false;
+
 	stopwatchRef = setInterval(() => {
 		if (milliseconds >= maxMilliseconds) {
 			clearInterval(stopwatchRef);
@@ -140,8 +144,6 @@ const startStopwatch = () => {
 		stopwatch.innerHTML = formatStopwatch(milliseconds);
 		milliseconds += delayInMilliseconds;
 	}, delayInMilliseconds);
-	startBtn.disabled = true;
-	stopBtn.disabled = false;
 };
 
 const stopStopwatch = () => {
@@ -160,6 +162,14 @@ const resetStopwatch = () => {
 	stopwatch.innerHTML = formatStopwatch(milliseconds);
 	startBtn.disabled = false;
 	stopBtn.disabled = true;
+
+	// Reset game
+	board.length = 0;
+	const bodyDivs = document.querySelectorAll('body > div');
+	for (let i = 0; i < bodyDivs.length; i += 1) {
+		document.body.removeChild(bodyDivs[i]);
+	}
+	initGame();
 };
 
 const areAllCardsOpen = () => {
@@ -174,12 +184,6 @@ const areAllCardsOpen = () => {
 
 // What happens when user clicks on a square
 const openCard = (cardElement, row, column) => {
-	// // Start timer on first ever card clicked
-	// if (timerStarted === false) {
-	// 	startTimer();
-	// 	timerStarted = true;
-	// }
-
 	// Store the clicked card
 	const clickedCard = board[row][column];
 
@@ -226,7 +230,7 @@ const openCard = (cardElement, row, column) => {
 			// If not all cards have been open, update game info
 			else {
 				updateGameInfo(`Noice, it's a match!`);
-				if (milliseconds >= 2100) {
+				if (milliseconds <= 2100) {
 					setTimeout(() => {
 						updateGameInfo(`Click a card to continue.`);
 					}, 2000);
