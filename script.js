@@ -1,11 +1,11 @@
 // Please implement exercise logic here
 let hrs = 0;
-let min = 0;
+let minute = 0;
 let sec = 0;
 let milisec = 0;
 
 let displayHrs = hrs;
-let displayMin = min;
+let displayMin = minute;
 let displaySec = sec;
 let displayMilisec = milisec;
 
@@ -20,9 +20,9 @@ let lapNow = null;
     sec+=1;
     milisec = 0
     if(sec / 60 ==1){
-      min+=1;
+      minute+=1;
       sec = 0;
-      if(min/60 ==1){
+      if(minute/60 ==1){
         hrs+=1;
         hrs = 0;
       }
@@ -38,10 +38,10 @@ let lapNow = null;
   } else{
       displaySec = sec;
     }
-  if(min <10){
-    displayMin = "0" + sec;
+  if(minute <10){
+    displayMin = "0" + minute;
   } else{
-    displayMin = min;
+    displayMin = minute;
   }
   if(hrs <10){
   displayHrs = "0" + hrs;
@@ -49,22 +49,22 @@ let lapNow = null;
     displayHrs = hrs;
   }
 
-  document.getElementById('timerHrs').innerHTML = displayHrs;
-  document.getElementById('timerMin').innerHTML = displayMin;
-  document.getElementById('timerSec').innerHTML = displaySec;
-  document.getElementById('timerMilisec').innerHTML = displayMilisec;
+  document.getElementById('timerHrs').innerHTML = `${displayHrs}`;
+  document.getElementById('timerMin').innerHTML = `${displayMin}`;
+  document.getElementById('timerSec').innerHTML = `${displaySec}`;
+  document.getElementById('timerMilisec').innerHTML = `${displayMilisec}`;
 };
 
 const startStop =()=>{
   if(x ==="stopped"){
     interval = window.setInterval(start, 10);
     x = "started";
-    document.getElementById('startBtn'),innerHTML = "Stop"; 
+    document.getElementById('startBtn').innerHTML = "Stop"; 
   }
   else {
     window.clearInterval(interval);
     x = "stopped";
-    document.getElementById('startBtn'),innerHTML = "Start";
+    document.getElementById('startBtn').innerHTML = "Start";
 
   }
 };
