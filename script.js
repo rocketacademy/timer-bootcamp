@@ -9,7 +9,7 @@ let displayMin = min;
 let displaySec = sec;
 let displayMilisec = milisec;
 
-let status = "stopped";
+let x = "stopped";
 let interval = null;
 let lapNow = null;
 
@@ -56,14 +56,14 @@ let lapNow = null;
 };
 
 const startStop =()=>{
-  if(status ==="stopped"){
+  if(x ==="stopped"){
     interval = window.setInterval(start, 10);
-    status = "started";
+    x = "started";
     document.getElementById('startBtn'),innerHTML = "Stop"; 
   }
   else {
     window.clearInterval(interval);
-    status = "stopped";
+    x = "stopped";
     document.getElementById('startBtn'),innerHTML = "Start";
 
   }
