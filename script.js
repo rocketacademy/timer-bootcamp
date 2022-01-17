@@ -1,34 +1,3 @@
-// ----- GLOBAL VARIABLES -----------------------
-const boardSize = 4;
-const board = [];
-
-let deck;
-let firstCard = null;
-let firstCardElement;
-
-// For gameplay
-let canClick = false;
-
-// For stopwatch
-let milliseconds = 0;
-const delayInMilliseconds = 100; // 0.1 second
-const maxMilliseconds = 180000; // 3 minutes (1 min = 60 000ms)
-let stopwatchStarted = false;
-let stopwatchRef;
-
-const stopwatch = document.createElement('div');
-const startBtn = document.createElement('button');
-const stopBtn = document.createElement('button');
-const resetBtn = document.createElement('button');
-
-// For game information
-const gameInfoContainer = document.createElement('div');
-const gameInfo = document.createElement('div');
-const stopwatchContainer = document.createElement('div');
-const gameRulesDiv = document.createElement('div');
-let timeoutMsgMatch;
-let timeoutMsgNoMatch;
-
 // ----- HELPER FUNCTIONS -----------------------
 // Get a random index ranging from 0 (inclusive) to max (exclusive).
 const getRandomIndex = (max) => Math.floor(Math.random() * max);
@@ -156,6 +125,7 @@ const formatStopwatch = (ms) => {
 	return `${min}:${sec}`;
 };
 
+// Stopwatch functions: start the stopwatch
 const startStopwatch = () => {
 	canClick = true;
 	startBtn.disabled = true;
@@ -185,6 +155,7 @@ const startStopwatch = () => {
 	}, delayInMilliseconds);
 };
 
+// Stopwatch fuctions: stop the stopwatch
 const stopStopwatch = () => {
 	clearInterval(stopwatchRef);
 
@@ -200,6 +171,7 @@ const stopStopwatch = () => {
 	}
 };
 
+// Stopwatch functions: reset the stopwatch
 const resetStopwatch = () => {
 	clearInterval(stopwatchRef);
 	milliseconds = 0;
@@ -212,6 +184,7 @@ const resetStopwatch = () => {
 	resetGame();
 };
 
+// Reset game
 const resetGame = () => {
 	board.length = 0;
 	firstCard = null;
