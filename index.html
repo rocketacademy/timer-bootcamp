@@ -6,8 +6,27 @@
   </head>
 
   <body>
-    <h1 id="header">Timer!</h1>
-    <!-- Import program logic -->
+    <div class="wrapper">
+      <div class= "display">
+        <p class = "timerDisplay" id = "timerHrs"> 00  </p> :
+        <p class = "timerDisplay" id = "timerMin"> 00  </p> :
+        <p class = "timerDisplay" id = "timerSec"> 00  </p> :
+        <p class = "timerDisplay" id = "timerMilisec"> 00  </p> 
+    </div>
+
+    <div class = "buttons">
+        <button id = "startBtn" onclick = "startStop()"> Start </button>
+        <button id = "resetBtn" onclick = "reset()"> Reset </button>
+        <button id = "lapBtn" onclick = "lap()"> Lap </button>
+    
+    </div>
+
+    <h1>Laps:</h1>
+
+    <div id = "laps">
+      <p id="lapRecord"></p>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

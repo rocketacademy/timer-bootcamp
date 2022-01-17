@@ -1,3 +1,96 @@
 body {
-  background-color: pink;
+  height: 100vh;
+  margin: 40px 0px 0px 0px;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.display {
+  display: flex;
+  left: 50%;
+  align-items: center;
+  justify-content: center;
+  font-family: "nunito", "poppins", sans-serif;
+  font-weight: 700;
+  font-size: 60px;
+  color: white;
+  text-shadow: 3px 3px 0px rgba(150, 150, 150, 1);
+}
+
+p {
+  margin: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  cursor: pointer;
+  height: 30px;
+  width: 80px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #3b85ed;
+  font-family: "nunito", "poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+
+  margin: 8px;
+  transform: translate(-4px, 4px);
+}
+button:hover {
+  box-shadow: none;
+  transform: translate3d(4px, 4px, 0px);
+  background-color: #224f8f;
+  transition-duration: 100ms;
+  transition-property: all;
+}
+
+h1 {
+  background-color: orange;
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  font-family: "nunito", "poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 3px 3px 0px rgba(150, 150, 150, 1);
+  border-radius: 10px;
+}
+
+#header {
+  width: 100%;
+  height: 100px;
+  position: sticky;
+}
+
+#lapRecord {
+  margin-top: 20px;
+}
+
+#laps {
+  scroll-behavior: smooth;
+  background-color: orange;
+  border-radius: 6px;
+  height: 15rem;
+  font-family: "nunito", "poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  text-shadow: 3px 3px 0px rgba(150, 150, 150, 1);
+
+  text-align: center;
+  color: white;
+  overflow-y: scroll;
+}
+.display {
+  padding: 0px 20px;
+  border: 4px solid white;
+  border-radius: 16px;
 }
