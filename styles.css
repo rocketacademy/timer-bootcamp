@@ -1,3 +1,67 @@
 body {
-  background-color: pink;
+  background-color: salmon;
+}
+
+.square {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+  height: 40px;
+  width: 20px;
+  vertical-align: top;
+  border-radius: 10%;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 20px;
+}
+
+.board {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.name {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin: 0 auto;
+  width: 30%;
+}
+
+.timer {
+  background-color: beige;
+  width: 100px;
+  margin-left: 10px;
+  border-style: inset;
+  padding: 2px;
+  display: inline-block;
+}
+
+.button {
+  margin: 3px;
+}
+
+.box {
+  border-style: groove;
+  background-color: ivory;
+  height: 300px;
+  width: 150px;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 5px;
+}
+
+.header {
+  text-decoration: underline;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.button {
+  width: 90px;
+}
+
+.text {
+  display: block;
+  padding: 10px;
 }
