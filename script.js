@@ -28,7 +28,11 @@ const numOfWinsBox = document.createElement('div');
 numOfWinsBox.setAttribute('style', 'margin-bottom: 5px');
 numOfWinsBox.innerText = 'Number of Wins: 0';
 const resetButton = document.createElement('button');
-resetButton.innerText = 'Reset current game';
+resetButton.innerText = 'Reset Game';
+resetButton.className = 'button';
+const pauseButton = document.createElement('button');
+pauseButton.innerText = 'Pause Game';
+pauseButton.className = 'button';
 
 const timerBox = document.createElement('div');
 timerBox.className = 'timer';
@@ -55,6 +59,7 @@ const timerReset = () => {
   const secondDisplay = pad(Math.floor((timeGiven / 1000) % 60), 2);
   timerBox.innerText = `Time Left: ${minuteDisplay}:${secondDisplay}`;
   timeLeft = timeGiven;
+  pauseButton.innerText = 'Pause Game';
 };
 
 // create outputBox (for display of game messages)
@@ -65,10 +70,40 @@ const output = (message) => {
   outputBox.innerText = message;
 };
 
+// setting 3 minutes game
+const timesUp = () => {
+  if (gameOver === false) {
+    output('Your time is up! (3 minute game time)');
+    gameOver = true;
+    resetButton.disabled = false;
+    pauseButton.disabled = true;
+  }
+};
+
+const timerPause = () => {
+  if (gameOver === false) {
+    if (paused === false) {
+      clearInterval(timerFunction);
+      clearInterval(gameOverFunction);
+      paused = true;
+      pauseButton.innerText = 'Resume Game';
+    } else if (paused === true) {
+      timerFunction = setInterval(timerStart, 1000);
+      gameOverFunction = setTimeout(timesUp, timeLeft);
+      paused = false;
+      pauseButton.innerText = 'Pause Game';
+    }
+  } else {
+    pauseButton.disabled = true;
+    pauseButton.innerText = '<-- Click here instead';
+  }
+};
+
 // clearing of temporary game messages function
 const clearOutput = () => {
   outputBox.innerText = '';
   resetButton.disabled = false;
+  pauseButton.disabled = false;
 };
 
 // setTimeout function for clearing of outputBox
@@ -79,15 +114,6 @@ const clearFunction = () => {
 // create winning message box
 const winBox = document.createElement('div');
 
-// setting 3 minutes game
-const timesUp = () => {
-  if (gameOver === false) {
-    output('Your time is up! (3 minute game time)');
-    gameOver = true;
-    resetButton.disabled = false;
-  }
-};
-
 // name submit button function to trigger start of game and appending of game elements
 const captureName = () => {
   playerName = nameField.value;
@@ -97,6 +123,7 @@ const captureName = () => {
   nameBox.innerHTML = `Welcome to Match Game, ${playerName}!</br></br>`;
   nameBox.appendChild(numOfWinsBox);
   nameBox.appendChild(resetButton);
+  nameBox.appendChild(pauseButton);
   nameBox.appendChild(timerBox);
   document.body.appendChild(boardEl);
   document.body.appendChild(outputBox);
@@ -111,6 +138,7 @@ nameSubmit.addEventListener('click', captureName);
 const squareClick = (cardElement, column, row) => {
   if (paused === false && gameOver === false) {
     resetButton.disabled = true;
+    pauseButton.disabled = true;
     console.log(cardElement);
 
     console.log('FIRST CARD DOM ELEMENT', firstCard);
@@ -159,6 +187,7 @@ const squareClick = (cardElement, column, row) => {
           numOfWinsBox.innerText = `Number of Wins: ${numOfWins}`;
           clearTimeout(gameOverFunction);
           clearTimeout(timerFunction);
+          pauseButton.disabled = true;
         }
       }
       // did not match
@@ -167,7 +196,7 @@ const squareClick = (cardElement, column, row) => {
         paused = true;
         // turn this card back over
         setTimeout(() => { firstCardElement.innerText = '';
-          cardElement.innerText = ''; paused = false; resetButton.disabled = false; }, 3000);
+          cardElement.innerText = ''; paused = false; resetButton.disabled = false; pauseButton.disabled = false; }, 3000);
       }
 
       // reset the first card
@@ -299,7 +328,10 @@ const initGame = () => {
 // reset function
 const reset = () => {
   outputBox.innerText = ''; // clear outputBox
+  clearInterval(gameOverFunction);
+  clearInterval(timerFunction);
   gameOverFunction = setTimeout(timesUp, timeGiven); // reset 3-minute timer
+  pauseButton.disabled = false;
   timerReset();
   timerFunction = setInterval(timerStart, 1000);
   firstCard = null; // reset firstCard to null
@@ -324,5 +356,6 @@ const reset = () => {
   boardEl = buildBoardElements(board);
 };
 resetButton.addEventListener('click', reset);
+pauseButton.addEventListener('click', timerPause);
 
 initGame();

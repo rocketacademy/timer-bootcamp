@@ -31,3 +31,7 @@ body {
   padding: 2px;
   display: inline-block;
 }
+
+.button {
+  margin: 3px;
+}
