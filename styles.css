@@ -1,3 +1,64 @@
 body {
-  background-color: pink;
+  background-color: rgb(184, 225, 252);
+}
+
+.stopwatch {
+  background-color: rgb(110, 110, 109);
+  display: inline-block;
+  padding: 20px;
+  border-radius: 30px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.lapData {
+  background-color: rgb(182, 182, 182);
+  float: left;
+  margin: 20px 20px 20px 20px;
+  height: 20px;
+}
+
+.timeData {
+  background-color: rgb(182, 182, 182);
+  font-size: 40px;
+  font-weight: bold;
+  float: right;
+  margin: 20px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
+  text-align: center;
+}
+
+.button {
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 75px;
+}
+
+.lap {
+  margin: 10px;
+}
+
+.lapTime {
+  margin: 10px;
+}
+
+.totalTime {
+  margin: 10px;
+}
+
+.lapTitle {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.lapDetails {
+  color: whitesmoke;
+}
+
+.lapContainer {
+  display: flex;
+  justify-content: space-between;
 }

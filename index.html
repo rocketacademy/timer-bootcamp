@@ -7,6 +7,34 @@
 
   <body>
     <h1 id="header">Timer!</h1>
+    <div class="stopwatch">
+      <div class="lapData">
+        <div class="lapTitles">
+          <span class="lap">Lap</span>
+          <span class="lapTime">Lap Time</span>
+          <span class="totalTime">Total Time</span>
+        </div>
+        <div class="lapDetails" id="lapDetails"></div>
+      </div>
+      <div class="timeData">
+        <div class="time">
+          <span id="hours">00</span>
+          <span>:</span>
+          <span id="minutes">00</span>
+          <span>:</span>
+          <span id="seconds">00</span>
+        </div>
+        <div>
+          <button class="button" id="startButton">Start</button>
+          <button class="button" id="stopButton">Stop</button>
+        </div>
+        <div>
+          <button class="button" id="resetButton">Reset</button>
+          <button class="button" id="lapButton">Lap</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Import program logic -->
     <script src="script.js"></script>
   </body>
