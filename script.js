@@ -18,8 +18,8 @@ let timer;
 let timerStatus;
 
 let lapCount = 0;
-
 let lapDetails = document.getElementById('lapDetails');
+let lapData = [];
 
 
 // ===== HELPER FUNCTIONS =====
@@ -105,14 +105,14 @@ const resetTimer = () => {
   lapMinutes = 0;
   lapHours = 0;
 
+  lapData = [];
   lapDetails.innerText = '';
   lapCount = 0;
-
+  
   // if reset button is hit when timer is running, timer will auto start
   if (timerStatus === 'start') {
     startTimer();
   }
-
 
   // if reset button is hit when timer is not running, timer will display 00:00:00
   if (timerStatus === 'stop') {
@@ -127,6 +127,8 @@ const resetTimer = () => {
 
 const lapTimer = () => {
 
+  lapDetails.innerText = "";
+
   lapCount += 1;
 
   console.log('lapHours: ', lapHours);
@@ -136,45 +138,93 @@ const lapTimer = () => {
   let currentLapTime = `${formatNum(lapHours)} : ${formatNum(lapMinutes)} : ${formatNum(lapSeconds)}`;
   let currentTotalTime = `${formatNum(hoursCounter)} : ${formatNum(minutesCounter)} : ${formatNum(secondsCounter)}`;
 
+  const currentLapDetails = {
+    lapIndex: lapCount,
+    lapNum: formatNum(lapCount),
+    currLapTime: currentLapTime,
+    currTotalTime: currentTotalTime
+  }
 
-  // create container for each set of data
-  let lapContainer = document.createElement('p');
-  lapContainer.classList.add('lapContainer');
-  document.getElementById('lapDetails').appendChild(lapContainer);
+  lapData.push(currentLapDetails);
+  console.log(lapData);
+
+  // to show only the latest 4 laps
+  // if more than 4 laps, start from lapData length - 4
+  // if up to 4 laps, display all
+
+  if (lapData.length <= 4) {
+    for (let i = 0; i < lapData.length; i += 1) {
+      // create container for each set of data
+      let lapContainer = document.createElement('p');
+      lapContainer.classList.add('lapContainer');
+      document.getElementById('lapDetails').appendChild(lapContainer);
 
 
-  // create lap, lap time and total time containers
-  let lap = document.createElement('span');
-  let lapTime = document.createElement('span');
-  let totalTime = document.createElement('span');
+      // create lap, lap time and total time containers
+      let lap = document.createElement('span');
+      let lapTime = document.createElement('span');
+      let totalTime = document.createElement('span');
 
-  lap.classList.add('lap');
-  lapTime.classList.add('lapTime');
-  totalTime.classList.add('totalTime');
+      lap.classList.add('lap');
+      lapTime.classList.add('lapTime');
+      totalTime.classList.add('totalTime');
 
-  // capture lap information to display
-  lap.innerText = formatNum(lapCount);
-  lapTime.innerText = currentLapTime;
-  totalTime.innerText = currentTotalTime;
+      // capture lap information to display
+      lap.innerText = lapData[i].lapNum;
+      lapTime.innerText = lapData[i].currLapTime;
+      totalTime.innerText = lapData[i].currTotalTime;
+
+      // append containers
+      lapContainer.appendChild(lap);
+      lapContainer.appendChild(lapTime);
+      lapContainer.appendChild(totalTime);
+
+      console.log('lapCount: ', lapCount);
+      console.log('currentLapTime: ', currentLapTime);
+      console.log('currentTotalTime: ', currentTotalTime);
+
+    }
+  } else if (lapData.length > 4) {
+      for (let i = lapData.length-4; i < lapData.length; i += 1) {
+        // create container for each set of data
+        let lapContainer = document.createElement('p');
+        lapContainer.classList.add('lapContainer');
+        document.getElementById('lapDetails').appendChild(lapContainer);
 
 
-  // append containers
-  lapContainer.appendChild(lap);
-  lapContainer.appendChild(lapTime);
-  lapContainer.appendChild(totalTime);
+        // create lap, lap time and total time containers
+        let lap = document.createElement('span');
+        let lapTime = document.createElement('span');
+        let totalTime = document.createElement('span');
 
-  console.log('lapCount: ', lapCount);
-  console.log('currentLapTime: ', currentLapTime);
-  console.log('currentTotalTime: ', currentTotalTime);
+        lap.classList.add('lap');
+        lapTime.classList.add('lapTime');
+        totalTime.classList.add('totalTime');
 
+        // capture lap information to display
+        lap.innerText = lapData[i].lapNum;
+        lapTime.innerText = lapData[i].currLapTime;
+        totalTime.innerText = lapData[i].currTotalTime;
+
+        // append containers
+        lapContainer.appendChild(lap);
+        lapContainer.appendChild(lapTime);
+        lapContainer.appendChild(totalTime);
+
+        console.log('lapCount: ', lapCount);
+        console.log('currentLapTime: ', currentLapTime);
+        console.log('currentTotalTime: ', currentTotalTime);
+      }
+     }
   // to reset lap details;
   lapSeconds = 0;
   lapMinutes = 0;
   lapHours = 0;
-
-
+  
 }
 
+
+// ===== INITIALISE TIMER =====
 
 // add event listener for start button
 const startButton = document.getElementById('startButton')
