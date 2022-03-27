@@ -21,6 +21,8 @@ let lapCount = 0;
 let lapDetails = document.getElementById('lapDetails');
 let lapData = [];
 
+let canClick = true;
+
 
 // ===== HELPER FUNCTIONS =====
 
@@ -35,51 +37,56 @@ const formatNum = (number) => {
 
 const startTimer = () => {
 
-  timer = setInterval( () => {
+  if (canClick) {
 
-    //console.log('secondsCounter: ', secondsCounter);
+    canClick = false;
 
-    // at every second, print the status of seconds, minutes, hours
+    timer = setInterval( () => {
 
-    seconds.innerText = formatNum(secondsCounter);
-    minutes.innerText = formatNum(minutesCounter);
-    hours.innerText = formatNum(hoursCounter);  
+      //console.log('secondsCounter: ', secondsCounter);
 
-    // when timer starts - for total time
+      // at every second, print the status of seconds, minutes, hours
 
-    // second starts
-    secondsCounter += 1
+      seconds.innerText = formatNum(secondsCounter);
+      minutes.innerText = formatNum(minutesCounter);
+      hours.innerText = formatNum(hoursCounter);  
 
-    // when seconds hit 60
-    if (secondsCounter === 60) {
-      
-      // minutes increase by 1, seconds start from 0
-      minutesCounter += 1;
-      secondsCounter = 0;
+      // when timer starts - for total time
 
-      // when minutes hit 60, minutes start from 0
-      if (minutesCounter === 60) {
-        hoursCounter += 1;
-        minutesCounter = 0;
-      }
-    }
+      // second starts
+      secondsCounter += 1
 
-    // when timer starts - for lap time
+      // when seconds hit 60
+      if (secondsCounter === 60) {
+        
+        // minutes increase by 1, seconds start from 0
+        minutesCounter += 1;
+        secondsCounter = 0;
 
-    lapSeconds += 1
-
-    if (lapSeconds === 60) {
-      lapMinutes += 1;
-      lapSeconds = 0;
-
-      if (lapMinutes === 60) {
-        lapHours += 1;
-        lapMinutes = 0;
+        // when minutes hit 60, minutes start from 0
+        if (minutesCounter === 60) {
+          hoursCounter += 1;
+          minutesCounter = 0;
+        }
       }
 
-    }
+      // when timer starts - for lap time
 
-  }, delayInMilliseconds);
+      lapSeconds += 1
+
+      if (lapSeconds === 60) {
+        lapMinutes += 1;
+        lapSeconds = 0;
+
+        if (lapMinutes === 60) {
+          lapHours += 1;
+          lapMinutes = 0;
+        }
+
+      }
+
+    }, delayInMilliseconds);
+  }
 }
 
 const stopTimer = () => {
@@ -87,11 +94,13 @@ const stopTimer = () => {
   console.log('secondsCounter: ', secondsCounter);
 
   timerStatus = 'stop';
+  canClick = true;
   clearInterval(timer);
   
 }
 
 const resetTimer = () => {
+
 
   console.log('secondsCounter: ', secondsCounter);
 
@@ -111,6 +120,7 @@ const resetTimer = () => {
   
   // if reset button is hit when timer is running, timer will auto start
   if (timerStatus === 'start') {
+    canClick = true; 
     startTimer();
   }
 
