@@ -32,13 +32,14 @@ startButton.classList.add("button", "green");
 startButton.innerHTML = "Start";
 document.body.appendChild(startButton);
 
-//resume the timer once clicked
+//when start button is triggered
 startButton.addEventListener("click", () => {
   console.log("START BUTTON PRESSED");
   // clearing time interval everytime when the button gets clicked
   clearInterval(timeInterval);
   // updateClock();
   timeInterval = setInterval(updateClock, displaySec);
+
 });
 
 //Stop button
@@ -47,7 +48,7 @@ stopButton.classList.add("button", "red");
 stopButton.innerHTML = "Stop";
 document.body.appendChild(stopButton);
 
-// pause the timer once clicked
+// when stop button is triggered
 stopButton.addEventListener("click", () => {
   console.log("STOP BUTTON PRESSED");
 
@@ -68,12 +69,97 @@ resetButton.addEventListener("click", () => {
   totalTime = 0;
   clearInterval(timeInterval);
   updateClock();
+
+  //clearing the lap display 
+  lapDisplay.innerHTML = ""
+
+  //clearing laptimes array
+  lapTimes = [];
+  counter = 1;
 });
 
+//lap button
+let lapButton = document.createElement("button");
+lapButton.classList.add("button", "blue");
+lapButton.innerHTML = "Lap";
+document.body.appendChild(lapButton);
+
+//lap display container
+let lapDisplay = document.createElement("div");
+lapDisplay.classList.add("display");
+document.body.appendChild(lapDisplay);
+
+//lap counter
+let counter = 1;
+let lapTimes = []; 
+
+//when lap button is triggered
+lapButton.addEventListener("click", () => {
+  // minus 1000ms as laptime is always 1s ahead
+  
+  let lapTime = totalTime - 1000;
+  let hour = convertTime(lapTime)[0]
+  let minute = convertTime(lapTime)[1]
+  let second = convertTime(lapTime)[2]
+  lapTimes.push(lapTime);
+  console.log(lapTimes);
+
+  lapDisplay.innerHTML +=
+  "Lap No." + `${counter}` + ": " +
+  ("0" + `${hour}`).slice(-2) +
+  ":" +
+  ("0" + `${minute}`).slice(-2) +
+  ":" +
+  ("0" + `${second}`).slice(-2) + "<br>";
+
+  // lapDisplay.appendChild(lapTime)
+  counter += 1;
+  split(lapTimes)
+});
+
+//lap display container
+let splitDisplay = document.createElement("div");
+splitDisplay.classList.add("display");
+document.body.appendChild(splitDisplay);
+
+//split time calc
+let splitTimes = [];
+let splitCounter = 1;
+
+function split (lapTimes) {
+
+for (i = 0; i < lapTimes.length; i++) {
+
+  // if there is more than 1 laps
+  if (lapTimes.length > 1) {
+    
+    splitTimes[splitCounter] = lapTimes[i+1] - lapTimes[i]
+    convertTime(splitTimes[splitCounter]);
+    let hour = convertTime(splitTimes[splitCounter])[0]
+    let minute = convertTime(splitTimes[splitCounter])[1]
+    let second = convertTime(splitTimes[splitCounter])[2]
+
+    splitDisplay.innerHTML += `Split No. ${splitCounter}: ` +  ("0" + `${hour}`).slice(-2) +
+    ":" +
+    ("0" + `${minute}`).slice(-2) +
+    ":" +
+    ("0" + `${second}`).slice(-2) + "<br>"; 
+    splitCounter += 1;
+  }
+}
+  
+}
+
+
 function updateClock() {
-  let hour = Math.floor((totalTime / (1000 * 60 * 60)) % 24);
-  let minute = Math.floor((totalTime / 1000 / 60) % 60);
-  let second = Math.floor((totalTime / 1000) % 60);
+
+  let hour = convertTime(totalTime)[0]
+  let minute = convertTime(totalTime)[1]
+  let second = convertTime(totalTime)[2]
+
+  // let hour = Math.floor((totalTime / (1000 * 60 * 60)) % 24);
+  // let minute = Math.floor((totalTime / 1000 / 60) % 60);
+  // let second = Math.floor((totalTime / 1000) % 60);
 
   timeDisplay.innerHTML =
     "Time Elapsed: " +
@@ -89,4 +175,13 @@ function updateClock() {
 
   totalTime += 1000;
   console.log(totalTime);
+}
+
+//convert millisecs to hours, minutes, seconds
+function convertTime (totalTime) {
+  let hour = Math.floor((totalTime / (1000 * 60 * 60)) % 24);
+  let minute = Math.floor((totalTime / 1000 / 60) % 60);
+  let second = Math.floor((totalTime / 1000) % 60);
+  
+  return [hour,minute,second]
 }
