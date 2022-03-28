@@ -39,7 +39,6 @@ startButton.addEventListener("click", () => {
   clearInterval(timeInterval);
   // updateClock();
   timeInterval = setInterval(updateClock, displaySec);
-
 });
 
 //Stop button
@@ -70,12 +69,16 @@ resetButton.addEventListener("click", () => {
   clearInterval(timeInterval);
   updateClock();
 
-  //clearing the lap display 
-  lapDisplay.innerHTML = ""
+  //clearing the lap display
+  lapDisplay.innerHTML = "";
 
   //clearing laptimes array
   lapTimes = [];
   counter = 1;
+
+  //clearing split records
+  splitDisplay.innerHTML = "";
+  splitTimesRecord = [];
 });
 
 //lap button
@@ -91,30 +94,34 @@ document.body.appendChild(lapDisplay);
 
 //lap counter
 let counter = 1;
-let lapTimes = []; 
+let lapTimes = [];
 
 //when lap button is triggered
 lapButton.addEventListener("click", () => {
   // minus 1000ms as laptime is always 1s ahead
-  
+
   let lapTime = totalTime - 1000;
-  let hour = convertTime(lapTime)[0]
-  let minute = convertTime(lapTime)[1]
-  let second = convertTime(lapTime)[2]
+  let hour = convertTime(lapTime)[0];
+  let minute = convertTime(lapTime)[1];
+  let second = convertTime(lapTime)[2];
   lapTimes.push(lapTime);
   console.log(lapTimes);
 
   lapDisplay.innerHTML +=
-  "Lap No." + `${counter}` + ": " +
-  ("0" + `${hour}`).slice(-2) +
-  ":" +
-  ("0" + `${minute}`).slice(-2) +
-  ":" +
-  ("0" + `${second}`).slice(-2) + "<br>";
+    "Lap No." +
+    `${counter}` +
+    ": " +
+    ("0" + `${hour}`).slice(-2) +
+    ":" +
+    ("0" + `${minute}`).slice(-2) +
+    ":" +
+    ("0" + `${second}`).slice(-2) +
+    "<br>";
 
-  // lapDisplay.appendChild(lapTime)
   counter += 1;
-  split(lapTimes)
+
+  // displaying split times
+  split(lapTimes);
 });
 
 //lap display container
@@ -123,39 +130,76 @@ splitDisplay.classList.add("display");
 document.body.appendChild(splitDisplay);
 
 //split time calc
-let splitTimes = [];
+
+let splitTime;
 let splitCounter = 1;
 
-function split (lapTimes) {
+function split(lapTimes) {
+  // empty the display everytime
+  splitDisplay.innerHTML = "";
 
-for (i = 0; i < lapTimes.length; i++) {
+  // recalculate the splits everytime the function is triggered
+  let splitTimesRecord = [];
 
   // if there is more than 1 laps
   if (lapTimes.length > 1) {
-    
-    splitTimes[splitCounter] = lapTimes[i+1] - lapTimes[i]
-    convertTime(splitTimes[splitCounter]);
-    let hour = convertTime(splitTimes[splitCounter])[0]
-    let minute = convertTime(splitTimes[splitCounter])[1]
-    let second = convertTime(splitTimes[splitCounter])[2]
+    // loop over lapTimes.length
+    for (i = 0; i < lapTimes.length - 1; i++) {
+      splitTime = lapTimes[i + 1] - lapTimes[i];
 
-    splitDisplay.innerHTML += `Split No. ${splitCounter}: ` +  ("0" + `${hour}`).slice(-2) +
-    ":" +
-    ("0" + `${minute}`).slice(-2) +
-    ":" +
-    ("0" + `${second}`).slice(-2) + "<br>"; 
+      // converting them to proper time format
+      let hour = convertTime(splitTime)[0];
+      let minute = convertTime(splitTime)[1];
+      let second = convertTime(splitTime)[2];
+
+      splitTimesRecord.push(splitTime);
+      console.log(splitTimesRecord);
+
+      splitDisplay.innerHTML +=
+        "Split No." +
+        `${splitCounter}` +
+        ": " +
+        ("0" + `${hour}`).slice(-2) +
+        ":" +
+        ("0" + `${minute}`).slice(-2) +
+        ":" +
+        ("0" + `${second}`).slice(-2) +
+        "<br>";
+    }
     splitCounter += 1;
   }
 }
-  
-}
 
+// function displaySplit(array) {
+//   // empty the display everytime
+//   splitDisplay.innerHTML = "";
+
+//   splitCounter = 1;
+
+//   for (i = 0; i < array.length; i++) {
+//     let hour = convertTime(array[0])[0];
+//     let minute = convertTime(array[0])[1];
+//     let second = convertTime(array[0])[3];
+
+//     splitDisplay.innerHTML +=
+//       "Split No." +
+//       `${splitCounter}` +
+//       ": " +
+//       ("0" + `${hour}`).slice(-2) +
+//       ":" +
+//       ("0" + `${minute}`).slice(-2) +
+//       ":" +
+//       ("0" + `${second}`).slice(-2) +
+//       "<br>";
+
+//     splitCounter += 1;
+//   }
+// }
 
 function updateClock() {
-
-  let hour = convertTime(totalTime)[0]
-  let minute = convertTime(totalTime)[1]
-  let second = convertTime(totalTime)[2]
+  let hour = convertTime(totalTime)[0];
+  let minute = convertTime(totalTime)[1];
+  let second = convertTime(totalTime)[2];
 
   // let hour = Math.floor((totalTime / (1000 * 60 * 60)) % 24);
   // let minute = Math.floor((totalTime / 1000 / 60) % 60);
@@ -178,10 +222,10 @@ function updateClock() {
 }
 
 //convert millisecs to hours, minutes, seconds
-function convertTime (totalTime) {
+function convertTime(totalTime) {
   let hour = Math.floor((totalTime / (1000 * 60 * 60)) % 24);
   let minute = Math.floor((totalTime / 1000 / 60) % 60);
   let second = Math.floor((totalTime / 1000) % 60);
-  
-  return [hour,minute,second]
+
+  return [hour, minute, second];
 }
