@@ -130,20 +130,18 @@ splitDisplay.classList.add("display");
 document.body.appendChild(splitDisplay);
 
 //split time calc
-
 let splitTime;
 let splitCounter = 1;
+let splitTimesRecord = [];
 
 function split(lapTimes) {
   // empty the display everytime
   splitDisplay.innerHTML = "";
 
-  // recalculate the splits everytime the function is triggered
-  let splitTimesRecord = [];
-
   // if there is more than 1 laps
   if (lapTimes.length > 1) {
     // loop over lapTimes.length
+    splitCounter = 1;
     for (i = 0; i < lapTimes.length - 1; i++) {
       splitTime = lapTimes[i + 1] - lapTimes[i];
 
@@ -152,8 +150,8 @@ function split(lapTimes) {
       let minute = convertTime(splitTime)[1];
       let second = convertTime(splitTime)[2];
 
-      splitTimesRecord.push(splitTime);
-      console.log(splitTimesRecord);
+      splitTimesRecord.push([hour, minute, second]);
+      // console.log(splitTimesRecord);
 
       splitDisplay.innerHTML +=
         "Split No." +
@@ -165,36 +163,10 @@ function split(lapTimes) {
         ":" +
         ("0" + `${second}`).slice(-2) +
         "<br>";
+      splitCounter += 1;
     }
-    splitCounter += 1;
   }
 }
-
-// function displaySplit(array) {
-//   // empty the display everytime
-//   splitDisplay.innerHTML = "";
-
-//   splitCounter = 1;
-
-//   for (i = 0; i < array.length; i++) {
-//     let hour = convertTime(array[0])[0];
-//     let minute = convertTime(array[0])[1];
-//     let second = convertTime(array[0])[3];
-
-//     splitDisplay.innerHTML +=
-//       "Split No." +
-//       `${splitCounter}` +
-//       ": " +
-//       ("0" + `${hour}`).slice(-2) +
-//       ":" +
-//       ("0" + `${minute}`).slice(-2) +
-//       ":" +
-//       ("0" + `${second}`).slice(-2) +
-//       "<br>";
-
-//     splitCounter += 1;
-//   }
-// }
 
 function updateClock() {
   let hour = convertTime(totalTime)[0];
