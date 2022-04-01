@@ -36,6 +36,7 @@ const formatNum = (number) => {
 }
 
 const startTimer = () => {
+  //console.log('secondsCounter: ', secondsCounter)
 
   if (canClick) {
 
@@ -43,13 +44,9 @@ const startTimer = () => {
 
     timer = setInterval( () => {
 
-      //console.log('secondsCounter: ', secondsCounter);
+      console.log('before secondsCounter: ', secondsCounter);
 
-      // at every second, print the status of seconds, minutes, hours
 
-      seconds.innerText = formatNum(secondsCounter);
-      minutes.innerText = formatNum(minutesCounter);
-      hours.innerText = formatNum(hoursCounter);  
 
       // when timer starts - for total time
 
@@ -84,7 +81,13 @@ const startTimer = () => {
         }
 
       }
+      // at every second, print the status of seconds, minutes, hours
 
+      console.log('after secondsCounter: ', secondsCounter);
+
+      seconds.innerText = formatNum(secondsCounter);
+      minutes.innerText = formatNum(minutesCounter);
+      hours.innerText = formatNum(hoursCounter);  
     }, delayInMilliseconds);
   }
 }
